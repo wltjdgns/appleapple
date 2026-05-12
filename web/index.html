@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사과게임 (Apple Game)</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: 'Pretendard', sans-serif;
+        }
+        #menu {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            background-color: #ff4d4d;
+            color: white;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        #game-container {
+            display: none;
+            position: relative;
+        }
+        canvas {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            cursor: crosshair;
+        }
+        #hud {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div id="menu">
+        <h1>사과게임</h1>
+        <div style="margin-bottom: 20px;">
+            <label>가로: <input type="number" id="colsInput" value="17" min="5" max="50" style="width: 50px;"></label>
+            <label>세로: <input type="number" id="rowsInput" value="10" min="5" max="50" style="width: 50px;"></label>
+        </div>
+        <button onclick="startGame('normal')">일반 모드 (120초)</button>
+        <button onclick="startGame('infinite')">무한 시간 모드</button>
+        <button onclick="startGame('custom')">가변 모드 (설정 크기)</button>
+        <button onclick="startGame('perfect')">퍼펙트 시드 (100% 제거)</button>
+    </div>
+
+    <div id="game-container">
+        <div id="hud">
+            <div id="score">Score: 0</div>
+            <div id="timer">Time: 120</div>
+            <button onclick="quitGame()" style="padding: 5px 15px; font-size: 1rem; background-color: #666;">종료</button>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <!-- Core Logic -->
+    <script src="../core/engine.js"></script>
+    <script src="../core/generator.js"></script>
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
