@@ -101,6 +101,11 @@ function render() {
     requestAnimationFrame(render);
 }
 
+function quitGame() {
+    clearInterval(timerInterval);
+    location.reload();
+}
+
 function setupEvents() {
     const getCoords = e => {
         const rect = canvas.getBoundingClientRect();
@@ -150,7 +155,16 @@ function setupEvents() {
         const validR2 = Math.max(validR1, Math.min(r2 + 1, engine.rows - 1));
         const validC2 = Math.max(validC1, Math.min(c2 + 1, engine.cols - 1));
 
-        engine.evaluateSelection(validR1, validC1, validR2, validC2);
+        if (engine.evaluateSelection(validR1, validC1, validR2, validC2)) {
+            // 사과가 모두 제거되었는지 확인
+            if (engine.getRemainingApples() === 0) {
+                clearInterval(timerInterval);
+                setTimeout(() => {
+                    alert(`축하합니다! 모든 사과를 제거했습니다. 최종 점수: ${engine.getScore()}`);
+                    location.reload();
+                }, 100);
+            }
+        }
     };
 
     canvas.addEventListener('mousedown', startAction);
