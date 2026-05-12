@@ -1,0 +1,351 @@
+[    1562ms] [ERROR] Attestation check for Shared Storage on https://www.googleadservices.com failed. @ https://www.googleadservices.com/pagead/managed/js/activeview/current/reach_worklet.html:0
+[    1572ms] [ERROR] Attestation check for Shared Storage on https://www.googleadservices.com failed. @ https://www.googleadservices.com/pagead/managed/js/activeview/current/reach_worklet.html:0
+[    1577ms] [ERROR] Attestation check for Shared Storage on https://www.googleadservices.com failed. @ https://www.googleadservices.com/pagead/managed/js/activeview/current/reach_worklet.html:0
+[    1797ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.gamesaien.com/favicon.ico:0
+[    2094ms] [WARNING] Deprecated property or method 'Ticker.setFPS'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1595011ms] [WARNING] Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12
+[ 1596836ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1596836ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1598581ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1599347ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1599347ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1602395ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1602743ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1602743ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1602743ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1602743ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1603916ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1603916ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1604917ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1604917ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1605632ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1605632ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1607421ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1607421ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1607769ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1608067ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1608067ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1608368ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1609114ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1609114ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1609712ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1609712ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1610249ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1611048ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1611048ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1611354ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1611638ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1611638ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1612320ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1612320ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1612612ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1614168ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1614168ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1614365ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1614704ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1614704ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1614907ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1615182ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1615182ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1615632ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1615984ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1615984ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1616638ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1617091ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1617091ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1617901ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1617901ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1618860ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1619485ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1619485ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1623767ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1624213ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1624213ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1627816ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1627817ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1630922ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1630922ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1633224ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1633224ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1634300ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1634300ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1634300ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1641520ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1642094ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1642094ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1643203ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1643203ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1644470ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1644712ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1644712ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1645755ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1645755ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1646301ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1647340ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1647340ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1648550ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1648550ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1649544ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1649544ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1649601ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1650816ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1650816ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1651608ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1651608ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1655033ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1656050ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1656564ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1656564ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1656565ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1656565ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1658492ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1658493ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1658903ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1659373ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1659373ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1660376ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1660376ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1660559ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1661064ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1661064ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1663105ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1663105ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1663105ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1663105ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1669706ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1669706ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1669706ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1669706ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1672197ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1672577ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1672577ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1672840ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1673793ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1673793ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1673793ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1689052ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1689052ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1689052ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1691651ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1691651ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1695701ms] TypeError: this[_0x4d2f0a(...)] is not a function
+    at _0x3d0def (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:83108)
+    at _0x2172f1.<computed>._0x5ec367 (https://www.gamesaien.com/game/fruit_box_a/fruit_box_a_006_o.js:1:82632)
+    at https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:2604
+    at b._dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:4090)
+    at b.dispatchEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:12:3449)
+    at b._dispatchMouseEvent (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:20816)
+    at b._handlePointerDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:19257)
+    at b._handleMouseDown (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:18816)
+    at HTMLCanvasElement.f (https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:13:16143)
+[ 1696566ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1696566ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1696567ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11
+[ 1696567ms] [WARNING] Deprecated property or method 'Container.getNumChildren'. See docs for info. @ https://www.gamesaien.com/game/files/gamepage-js/createjs-1.0.0.min.js:11

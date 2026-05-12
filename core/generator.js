@@ -3,12 +3,29 @@
  */
 class SeedGenerator {
     /**
-     * 무작위 숫자로 보드를 채움 (일반 모드)
+     * Rejection Sampling 방식을 이용한 보드 생성 (표준 모드)
+     * 1~9 사이의 숫자를 랜덤하게 채운 뒤, 전체 합이 10의 배수인 경우에만 채택함.
+     * 이는 원본 사과게임의 통계적 난이도 분포를 가장 잘 재현함.
      */
     static randomGen(rows, cols) {
-        return Array.from({ length: rows }, () =>
-            Array.from({ length: cols }, () => Math.floor(Math.random() * 9) + 1)
-        );
+        while (true) {
+            let sum = 0;
+            const board = [];
+            for (let r = 0; r < rows; r++) {
+                const row = [];
+                for (let c = 0; c < cols; c++) {
+                    const val = Math.floor(Math.random() * 9) + 1;
+                    row.push(val);
+                    sum += val;
+                }
+                board.push(row);
+            }
+
+            // 전체 합이 10의 배수이면 채택
+            if (sum % 10 === 0) {
+                return board;
+            }
+        }
     }
 
     /**

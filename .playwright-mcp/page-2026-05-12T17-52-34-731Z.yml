@@ -1,0 +1,79 @@
+- generic [active] [ref=e1]:
+  - table [ref=e2]:
+    - rowgroup [ref=e3]:
+      - row "ゲーム菜園トップページ / フルーツボックス 説明 English" [ref=e4]:
+        - cell [ref=e5]
+        - cell "ゲーム菜園トップページ / フルーツボックス 説明 English" [ref=e6]:
+          - generic [ref=e7]:
+            - link "ゲーム菜園トップページ" [ref=e8] [cursor=pointer]:
+              - /url: ../../
+            - text: / フルーツボックス
+            - link "説明" [ref=e9] [cursor=pointer]:
+              - /url: guide/
+            - link "English" [ref=e10] [cursor=pointer]:
+              - /url: https://en.gamesaien.com/game/fruit_box/
+        - cell [ref=e11]
+      - row "Advertisement Advertisement" [ref=e12]:
+        - cell "Advertisement" [ref=e13]:
+          - insertion [ref=e15]:
+            - iframe [ref=e17]:
+              - generic [active] [ref=f2e1]:
+                - generic [ref=f2e3]:
+                  - link:
+                    - /url: https://www.googleadservices.com/pagead/aclk?sa=L&ai=CLpTm3WgDaoKUHrSJ3NMPh573-A3dzeH6hgHtoe3ByRWxjvzCAxABILy_lgJgm7PqhLgpoAGq6ev9AsgBAqgDAcgDyQSqBOQBT9Bx7cdOi0KySQXB9c2UrM72d28bAVqr9qxzmFtBbEyUo7ADQY91DA5tbiRGvPKaBF00PYZDNV6ll4245pPNKlY3c9KS6B6FlFBqjkR6DLa4sSFhAgvvroCkTxM3KNDPJHXWnpeyNAQp6UY0qWXmDxUHmDDinhU3KWiLnu_9bFUZyi5K9juybOBIltD3brwpGP6tqTNz9MVvG_E3RLBQIAkdfYbJnd73tbVKDXE95aYwCg9iYrtbrwN6NpRZH8iCvbK7HIhtNnIKrnOVE-yMYUOSalTCJ132TOzMtqUzH06NHO-dwATk9OiA_gSIBZrSk8I9oAYCgAe-lpSCAagHp8yxAqgH4tixAqgHpr4bqAfMzrECqAfz0RuoB5bYG6gHqpuxAqgHjs4bqAeT2BuoB_DgG6gH7paxAqgH_p6xAqgHr76xAqgH1ckbqAfZtrECqAeaBqgH_56xAqgH35-xAqgH-MKxAqgH-8KxAtgHAdIIMQiAYRABGJ8DMgiKgoCAgICACDoPgECAwICAgICogAKog4AQSL39wTpY0-P2tqi0lAOxCZGJBZuo0ebhgAoBmAsByAsBogwDkAEBqg0CS1LIDQHqDRMIzfr2tqi0lAMVtAR3BB0Hzx3f8A0CiA4J2BMC0BUBmBYByhYCCgD4FgGAFwGyFxAYASoKOTg2Nzg2MzYxMVAGuhcCOAGqGBcJAAAAAAw5HUESCjk4Njc4NjM2MTEYAbIYCRICsFMYAiIBANAYAegYAcIZAggB&ae=1&gclid=EAIaIQobChMIwvb2tqi0lAMVtAR3BB0Hzx3fEAEYASAAEgIjofD_BwE&num=1&cid=CAQS9AEABaugfdtG80r_VQqXzc15f4ypoFslq-vSfDqLCfHZZ5vVHi6hS3kTDX1ngHLVLOO_ic6MY1UrCeaJpzCsaqy0vTza-ffXJFLJjsOaWFE9oL2TRw3YaPxAXaftb37YzI6WvCY26CzqEamtdjwEr-edUe89jpA9FSntiTUuILQrBLGYasF9HnUBBJu-l2Cl-GQ_iBVw9MBsDMS8PfIpGXz2bbLyddc5IPEKJwWEbf25e7BAeZTDEEDnuyf_FVS2jH7i4QMGej7lhcXXH11u-HAInVVTcw6IuJ2wXv3aWUbVwRlk__RlW5-eOQ3kLq3Yi-hn5y8rGAE&sig=AOD64_1KIai0KoXJOq4aNS1eYT9WfxLX9A&client=ca-pub-0839959289662987&rf=2&nb=2&adurl=https://store.steampowered.com/app/985810/GrandChase/%3Futm_source%3DGoogle%26utm_medium%3DCPC_KR%26utm_campaign%3DSoleneFinal%26gad_source%3D5%26gad_campaignid%3D16513296666%26gclid%3DEAIaIQobChMIwvb2tqi0lAMVtAR3BB0Hzx3fEAEYASAAEgIjofD_BwE
+                  - img [ref=f2e7] [cursor=pointer]
+                  - button [ref=f2e9] [cursor=pointer]:
+                    - img [ref=f2e10]
+                - iframe
+        - cell [ref=e18]:
+          - img [ref=e22]
+        - cell "Advertisement" [ref=e23]:
+          - insertion [ref=e25]:
+            - iframe [ref=e27]:
+              - generic [active] [ref=f3e1]:
+                - generic [ref=f3e3]:
+                  - link:
+                    - /url: https://www.googleadservices.com/pagead/aclk?sa=L&ai=CTtcc3WgDaufCHrSWjeYP_OOZ2A3dzeH6hgHtoe3ByRWxjvzCAxABILy_lgJgm7PqhLgpoAGq6ev9AsgBAqgDAcgDyQSqBOcBT9DqG6HtNhN5WiMZ-Kt4lqy1JBzdjgf9heGo323XK6lG6GcIHaxdlcO58FmItebgTE23bzSdTuSV2qPNKGOavWwjg61cx41fAxU4COd5hCOqX8xfRde8eM4c11gsx5QGD37s8qgzqobv4KnYqewdUAU3dsvDo0T9ow_gEN1GXWIa8fxgTEARARUEOuCrq7x2nPnIQ1as2e_hX3uwgwOLz4TsljJQ2XWXh5WyGmAhyJmpEqFWN8BK_sf86q2KYBNTJ4K4mXe1bELirz9SoRWt2w8P8T3zL7XQukCeKrGR8nwPaAvTAFMEwATk9OiA_gSIBZrSk8I9oAYCgAe-lpSCAagHp8yxAqgH4tixAqgHpr4bqAfMzrECqAfz0RuoB5bYG6gHqpuxAqgHjs4bqAeT2BuoB_DgG6gH7paxAqgH_p6xAqgHr76xAqgH1ckbqAfZtrECqAeaBqgH_56xAqgH35-xAqgH-MKxAqgH-8KxAtgHAdIIMQiAYRABGJ8DMgiKgoCAgICACDoPgECAwICAgICogAKog4AQSL39wTpYlZL3tqi0lAOxCZGJBZuo0ebhgAoBmAsByAsBogwDkAEBqg0CS1LIDQHqDRMIkqj3tqi0lAMVNEvDBh38cQbb8A0CiA4J2BMC0BUBmBYByhYCCgD4FgGAFwGyFxAYASoKOTg2Nzg2MzYxMVAGuhcCOAGqGBcJAAAAACy4FkESCjk4Njc4NjM2MTEYAbIYCRICsFMYAiIBANAYAegYAcIZAggB&ae=1&gclid=EAIaIQobChMIp6X3tqi0lAMVNEvDBh38cQbbEAEYASAAEgJt4PD_BwE&num=1&cid=CAQS0QEABaugfeN1MW0Yq-BC93rbxWeuHpbW_ZXBVRB39LpbDbvfijPLpyJQ6uX4mxvqVBFEjSgzPKE9u-b4NLef5o6xzzLIL7LtUL45GeIED-NElDgiUpK216IwRm74Zmy9h9IcY06SPLfXkOZ7UeGvWkLRFeLXyzf8y1HRTSFP35KYuNalCvbP8DZsS1Esqo5nFG6pm2qaCxN0oKsmzl_WXrhhaRw2UZvzb-6m9tT8rq47EwIw9TjHVTKN7ZKg4N0MaZh-ALTLKa3krgXz4dL1D_-RLhgB&sig=AOD64_3gfPcXuSo3G9cXMOJcGXLViPjEdQ&client=ca-pub-0839959289662987&rf=2&nb=2&adurl=https://store.steampowered.com/app/985810/GrandChase/%3Futm_source%3DGoogle%26utm_medium%3DCPC_KR%26utm_campaign%3DSoleneFinal%26gad_source%3D5%26gad_campaignid%3D16513296666%26gclid%3DEAIaIQobChMIp6X3tqi0lAMVNEvDBh38cQbbEAEYASAAEgJt4PD_BwE
+                  - img [ref=f3e7] [cursor=pointer]
+                  - button [ref=f3e9] [cursor=pointer]:
+                    - img [ref=f3e10]
+                - iframe
+      - row "画面上をマウスでドラッグして、数字の合計が10になるようにリンゴを囲むパズルゲームです。(説明) iPhone,iPadやAndroidでも動作します。 Advertisement" [ref=e28]:
+        - cell "画面上をマウスでドラッグして、数字の合計が10になるようにリンゴを囲むパズルゲームです。(説明) iPhone,iPadやAndroidでも動作します。" [ref=e29]:
+          - generic [ref=e30]:
+            - text: 画面上をマウスでドラッグして、数字の合計が10になるようにリンゴを囲むパズルゲームです。(
+            - link "説明" [ref=e31] [cursor=pointer]:
+              - /url: guide/
+            - text: )
+            - paragraph [ref=e32]: iPhone,iPadやAndroidでも動作します。
+        - cell "Advertisement" [ref=e33]:
+          - insertion [ref=e35]:
+            - iframe [ref=e37]:
+              - generic [ref=f4e3]:
+                - button [ref=f4e4]:
+                  - img [ref=f4e5]
+                - generic [ref=f4e7]:
+                  - generic [ref=f4e9]:
+                    - generic [ref=f4e13]:
+                      - button "Play video" [ref=f4e17] [cursor=pointer]:
+                        - img [ref=f4e18]
+                      - button "Unmute video" [ref=f4e23] [cursor=pointer]
+                    - button "もう一回見る" [ref=f4e30]:
+                      - img [ref=f4e32] [cursor=pointer]
+                    - img [ref=f4e37]
+                  - button "もっと見る" [ref=f4e44] [cursor=pointer]
+  - insertion [ref=e38]:
+    - iframe [ref=e41]:
+      - generic [ref=f17e3]:
+        - button [ref=f17e4]:
+          - img [ref=f17e5]
+        - generic [ref=f17e7]:
+          - generic [ref=f17e9]:
+            - generic [ref=f17e13]:
+              - button "Play video" [ref=f17e17] [cursor=pointer]:
+                - img [ref=f17e18]
+              - button "Unmute video" [ref=f17e23] [cursor=pointer]
+            - button "もう一回見る" [ref=f17e30]:
+              - img [ref=f17e32] [cursor=pointer]
+            - img [ref=f17e37]
+          - button "もっと見る" [ref=f17e44] [cursor=pointer]

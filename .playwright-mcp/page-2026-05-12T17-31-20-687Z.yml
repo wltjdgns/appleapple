@@ -1,0 +1,72 @@
+- generic [active] [ref=e1]:
+  - generic: "0123456789"
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - link "ColorTiles+" [ref=e5] [cursor=pointer]:
+        - /url: https://color-tiles.oshizi.com/ko/
+        - img "ColorTiles+" [ref=e6]
+      - link "사과게임 플러스" [ref=e7] [cursor=pointer]:
+        - /url: /ko/
+        - img [ref=e8]
+      - generic [ref=e15]:
+        - button "Game Settings" [ref=e17] [cursor=pointer]:
+          - img [ref=e18]
+        - button "음소거" [ref=e22] [cursor=pointer]:
+          - img [ref=e23]
+        - button "Language" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 한
+        - button "Dark mode" [ref=e28] [cursor=pointer]:
+          - img [ref=e29]
+    - generic [ref=e31]:
+      - link "공지" [ref=e32] [cursor=pointer]:
+        - /url: /ko/notice/
+      - generic [ref=e33]: ·
+      - link "소개" [ref=e34] [cursor=pointer]:
+        - /url: /ko/about/
+      - generic [ref=e35]: ·
+      - link "커뮤니티" [ref=e36] [cursor=pointer]:
+        - /url: /ko/community/
+    - img "Apple" [ref=e38]
+    - paragraph [ref=e43]: 합이 10이 되도록 드래그하세요!
+    - main [ref=e44]:
+      - generic [ref=e45]:
+        - button "혼자 하기" [ref=e46] [cursor=pointer]
+        - button "랜덤 매치 BETA" [ref=e47] [cursor=pointer]:
+          - generic [ref=e48]: 랜덤 매치
+          - generic [ref=e49]: BETA
+      - generic [ref=e52]: 또는 다른 사람과 함께
+      - generic [ref=e54]:
+        - button "방 만들기" [ref=e55] [cursor=pointer]
+        - generic [ref=e56]:
+          - textbox "초대 코드 입력" [ref=e57]
+          - button "참여" [ref=e58] [cursor=pointer]
+      - insertion [ref=e61]
+    - contentinfo [ref=e62]:
+      - link "Oshizi (publisher)" [ref=e63] [cursor=pointer]:
+        - /url: https://oshizi.com/ko/
+        - generic [ref=e64]: by
+        - img "Oshizi" [ref=e65]
+      - generic [ref=e76]:
+        - button "건의하기" [ref=e77] [cursor=pointer]
+        - text: ·
+        - link "게임 방법" [ref=e78] [cursor=pointer]:
+          - /url: /ko/how-to-play/
+        - text: ·
+        - link "랜덤 매치" [ref=e79] [cursor=pointer]:
+          - /url: /ko/random/
+        - text: ·
+        - link "멀티플레이" [ref=e80] [cursor=pointer]:
+          - /url: /ko/multiplayer/
+        - text: ·
+        - link "Contact" [ref=e81] [cursor=pointer]:
+          - /url: mailto:contact@oshizi.com
+      - generic [ref=e82]:
+        - link "Terms" [ref=e83] [cursor=pointer]:
+          - /url: /site-policy/terms/
+        - text: ·
+        - link "Privacy" [ref=e84] [cursor=pointer]:
+          - /url: /site-policy/privacy/
+        - text: ·
+        - link "Rules" [ref=e85] [cursor=pointer]:
+          - /url: /site-policy/rules/
+  - alert [ref=e86]

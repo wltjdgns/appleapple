@@ -1,0 +1,58 @@
+- table [ref=e2]:
+  - rowgroup [ref=e3]:
+    - row "ゲーム菜園トップページ / フルーツボックス 説明 English" [ref=e4]:
+      - cell [ref=e5]
+      - cell "ゲーム菜園トップページ / フルーツボックス 説明 English" [ref=e6]:
+        - generic [ref=e7]:
+          - link "ゲーム菜園トップページ" [ref=e8] [cursor=pointer]:
+            - /url: ../../
+          - text: / フルーツボックス
+          - link "説明" [ref=e9] [cursor=pointer]:
+            - /url: guide/
+          - link "English" [ref=e10] [cursor=pointer]:
+            - /url: https://en.gamesaien.com/game/fruit_box/
+      - cell [ref=e11]
+    - row "Advertisement Advertisement" [ref=e12]:
+      - cell "Advertisement" [ref=e13]:
+        - insertion [ref=e15]:
+          - iframe [ref=e17]:
+            - generic [active] [ref=f2e1]:
+              - generic [ref=f2e3]:
+                - link:
+                  - /url: https://googleads.g.doubleclick.net/aclk?sa=l&ai=CKLmuzFkDaoftBOqgjeYPmrb32AizssmUhgGxjbH3wBXJpezp7TYQASC8v5YCYJuz6oS4KaAByPPI2AHIAQKoAwHIA8kEqgTzAU_QOHXRmeUhqOXXsH0hqrNK76efSlVM54RXXrJmqsbbNrEPvIUTSPFrqiEfinUmr7GXTcGVurUBL08runF8al5s1CiRlpNGJbJtOkjKHtp61uPcjU_9LjE3LKM-xRePAx2O_iA3x-FgttftZNQCY_aRGrJyJv_Vpqsyg-fZD-ZPS7QSjqQstEIS-UXFzd4vwZFOTQP9ACvLVVAIax8CKOd6gkHGtFdlXTxlh5fscaWhfLiQ3nFbbzU97-jB5yNvd7YsB452aAnUb3ADIUHVGrAaRVpPMleHFFSYDbDb8sAwthBGP1bvc4I1ydKRMgUCG2yvRcAEpOzh-9YEiAXeqdetTaAGAoAHoIy3pwKoB6fMsQKoB6a-G6gHzM6xAqgH89EbqAeW2BuoB6qbsQKoB47OG6gHk9gbqAfw4BuoB-6WsQKoB_6esQKoB6--sQKoB9XJG6gH2baxAqgHmgaoB_-esQKoB9-fsQKoB_jCsQKoB_vCsQLYBwHSCDEIgGEQARifAzIIioKAgICAgAg6D4BAgMCAgICAqIACqIOAEEi9_cE6WOfoyIeatJQDsQlrB34gM46y9YAKAZgLAcgLAaIMCCoGCgSW4rECqg0CS1LIDQHqDRMI5YjJh5q0lAMValDDBh0a2x2L8A0CiA4J2BMM0BUByhYCCgD4FgGAFwGyFxAYASoKOTg2Nzg2MzYxMVAGuhcCOAGqGBcJAAAAANhNA0ESCjk4Njc4NjM2MTEYAbIYCRICsWkYAiIBANAYAegYAcIZAggB&ae=1&gclid=EAIaIQobChMIh4PJh5q0lAMValDDBh0a2x2LEAEYASAAEgKoUPD_BwE&num=1&cid=CAQS5AEABaugfdFE46im7HoUwZiiqK1x9zEr4xqPqiyPCnFi_IMFbhMIXFfyybKpLOniiuCCyLVP8BJKnUwnlaXmgDjTFg9AgazHEgPM4bnN_KIAx1v1N0H0Rh977haVjphT9JMYspAg8oLFIsUpx-yWoZxHN8NfjLFJBZdMPWOEe2UbK1wvEsVnCeW1WJDdjCynw69T01xxLmspkp6jFVUc6pPeAR0lX3iHwnHGGgkwlniNw_e_-oT_HrrNw8rI8gBZJ2ZaRa-2E0efT6RIu96Gft0EEVC5e7Wi9EEGsXD9xrQvkc-UmU4YAQ&sig=AOD64_0HNd12xoNpTgUbpUTvgfl1RCDbkQ&client=ca-pub-0839959289662987&rf=2&nb=2&adurl=https://kor.wwiqtest.com/%3Futm_source%3Dgoogle%26utm_medium%3Dcpc%26utm_campaign%3D20765332702%26utm_adset%3D160783955492%26utm_term%3D%26utm_ad%3D793040990291%26gad_source%3D5%26gad_campaignid%3D20765332702%26gclid%3DEAIaIQobChMIh4PJh5q0lAMValDDBh0a2x2LEAEYASAAEgKoUPD_BwE
+                - img [ref=f2e7] [cursor=pointer]
+                - button [ref=f2e9] [cursor=pointer]:
+                  - img [ref=f2e10]
+              - iframe
+      - cell [ref=e18]:
+        - img [ref=e22]
+      - cell "Advertisement" [ref=e23]:
+        - insertion [ref=e25]:
+          - iframe [ref=e27]:
+            - generic [active] [ref=f3e1]:
+              - generic [ref=f3e3]:
+                - link:
+                  - /url: https://googleads.g.doubleclick.net/aclk?sa=l&ai=CcmP3zFkDapfhBOqgjeYP1MD3-AjdzeH6hgHtoe3ByRWxjvzCAxABILy_lgJgm7PqhLgpoAGq6ev9AsgBAqgDAcgDyQSqBOcBT9D5Mp9HxjVcOAhqrIBu5eWK1iiL0EUSo8vOVCTh71eI1aYp7ge2rOkuCWWIVD-imFgmlUKQaVdW03FdoREVfdb9DvEzOHGNRB4yBWE_VMKZIi-ocXkuCtO2GEKrisx8EJig7wO9oQCgT9JlHD7JhQvL3nD8RnUdbdnJEFHvPHPhNCNqo9_HmOM5E-nysctRwwJ8CzWa7iamZaEX5GmEG88HwbZJCvb2XWnvs4fZ4JaoaFF0Ltf41syeatrwAMEVV8awjOG2a9VTZLTP3-DU2t_9-dDIbqwTbwbnGcUaMq4i9_W4ojkIwATk9OiA_gSIBZrSk8I9oAYCgAe-lpSCAagHp8yxAqgH4tixAqgHpr4bqAfMzrECqAfz0RuoB5bYG6gHqpuxAqgHjs4bqAeT2BuoB_DgG6gH7paxAqgH_p6xAqgHr76xAqgH1ckbqAfZtrECqAeaBqgH_56xAqgH35-xAqgH-MKxAqgH-8KxAtgHAdIIMQiAYRABGJ8DMgiKgoCAgICACDoPgECAwICAgICogAKog4AQSL39wTpYyOPIh5q0lAOxCZGJBZuo0ebhgAoBmAsByAsBogwDkAEBqg0CS1LIDQHqDRMIm_vIh5q0lAMValDDBh1U4B2P8A0CiA4J2BMC0BUBmBYByhYCCgD4FgGAFwGyFxAYASoKOTg2Nzg2MzYxMVAGuhcCOAGqGBcJAAAAACDNCkESCjk4Njc4NjM2MTEYAbIYCRICsFMYAiIBANAYAegYAcIZAggB&ae=1&gclid=EAIaIQobChMIl_fIh5q0lAMValDDBh1U4B2PEAEYASAAEgK6G_D_BwE&num=1&cid=CAQS5AEABaugfVvQmWv4Z7ZxMIT-6SGcsxfX5HPkEZhilpSHm8l1lN06WTqcWf5cq4ajOjjO2URFVXoFLR7iiDsPvFPWbD53OOEzhcra0c1nPcc817IUhK4CTteLSn9wRgUwj2kOW72CuHzvxbno08pofxXvjAtflBaJW78zDG-NdQYLZ0BiWNvm19uBhHijtOWxPuSYGaYyj96Y3v7PTZWDa6zt0rGdxtEbP-l7fyqG6KfE007CRpXssg1uPlKYU8RRLf45uIOCoA3QRtpJYAAtLfkQS8vE3_2MRQZaZqTbdm2wce4-vq8YAQ&sig=AOD64_1KZka20p8B1BU97YJESH6YnwuOKw&client=ca-pub-0839959289662987&rf=2&nb=2&adurl=https://store.steampowered.com/app/985810/GrandChase/%3Futm_source%3DGoogle%26utm_medium%3DCPC_KR%26utm_campaign%3DSoleneFinal%26gad_source%3D5%26gad_campaignid%3D16513296666%26gclid%3DEAIaIQobChMIl_fIh5q0lAMValDDBh1U4B2PEAEYASAAEgK6G_D_BwE
+                - img [ref=f3e7] [cursor=pointer]
+                - button [ref=f3e9] [cursor=pointer]:
+                  - img [ref=f3e10]
+              - iframe
+    - row "画面上をマウスでドラッグして、数字の合計が10になるようにリンゴを囲むパズルゲームです。(説明) iPhone,iPadやAndroidでも動作します。 Advertisement" [ref=e28]:
+      - cell "画面上をマウスでドラッグして、数字の合計が10になるようにリンゴを囲むパズルゲームです。(説明) iPhone,iPadやAndroidでも動作します。" [ref=e29]:
+        - generic [ref=e30]:
+          - text: 画面上をマウスでドラッグして、数字の合計が10になるようにリンゴを囲むパズルゲームです。(
+          - link "説明" [ref=e31] [cursor=pointer]:
+            - /url: guide/
+          - text: )
+          - paragraph [ref=e32]: iPhone,iPadやAndroidでも動作します。
+      - cell "Advertisement" [ref=e33]:
+        - insertion [ref=e35]:
+          - iframe [ref=e37]:
+            - generic [active] [ref=f4e1]:
+              - generic [ref=f4e3]:
+                - link:
+                  - /url: https://googleads.g.doubleclick.net/aclk?sa=l&ai=CpCOfzFkDaoTnBM6SjeYP8vz2oAXXl6eEhwGIkOu4uhXa2R4QASC8v5YCYJuz6oS4KaABn-T1sQHIAQKpAiK3HsQPGQc-qAMByAPJBKoE8gFP0D2uykuGuqovcD6hYNdb38kwsHUYj98APw6RnwjCFwzzx0SFvXu2pf0HOzRwOa60UZ0rd32_tXqVgqbcpPUWRVEQDBJpMNqEf7HeuYFY0JWFwHkgtrfMCpaF3S2hjXMV-Z47HPO7lirVfgbTuGC-E7q8QBFS01N7k51iu9tNMM3qqhDCBySJayvlso7LixcKSzphPiQEuZaBQdGN26X2Nk_Zpp0ZJWg8JZLzoSIpKZAR8wW6dvBAl652o1yNwBtOHc803E_hhNfWIkArTK4R6qQJCB9QdBvCdRR_lGt-ccpX2XF0MEeW4OBikLGcBSEAKcAEwvSj3skFiAW7hKvjWKAGAoAHyZuKzgKoB6fMsQKoB-LYsQKoB6a-G6gHzM6xAqgH89EbqAeW2BuoB6qbsQKoB47OG6gHk9gbqAfw4BuoB-6WsQKoB_6esQKoB6--sQKoB9XJG6gH2baxAqgHmgaoB_-esQKoB9-fsQKoB_jCsQKoB_vCsQLYBwHSCDEIgGEQARifAzIIioKAgICAgAg6D4BAgMCAgICAqIACqIOAEEi9_cE6WNDqyIeatJQDsQlaYCJS7QI0J4AKAZgLAcgLAaIMA5ABAaoNAktSyA0B6g0TCKiByYeatJQDFU5JwwYdcr4dVPANAogOCdgTCtAVAZgWAcoWAgoA-BYBgBcBshcQGAEqCjcxMTg5MDAyNzJQBroXAjgBqhgXCQAAAACIaQBBEgo3MTE4OTAwMjcyGAGyGAkSAqdPGAIiAQDQGAHoGAHCGQIIAQ&ae=1&gclid=EAIaIQobChMIhP3Ih5q0lAMVTknDBh1yvh1UEAEYASAAEgIzovD_BwE&num=1&cid=CAQShwIABaugff-QE6h7iCSBznVcGqXbcnWz5Pu8ecE6YuY1h55FnlyLmtt4vjRTcFQFSYl1lB1gVT4CXXzyaITpTFnLwiZSJhEaZyRtyAaJ2QoSGGVtrVNXZjjvXJG91l745Rl4EbTt6LAiCLuSigtEX4xSc_4Qqg72fqlwp8ba34mX88swOBY8JBxPhfFoEnhdDPuH6IC1j0VjmD9eMJfKMAdr0ZQiDQIVe630WFTGICGu2teNE1xCIZ579FkWLywNCmvKgtYqjeGX2pa3_qgA31_UXfBWc-TCLVFUVpaYbL7rXaREwLptFv9e81zbsoL8MY9EYQqveZNLsVci_-5Cy2hE8wCKlGMrPRgB&sig=AOD64_3YVIxHDJbfL63WjuemTIKCPc3Tyg&client=ca-pub-0839959289662987&rf=2&nb=2&adurl=https://www.hanatour.com/promotion/plan/PM00697A175D%3Futm_source%3Dgoogle%26utm_medium%3Ddisplay%26utm_campaign%3Daqu_26y_mkt_performance_fit_areaz_aquex_da_pm00697a175d_aa%26utm_content%3Daqu_26y_mkt_performance_pm00697a175d_aa_x_googdn_freeallin_nhaair_tr_med_x_pc%26pid%3Dgoogleadwords_int%26c%3Daqu_26y_mkt_performance_fit_areaz_aquex_da_pm00697a175d_aa%26af_channel%3Ddisplay%26af_adset%3Daqu_26y_mkt_performance_%26af_ad%3Dpm00697a175d_aa_x_googdn_freeallin_nhaair_tr_med_x%26af_ad_type%3Ddisplay%26gad_source%3D5%26gad_campaignid%3D23830643259%26gclid%3DEAIaIQobChMIhP3Ih5q0lAMVTknDBh1yvh1UEAEYASAAEgIzovD_BwE
+                - img [ref=f4e7] [cursor=pointer]
+                - button [ref=f4e9] [cursor=pointer]:
+                  - img [ref=f4e10]
+              - iframe

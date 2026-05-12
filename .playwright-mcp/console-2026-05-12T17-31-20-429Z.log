@@ -1,0 +1,3 @@
+[    3205ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://cksync.yahoo.co.jp/sspsync?ptr=12703&google_gid=CAESEM-CWVyJY908Tb7STtKCyHM&google_cver=1&google_push=AXcoOmSkoZNjSflcnRMzCwvEDQbZESc0EEsHd9_hrl-iD645MOeCjjeYT8xR9hgvzIvHeE3vNIjV9hoy4pyOEY10la5RpPwUs2rbnStOkkoKMZGZ58IkmBJTE20oh2-qHxGRK1xLifmr6o6uxXF8xzpupHy5jc0:0
+[    3347ms] [ERROR] Attestation check for Shared Storage on https://www.googleadservices.com failed. @ https://www.googleadservices.com/pagead/managed/js/activeview/current/reach_worklet.html:0
+[  359225ms] [ERROR] Attestation check for Shared Storage on https://www.googleadservices.com failed. @ https://www.googleadservices.com/pagead/managed/js/activeview/current/reach_worklet.html:0

@@ -1,0 +1,579 @@
+- generic [ref=e1]:
+  - generic: "0123456789"
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - link "사과게임 플러스" [ref=e4] [cursor=pointer]:
+        - /url: /ko/
+        - img [ref=e5]
+      - generic [ref=e12]:
+        - button "Game Settings" [ref=e14] [cursor=pointer]:
+          - img [ref=e15]
+        - button "음소거" [ref=e19] [cursor=pointer]:
+          - img [ref=e20]
+        - button "Language" [ref=e23] [cursor=pointer]:
+          - generic [ref=e24]: 한
+        - button "Dark mode" [ref=e25] [cursor=pointer]:
+          - img [ref=e26]
+    - article [ref=e28]:
+      - heading "원본 사과게임과의 난이도 차이" [level=1] [ref=e29]
+      - paragraph [ref=e30]:
+        - emphasis [ref=e31]: "발행일: 2026-03-13"
+      - generic [ref=e32]:
+        - heading "요약" [level=3] [ref=e33]
+        - paragraph [ref=e34]: 원본 사과게임(フルーツボックス)에서 보드 500개를 스크린샷과 OCR로 추출한 뒤, 생성 알고리즘이 어떻게 돌아가는지 통계적으로 분석해봤다. 총 85,000개의 숫자를 확인한 결과, 각각의 칸은 1~9 사이에서 독립적으로 균등하게 뽑히고, 위치 편향이나 인접 칸 상관, 특정 숫자 쏠림 같은 패턴은 보이지 않았다. 또한 한 보드의 모든 숫자 전체합은 보드마다 달랐으며, 모두 10의 배수임을 확인할 수 있었다. 이를 통해 우리는 우리가 오마주한 원본 사과게임이 Rejection Sampling으로 보드를 생성한다고 추정했고, 이를 구현해서 생성한 보드는 KS 검정 결과 원본 데이터와 유의미한 차이가 없었다 (p=0.65).
+        - paragraph [ref=e35]:
+          - strong [ref=e36]: 한줄 요약
+          - text: 우리 사과게임의
+          - strong [ref=e37]: 난이도는 원본 사과게임과 같다
+          - text: .
+      - heading "1. 서론" [level=2] [ref=e40]
+      - paragraph [ref=e41]: 사과게임(フルーツボックス)은 17×10 격자에 1~9 숫자가 깔리고, 합이 10이 되는 직사각형 영역을 골라 지우는 퍼즐 게임이다. 간단하지만 중독성 있는 이 게임을 수 백 판씩 하다 보면, 이 게임의 난이도는 매 판 달라지며 보드의 숫자 분포에 따라 결정된다는 것을 알게 된다. 주로 큰 숫자가 많을수록 어려울 확률이 높고, 어떤 경우는 최적에 가까운 풀이법으로도 매우 낮은 점수밖에 얻지 못한다.
+      - paragraph [ref=e42]: 극단적으로 생각해보면 이렇다.
+      - list [ref=e43]:
+        - listitem [ref=e44]:
+          - text: 170칸이 전부
+          - strong [ref=e45]: "9"
+          - text: 라면 총합은 1,530이지만, 어떤 조합으로도 합 10을 만들 수 없어서 점수는
+          - strong [ref=e46]: 0점
+        - listitem [ref=e47]:
+          - text: 반대로 전부
+          - strong [ref=e48]: "1"
+          - text: 이라면 총합은 170이고, 아무 10칸만 골라도 합이 10이 되니 거의
+          - strong [ref=e49]: 만점
+          - text: 에 가까운 판
+      - paragraph [ref=e50]: 실제 보드는 물론 이 둘 사이 어딘가에 있다. 그래도 큰 숫자(7, 8, 9)가 많으면 확실히 빡빡하고, 낮은 숫자가 많으면 상대적으로 조합을 만들기가 쉬워진다. 일정 수준 이상의 플레이어라면 제한시간이 끝난 시점에 '보이는' 숫자쌍은 거의 찾게 되므로, 보드의 숫자가 얼마나 잘 나오는지가 점수를 결정하는데 큰 역할을 한다.
+      - paragraph [ref=e51]: 파생 게임 중에는 이걸 "불공평하다"고 보고 숫자 분포를 일부러 조정하는 경우도 있다. 하지만 나는 오히려 이 운 요소가 원작의 핵심 재미라고 생각한다. 매 판 난이도가 조금씩 다르기 때문에 긴장감이 생기고, 난이도에 따라 전략도 다양해진다. 특히나 대결을 하는 경우에 이러한 보드 운 요소가 큰 재미 요소가 되는데, 누군가는 좋은 보드에서 최고의 득점을 내고, 누군가는 좋지 않은 보드에서 최대한의 점수를 내기 때문에 승부가 더 예측불가능해지고 흥미진진해진다.
+      - paragraph [ref=e52]: 다만 원본의 게임으로는 같은 보드로 게임하는 것이 불가능하고, 때문에 N판의 평균을 가지고 대결을 한다던가 하는 방식으로 대결할 수밖에 없었다. N이 충분히 크지 않기 때문에 가끔은 불쾌할 정도로 운의 요소가 너무 커질 때가 있었고, 그래서 같은 보드로 함께 플레이할 수 있는 이 게임을 만들게 되었다. 원본처럼 보드의 난이도가 매 판 바뀌는 점은 유지하면서도, 같은 보드로 플레이하므로 '보드의 난이도를 고려한 전략' 또한 게임의 일부가 되도록 하고 싶었다.
+      - paragraph [ref=e53]: 따라서 "원본과 최대한 같은 난이도 분포를 재현하는 것"은 중요했다. 더 어렵지도 쉽지도 않게. 그래서 원본 게임에서 500개의 보드를 모아서 어떤 방식으로 생성되는지 분석해봤다.
+      - heading "2. 방법" [level=2] [ref=e54]
+      - heading "2.1 보드 수집" [level=3] [ref=e55]
+      - paragraph [ref=e56]: Playwright(headless Chromium, 2× 해상도)를 써서 원본 사이트 플레이를 자동화했다.
+      - paragraph [ref=e57]: 접속 → Play → 스크린샷 → 새로고침
+      - paragraph [ref=e58]: 이 과정을 500번 반복해서 보드 이미지를 모았다.
+      - heading "2.2 OCR 파이프라인" [level=3] [ref=e59]
+      - paragraph [ref=e60]: 스크린샷에서 숫자를 읽는 과정은 다음 순서로 진행했다.
+      - paragraph [ref=e61]:
+        - strong [ref=e62]: 1. 녹색 테두리 감지
+        - text: "- HSV 임계값으로 게임 프레임을 찾는다."
+      - figure "Figure 1. 녹색 테두리 감지 결과" [ref=e63]:
+        - img "녹색 테두리 감지 결과 - HSV 임계값으로 게임 프레임 영역을 찾은 이미지" [ref=e64]
+        - generic [ref=e65]: Figure 1. 녹색 테두리 감지 결과
+      - paragraph [ref=e66]:
+        - strong [ref=e67]: 2. 사과 영역 crop
+        - text: "- 빨간색 HSV 마스크를 이용해 사과 영역만 잘라낸다."
+      - figure "Figure 2. 사과 영역만 crop한 결과" [ref=e68]:
+        - img "사과 영역만 crop한 결과 - 빨간색 마스크로 사과 영역을 분리한 이미지" [ref=e69]
+        - generic [ref=e70]: Figure 2. 사과 영역만 crop한 결과
+      - paragraph [ref=e71]:
+        - strong [ref=e72]: 3. 격자 정렬
+        - text: "- centroid와 1D 클러스터링으로 10행 × 17열 격자를 맞춘다."
+      - 'figure "Figure 3. 격자 정렬 (노란선: 행/열 중심, 초록점: 각 칸 중심)" [ref=e73]':
+        - img "격자 정렬 결과 - 노란선으로 행/열 중심, 초록점으로 각 칸 중심을 표시한 이미지" [ref=e74]
+        - generic [ref=e75]: "Figure 3. 격자 정렬 (노란선: 행/열 중심, 초록점: 각 칸 중심)"
+      - paragraph [ref=e76]:
+        - strong [ref=e77]: 4. 칸별 OCR
+        - text: "- 각 60×60 px 칸을 전처리한 뒤 Tesseract로 숫자를 읽는다."
+      - paragraph [ref=e78]: "사용한 전처리:"
+      - list [ref=e79]:
+        - listitem [ref=e80]: Margin crop (상 17, 하 10, 좌우 19 px)
+        - listitem [ref=e81]: Grayscale → threshold 200 → invert
+        - listitem [ref=e82]: Pad 15px → resize 128×128 → threshold 128
+        - listitem [ref=e83]:
+          - text: Tesseract
+          - code [ref=e84]: "--psm 6 --oem 1 -c tessedit_char_whitelist=123456789"
+      - figure "Figure 4. 칸별 OCR 전처리 예시" [ref=e85]:
+        - img "3개 셀(0,0), (4,8), (9,16)에 대한 OCR 전처리 파이프라인 비교 (60×60 cell → Crop → Gray → Thresh → Invert → Final → 인식 결과)" [ref=e86]
+        - generic [ref=e87]: Figure 4. 칸별 OCR 전처리 예시
+      - heading "2.3 데이터 무결성 검증" [level=3] [ref=e88]
+      - heading "2.3.1 체크섬 검증" [level=3] [ref=e89]
+      - paragraph [ref=e90]:
+        - text: 각 보드는 170개 숫자(
+        - generic [ref=e91]:
+          - math [ref=e93]:
+            - generic [ref=e95]:
+              - generic [ref=e96]:
+                - generic [ref=e97]: d
+                - generic [ref=e98]: i
+              - generic [ref=e99]: ∈
+              - generic [ref=e100]: "{"
+              - generic [ref=e101]: "1"
+              - generic [ref=e102]: ","
+              - generic [ref=e103]: …
+              - generic [ref=e104]: ","
+              - generic [ref=e105]: "9"
+              - generic [ref=e106]: "}"
+          - generic [ref=e107]:
+            - generic [ref=e108]:
+              - generic [ref=e109]:
+                - text: d
+                - generic [ref=e114]: i
+              - text: ∈
+            - generic [ref=e118]: "{1, … , 9}"
+        - text: )로 구성되고, 게임 규칙상 합이 10의 배수여야 한다.
+      - paragraph [ref=e119]:
+        - generic [ref=e120]:
+          - math [ref=e122]:
+            - generic [ref=e124]:
+              - generic [ref=e125]:
+                - generic [ref=e126]: ∑
+                - generic [ref=e127]:
+                  - generic [ref=e128]: i
+                  - generic [ref=e129]: =
+                  - generic [ref=e130]: "1"
+                - generic [ref=e131]: "170"
+              - generic [ref=e132]:
+                - generic [ref=e133]: d
+                - generic [ref=e134]: i
+              - generic [ref=e135]: ≡
+              - generic [ref=e136]: "0"
+              - generic [ref=e137]: (
+              - generic [ref=e138]:
+                - generic [ref=e139]: m
+                - generic [ref=e140]: o
+                - generic [ref=e141]: d
+              - generic [ref=e142]: "10"
+              - generic [ref=e143]: )
+          - generic [ref=e144]:
+            - generic [ref=e145]:
+              - generic [ref=e146]:
+                - text: ∑
+                - generic [ref=e150]:
+                  - generic [ref=e152]: i=1
+                  - generic [ref=e154]: "170"
+              - generic [ref=e158]:
+                - text: d
+                - generic [ref=e163]: i
+              - text: ≡
+            - generic [ref=e167]: "0"
+            - generic [ref=e168]:
+              - text: (
+              - generic [ref=e170]: mod
+              - text: 10)
+      - paragraph [ref=e171]: 즉, OCR이 틀렸다면 이 조건을 깨뜨릴 가능성이 높다. 오류가 무작위 치환이라고 보면, 틀렸는데도 우연히 체크섬을 통과할 확률은 대략 1/10 정도다.
+      - paragraph [ref=e172]:
+        - generic [ref=e173]:
+          - math [ref=e175]:
+            - generic [ref=e177]:
+              - generic [ref=e178]:
+                - generic [ref=e179]: P
+                - generic [ref=e180]: false_pass
+              - generic [ref=e181]: ≈
+              - generic [ref=e182]:
+                - generic [ref=e183]: "1"
+                - generic [ref=e184]: "10"
+          - generic [ref=e185]:
+            - generic [ref=e186]:
+              - generic [ref=e187]:
+                - text: P
+                - generic [ref=e194]: false_pass
+              - text: ≈
+            - generic [ref=e203]:
+              - generic [ref=e205]: "10"
+              - generic [ref=e208]: "1"
+      - paragraph [ref=e212]: 결과적으로 500개 보드 전부 체크섬 통과.
+      - generic [ref=e213]:
+        - generic [ref=e214]:
+          - generic [ref=e215]: 체크섬 통과
+          - generic [ref=e216]: 500 / 500
+        - generic [ref=e217]:
+          - generic [ref=e219]:
+            - math [ref=e221]:
+              - generic [ref=e223]:
+                - generic [ref=e224]: ∑
+                - generic [ref=e225]:
+                  - generic [ref=e226]: d
+                  - generic [ref=e227]: i
+                - generic [ref=e228]:
+                  - generic [ref=e229]: m
+                  - generic [ref=e230]: o
+                  - generic [ref=e231]: d
+                - generic [ref=e232]: "10"
+                - generic [ref=e233]: =
+                - generic [ref=e234]: "0"
+            - generic [ref=e235]:
+              - generic [ref=e236]:
+                - text: ∑
+                - generic [ref=e237]:
+                  - text: d
+                  - generic [ref=e242]: i
+              - generic [ref=e246]:
+                - generic [ref=e248]: mod
+                - text: 10 =
+              - generic [ref=e249]: "0"
+          - generic [ref=e250]: 100%
+      - heading "2.3.2 수동 검증" [level=3] [ref=e251]
+      - paragraph [ref=e252]: 여러 오류가 서로 상쇄되어 체크섬을 우연히 통과하는 경우를 잡기 위해, 전체의 5%인 25개 보드를 직접 스크린샷과 대조해봤다. 눈으로 검사한 숫자는 총 4,250자리(170 × 25)였고, 오류는 0건이었다.
+      - paragraph [ref=e253]:
+        - generic [ref=e254]:
+          - math [ref=e256]:
+            - generic [ref=e259]: "n"
+          - generic [ref=e261]: "n"
+        - text: 번 검사에서 오류가 하나도 안 나왔을 때, 오류율
+        - generic [ref=e262]:
+          - math [ref=e264]:
+            - generic [ref=e267]: p
+          - generic [ref=e269]: p
+        - text: 의 95% 신뢰 상한은 Rule of Three로 다음처럼 잡을 수 있다.
+      - paragraph [ref=e270]:
+        - generic [ref=e271]:
+          - math [ref=e273]:
+            - generic [ref=e275]:
+              - generic [ref=e276]: p
+              - generic [ref=e277]: ≤
+              - generic [ref=e278]:
+                - generic [ref=e279]: "3"
+                - generic [ref=e280]: "n"
+              - generic [ref=e281]: =
+              - generic [ref=e282]:
+                - generic [ref=e283]: "3"
+                - generic [ref=e284]: "25"
+              - generic [ref=e285]: =
+              - generic [ref=e286]: "0.12"
+              - generic [ref=e287]: (
+              - generic [ref=e288]: "12"
+              - generic [ref=e289]: "%"
+              - generic [ref=e290]: )
+          - generic [ref=e291]:
+            - generic [ref=e292]: p ≤
+            - generic [ref=e293]:
+              - generic [ref=e298]:
+                - generic [ref=e300]: "n"
+                - generic [ref=e303]: "3"
+              - text: =
+            - generic [ref=e307]:
+              - generic [ref=e312]:
+                - generic [ref=e314]: "25"
+                - generic [ref=e317]: "3"
+              - text: =
+            - generic [ref=e321]: 0.12 (12%)
+      - heading "2.3.3 종합 신뢰도" [level=3] [ref=e322]
+      - paragraph [ref=e323]: 두 검증 방법은 독립적이고, 따라서 미검출 오류의 결합 확률은 다음과 같다.
+      - paragraph [ref=e324]:
+        - generic [ref=e325]:
+          - math [ref=e327]:
+            - generic [ref=e329]:
+              - generic [ref=e330]:
+                - generic [ref=e331]: P
+                - generic [ref=e332]: undetected
+              - generic [ref=e333]: =
+              - generic [ref=e334]: p
+              - generic [ref=e335]: ×
+              - generic [ref=e336]:
+                - generic [ref=e337]: P
+                - generic [ref=e338]: false_pass
+              - generic [ref=e339]: ≈
+              - generic [ref=e340]: "0.12"
+              - generic [ref=e341]: ×
+              - generic [ref=e342]: "0.1"
+          - generic [ref=e343]:
+            - generic [ref=e344]:
+              - generic [ref=e345]:
+                - text: P
+                - generic [ref=e352]: undetected
+              - text: =
+            - generic [ref=e356]: p ×
+            - generic [ref=e357]:
+              - generic [ref=e358]:
+                - text: P
+                - generic [ref=e365]: false_pass
+              - text: ≈
+            - generic [ref=e369]: 0.12 ×
+            - generic [ref=e370]: "0.1"
+      - paragraph [ref=e371]:
+        - generic [ref=e372]:
+          - math [ref=e374]:
+            - generic [ref=e376]:
+              - generic [ref=e377]: =
+              - generic [ref=e378]: "0.012"
+              - generic [ref=e379]: (
+              - generic [ref=e380]: "1.2"
+              - generic [ref=e381]: "%"
+              - generic [ref=e382]: )
+          - generic [ref=e383]:
+            - generic [ref=e384]: =
+            - generic [ref=e385]: 0.012 (1.2%)
+      - paragraph [ref=e386]:
+        - text: 즉, 데이터셋의 통계적 신뢰도는
+        - strong [ref=e387]: 98.8%
+        - text: 로, OCR 처리가 잘 되었다고 볼 수 있다.
+      - heading "3. 실제로 어떤 패턴이 보였나" [level=2] [ref=e388]
+      - heading "3.1 숫자 빈도는 거의 완벽하게 균등했다" [level=3] [ref=e389]
+      - paragraph [ref=e390]: 500판, 총 85,000개 숫자를 세어보니 1~9는 거의 똑같은 비율로 나왔다.
+      - table [ref=e391]:
+        - rowgroup [ref=e392]:
+          - row "숫자 1 2 3 4 5 6 7 8 9" [ref=e393]:
+            - columnheader "숫자" [ref=e394]
+            - columnheader "1" [ref=e395]
+            - columnheader "2" [ref=e396]
+            - columnheader "3" [ref=e397]
+            - columnheader "4" [ref=e398]
+            - columnheader "5" [ref=e399]
+            - columnheader "6" [ref=e400]
+            - columnheader "7" [ref=e401]
+            - columnheader "8" [ref=e402]
+            - columnheader "9" [ref=e403]
+        - rowgroup [ref=e404]:
+          - row "횟수 9,479 9,381 9,373 9,422 9,371 9,562 9,512 9,319 9,581" [ref=e405]:
+            - cell "횟수" [ref=e406]:
+              - strong [ref=e407]: 횟수
+            - cell "9,479" [ref=e408]
+            - cell "9,381" [ref=e409]
+            - cell "9,373" [ref=e410]
+            - cell "9,422" [ref=e411]
+            - cell "9,371" [ref=e412]
+            - cell "9,562" [ref=e413]
+            - cell "9,512" [ref=e414]
+            - cell "9,319" [ref=e415]
+            - cell "9,581" [ref=e416]
+          - row "% 11.15 11.04 11.03 11.08 11.02 11.25 11.19 10.96 11.27" [ref=e417]:
+            - cell "%" [ref=e418]:
+              - strong [ref=e419]: "%"
+            - cell "11.15" [ref=e420]
+            - cell "11.04" [ref=e421]
+            - cell "11.03" [ref=e422]
+            - cell "11.08" [ref=e423]
+            - cell "11.02" [ref=e424]
+            - cell "11.25" [ref=e425]
+            - cell "11.19" [ref=e426]
+            - cell "10.96" [ref=e427]
+            - cell "11.27" [ref=e428]
+          - row "균등분포 11.11 11.11 11.11 11.11 11.11 11.11 11.11 11.11 11.11" [ref=e429]:
+            - cell "균등분포" [ref=e430]:
+              - strong [ref=e431]: 균등분포
+            - cell "11.11" [ref=e432]
+            - cell "11.11" [ref=e433]
+            - cell "11.11" [ref=e434]
+            - cell "11.11" [ref=e435]
+            - cell "11.11" [ref=e436]
+            - cell "11.11" [ref=e437]
+            - cell "11.11" [ref=e438]
+            - cell "11.11" [ref=e439]
+            - cell "11.11" [ref=e440]
+      - paragraph [ref=e441]: 카이제곱 검정 결과도 χ² = 7.30, p = 0.504로 나왔다. 즉, "각 숫자가 같은 확률로 나온다"는 가설을 전혀 기각할 수 없었다.
+      - paragraph [ref=e442]: 이건 꽤 중요하다. 적어도 전체 숫자 분포를 일부러 조정하는 흔적은 보이지 않는다는 뜻이기 때문이다.
+      - figure "Figure 5. 숫자별 출현 빈도" [ref=e443]:
+        - img "숫자 1~9의 출현 빈도를 나타낸 막대그래프"
+        - generic [ref=e444]: Figure 5. 숫자별 출현 빈도
+      - heading "3.2 보드 총합도 이론값과 잘 맞았다" [level=3] [ref=e445]
+      - paragraph [ref=e446]: 만약 170칸을 1~9 균등분포에서 독립적으로 뽑는다면, 보드 총합의 이론적 평균은 850이고 표준편차는 약 33.7이다.
+      - paragraph [ref=e447]: 실제 관측값은 평균 851.3, 표준편차 34.8이었다.
+      - paragraph [ref=e448]: 이 정도면 사실상 이론과 거의 같은 수준이다. 즉, 총합 분포만 봐도 "기본적으로는 균등 난수 170개를 뽑고 있다"는 해석과 잘 맞는다.
+      - figure "Figure 6. 보드 총합 분포" [ref=e449]:
+        - img "보드 총합의 히스토그램 분포"
+        - generic [ref=e450]: Figure 6. 보드 총합 분포
+      - heading "3.3 특정 위치에 특정 숫자가 몰리지는 않았다" [level=3] [ref=e451]
+      - paragraph [ref=e452]: 혹시 어떤 위치에는 큰 숫자가 더 자주 나온다거나, 가장자리와 중앙이 다르다거나 하는 규칙이 있을 수도 있다. 그래서 칸별 평균값을 확인해봤다.
+      - paragraph [ref=e453]: 결과는 아주 단순했다. 500판 평균 기준으로 모든 칸이 거의 5.0 근처에 모였고, 행 평균은 [4.97, 5.04], 열 평균은 [4.92, 5.07] 범위였다.
+      - figure "Figure 7. 칸별 평균 숫자 히트맵" [ref=e454]:
+        - img "10x17 격자의 칸별 평균 숫자를 나타낸 히트맵"
+        - generic [ref=e455]: Figure 7. 칸별 평균 숫자 히트맵
+      - figure "Figure 8. 행/열별 평균 숫자" [ref=e456]:
+        - img "행별, 열별 평균 숫자를 나타낸 그래프"
+        - generic [ref=e457]: Figure 8. 행/열별 평균 숫자
+      - paragraph [ref=e458]: 즉, 위치별 편향은 보이지 않았다. 적어도 "윗줄은 쉽게 나오게 한다", "가운데에 큰 수를 더 깐다" 같은 구조는 없는 셈이다.
+      - heading "3.4 전체는 균등하지만, 개별 판은 꽤 들쭉날쭉하다" [level=3] [ref=e459]
+      - paragraph [ref=e460]: 여기서 재미있는 건, 전체적으로는 완전히 균등해 보여도 개별 보드 단위로 보면 꽤 불균형한 판이 많이 나온다는 점이다. 어떤 판은 9가 유난히 많고, 어떤 판은 1이나 2가 상대적으로 많이 나온다. 플레이할 때 느끼는 "이번 판 왜 이렇게 어렵냐"가 실제로 데이터에서도 보인다는 뜻이다.
+      - paragraph [ref=e461]: 이걸 수치로 보기 위해 각 보드의 숫자 구성과 기대값(각 숫자당 18.89개)을 비교해 카이제곱 값을 계산했다. 독립 균등분포라면 이 값은 χ²(df = 8)을 따라야 한다.
+      - table [ref=e462]:
+        - rowgroup [ref=e463]:
+          - row "Observed (500) Rejection Sampling (10,000 sim) χ² (df=8) Theory" [ref=e464]:
+            - columnheader [ref=e465]
+            - columnheader "Observed (500)" [ref=e466]
+            - columnheader "Rejection Sampling (10,000 sim)" [ref=e467]
+            - columnheader "χ² (df=8) Theory" [ref=e468]
+        - rowgroup [ref=e469]:
+          - row "Mean 8.22 7.99 8.00" [ref=e470]:
+            - cell "Mean" [ref=e471]
+            - cell "8.22" [ref=e472]
+            - cell "7.99" [ref=e473]
+            - cell "8.00" [ref=e474]
+          - row "Median 7.46 7.35 6.34" [ref=e475]:
+            - cell "Median" [ref=e476]
+            - cell "7.46" [ref=e477]
+            - cell "7.35" [ref=e478]
+            - cell "6.34" [ref=e479]
+          - row "StdDev 4.17 3.94 4.00" [ref=e480]:
+            - cell "StdDev" [ref=e481]
+            - cell "4.17" [ref=e482]
+            - cell "3.94" [ref=e483]
+            - cell "4.00" [ref=e484]
+      - paragraph [ref=e485]: 관측값은 이론값과 꽤 잘 맞았고, 시뮬레이션 결과와도 거의 겹쳤다. 즉, "개별 판이 들쭉날쭉한 것" 자체가 오히려 자연스러운 현상이다. 누군가 의도적으로 난이도를 조정한 흔적이 아니라, 원래 무작위 생성이면 당연히 나와야 하는 변동성에 가깝다.
+      - figure "Figure 9. 게임별 카이제곱 분포 (관측 vs 시뮬레이션 vs 이론)" [ref=e486]:
+        - img "게임별 카이제곱 값의 분포를 관측, 시뮬레이션, 이론으로 비교한 그래프"
+        - generic [ref=e487]: Figure 9. 게임별 카이제곱 분포 (관측 vs 시뮬레이션 vs 이론)
+      - paragraph [ref=e488]: "Q-Q 플롯으로도 확인할 수 있다:"
+      - 'figure "Figure 10. Q-Q 플롯: 게임별 χ² vs 이론적 χ²(8)" [ref=e489]':
+        - img "게임별 카이제곱 값과 이론적 χ²(8) 분포를 비교한 Q-Q 플롯"
+        - generic [ref=e490]: "Figure 10. Q-Q 플롯: 게임별 χ² vs 이론적 χ²(8)"
+      - heading "최대 편차와 부족/과잉 패턴" [level=3] [ref=e491]
+      - paragraph [ref=e492]: "각 보드에서 기대값에서 가장 많이 벗어난 숫자의 편차를 봐도 시뮬레이션과 잘 맞았다:"
+      - figure "Figure 11. 게임별 최대 편차 분포" [ref=e493]:
+        - img "게임별 최대 편차의 히스토그램 분포"
+        - generic [ref=e494]: Figure 11. 게임별 최대 편차 분포
+      - paragraph [ref=e495]: "\"가장 많이 나온 숫자\"나 \"가장 적게 나온 숫자\"를 세어봤을 때도 특정 숫자에 쏠림은 없었다:"
+      - figure "Figure 12. 게임별 부족/과잉 숫자 패턴" [ref=e496]:
+        - img "게임별 부족 및 과잉 숫자의 패턴 분석 그래프"
+        - generic [ref=e497]: Figure 12. 게임별 부족/과잉 숫자 패턴
+      - paragraph [ref=e498]: 쉽게 말해, 어떤 숫자가 자주 과잉되거나 자주 부족해지는 구조는 없었다.
+      - heading "3.5 인접 칸끼리도 사실상 독립이었다" [level=3] [ref=e499]
+      - paragraph [ref=e500]: 혹시 숫자가 완전히 독립이 아니라, 옆칸과 어느 정도 연관되어 있을 수도 있다. 예를 들어 비슷한 숫자끼리 뭉친다든가, 작은 수 다음엔 큰 수가 나온다든가 하는 식이다.
+      - paragraph [ref=e501]: 그래서 인접 칸 상관을 계산해봤다.
+      - table [ref=e502]:
+        - rowgroup [ref=e503]:
+          - row "방향 n Pearson r p-value" [ref=e504]:
+            - columnheader "방향" [ref=e505]
+            - columnheader "n" [ref=e506]
+            - columnheader "Pearson r" [ref=e507]
+            - columnheader "p-value" [ref=e508]
+        - rowgroup [ref=e509]:
+          - row "가로 80,000 0.0007 0.853" [ref=e510]:
+            - cell "가로" [ref=e511]
+            - cell "80,000" [ref=e512]
+            - cell "0.0007" [ref=e513]
+            - cell "0.853" [ref=e514]
+          - row "세로 76,500 -0.0012 0.730" [ref=e515]:
+            - cell "세로" [ref=e516]
+            - cell "76,500" [ref=e517]
+            - cell "-0.0012" [ref=e518]
+            - cell "0.730" [ref=e519]
+      - paragraph [ref=e520]: 결과는 둘 다 거의 0이었다.
+      - paragraph [ref=e521]: "전이 행렬(숫자 i 다음에 j가 나올 확률)도 기대값 11.1%에서 ±0.5%p 안쪽이었고:"
+      - figure "Figure 13. 수평 전이 확률 편차 행렬" [ref=e522]:
+        - img "수평 방향 숫자 전이 확률의 편차를 나타낸 행렬 히트맵"
+        - generic [ref=e523]: Figure 13. 수평 전이 확률 편차 행렬
+      - paragraph [ref=e524]: "자기상관도 전 시차에서 95% 신뢰구간 안에 들어왔다:"
+      - figure "Figure 14. 자기상관 함수" [ref=e525]:
+        - img "숫자 시퀀스의 자기상관 함수 그래프"
+        - generic [ref=e526]: Figure 14. 자기상관 함수
+      - paragraph [ref=e527]: 즉, 숫자들은 이웃한 칸과도 특별한 관계 없이 깔린다고 보는 편이 맞다.
+      - heading "4. 그래서 생성 알고리즘은 뭘까" [level=2] [ref=e528]
+      - paragraph [ref=e529]: 지금까지 나온 결과를 정리하면 이렇다.
+      - list [ref=e530]:
+        - listitem [ref=e531]: 각 칸의 숫자는 1~9 사이에서 균등하게 나온다
+        - listitem [ref=e532]: 칸들 사이에 특별한 상관은 없다
+        - listitem [ref=e533]: 위치 편향도 없다
+        - listitem [ref=e534]: 다만 전체 합은 반드시 10의 배수여야 한다
+      - paragraph [ref=e535]:
+        - text: 이 조건을 가장 단순하게 만족하는 방법은 사실 하나다. 바로
+        - strong [ref=e536]: rejection sampling
+        - text: 이다.
+      - paragraph [ref=e537]: 즉,
+      - list [ref=e538]:
+        - listitem [ref=e539]: 일단 170칸에 숫자를 전부 랜덤으로 채운다
+        - listitem [ref=e540]: 합을 계산한다
+        - listitem [ref=e541]: 합이 10의 배수면 채택한다
+        - listitem [ref=e542]: 아니면 버리고 처음부터 다시 만든다
+      - paragraph [ref=e543]: 의사코드로 쓰면 이런 느낌이다.
+      - figure [ref=e544]:
+        - code [ref=e546]:
+          - generic [ref=e547]: FUNCTION GenerateBoard(rows, cols)
+          - generic [ref=e548]: REPEAT
+          - generic [ref=e549]: board ← EMPTY 2D ARRAY [rows × cols]
+          - generic [ref=e550]: FOR r ← 0 TO rows - 1 DO
+          - generic [ref=e551]: FOR c ← 0 TO cols - 1 DO
+          - generic [ref=e552]: board[r][c] ← RANDOM INTEGER IN [1, 9]
+          - generic [ref=e553]: END FOR
+          - generic [ref=e554]: END FOR
+          - generic [ref=e555]: s ← SUM OF ALL ELEMENTS IN board
+          - generic [ref=e556]: UNTIL s MOD 10 = 0
+          - generic [ref=e557]: RETURN board
+          - generic [ref=e558]: END FUNCTION
+      - heading "5. 정말 이 모델이 원본과 맞나" [level=2] [ref=e559]
+      - paragraph [ref=e560]: Rejection sampling 방식으로 보드를 10,000판 시뮬레이션해서 실제 데이터와 비교해봤다.
+      - paragraph [ref=e561]: 보드별 카이제곱 분포를 KS 검정으로 비교한 결과는 다음과 같았다.
+      - table [ref=e562]:
+        - rowgroup [ref=e563]:
+          - row "Test D statistic p-value Result" [ref=e564]:
+            - columnheader "Test" [ref=e565]
+            - columnheader "D statistic" [ref=e566]
+            - columnheader "p-value" [ref=e567]
+            - columnheader "Result" [ref=e568]
+        - rowgroup [ref=e569]:
+          - row "Observed vs Rejection Sampling 0.0335 0.65 No difference" [ref=e570]:
+            - cell "Observed vs Rejection Sampling" [ref=e571]
+            - cell "0.0335" [ref=e572]
+            - cell "0.65" [ref=e573]
+            - cell "No difference" [ref=e574]
+      - paragraph [ref=e575]: p-value가 0.65이면, 적어도 이 데이터 기준에서는 두 분포가 다르다고 볼 근거가 없다. 즉, 실제 원본 보드와 이 모델이 아주 잘 맞는다는 뜻이다.
+      - heading "6. 직접 구현해보면" [level=2] [ref=e576]
+      - paragraph [ref=e577]: 실제로는 아래 같은 코드로 바로 구현할 수 있다.
+      - figure [ref=e578]:
+        - code [ref=e580]:
+          - generic [ref=e581]: // TypeScript
+          - generic [ref=e582]: "function generateBoard(): number[][] {"
+          - generic [ref=e583]: const ROWS = 10, COLS = 17;
+          - generic [ref=e585]: "while (true) {"
+          - generic [ref=e586]: "const board: number[][] = [];"
+          - generic [ref=e587]: let sum = 0;
+          - generic [ref=e589]: "for (let r = 0; r < ROWS; r++) {"
+          - generic [ref=e590]: board[r] = [];
+          - generic [ref=e591]: "for (let c = 0; c < COLS; c++) {"
+          - generic [ref=e592]: board[r][c] = Math.floor(Math.random() * 9) + 1;
+          - generic [ref=e593]: sum += board[r][c];
+          - generic [ref=e594]: "}"
+          - generic [ref=e595]: "}"
+          - generic [ref=e597]: if (sum % 10 === 0) return board;
+          - generic [ref=e598]: "}"
+          - generic [ref=e599]: "}"
+      - paragraph [ref=e600]: 이 방식으로 500판을 생성해서 원본과 다시 비교해본 결과도 큰 차이는 없었다.
+      - figure "Figure 15. 원본 vs 생성 보드 비교" [ref=e601]:
+        - img "원본 보드와 생성 보드의 통계적 분포를 비교한 그래프"
+        - generic [ref=e602]: Figure 15. 원본 vs 생성 보드 비교
+      - table [ref=e603]:
+        - rowgroup [ref=e604]:
+          - row "Metric Original (500) Generated (500) KS p-value" [ref=e605]:
+            - columnheader "Metric" [ref=e606]
+            - columnheader "Original (500)" [ref=e607]
+            - columnheader "Generated (500)" [ref=e608]
+            - columnheader "KS p-value" [ref=e609]
+        - rowgroup [ref=e610]:
+          - row "Sum Mean 851.3 849.9 0.56" [ref=e611]:
+            - cell "Sum Mean" [ref=e612]
+            - cell "851.3" [ref=e613]
+            - cell "849.9" [ref=e614]
+            - cell "0.56" [ref=e615]
+          - row "χ² Mean 8.22 8.08 0.82" [ref=e616]:
+            - cell "χ² Mean" [ref=e617]
+            - cell "8.22" [ref=e618]
+            - cell "8.08" [ref=e619]
+            - cell "0.82" [ref=e620]
+      - paragraph [ref=e621]: 즉, 숫자 구성, 총합 분포, 게임별 편차 모두에서 생성 보드와 원본 보드가 사실상 구별되지 않았다.
+      - heading "7. 결론" [level=2] [ref=e622]
+      - paragraph [ref=e623]:
+        - text: 500판을 분석해본 결과, 원본 사과게임의 보드 생성 방식은
+        - link "Rejection Sampling" [ref=e624] [cursor=pointer]:
+          - /url: https://en.wikipedia.org/wiki/Rejection_sampling
+        - text: 으로 추정되며, 이 과정 외에 별도의 위치 규칙이나 사후 보정, 난이도 조절은 보이지 않았다.
+      - paragraph [ref=e625]: 이러한 추정을 바탕으로 우리는 다음과 같은 보드 생성 로직을 만들었다.
+      - list [ref=e626]:
+        - listitem [ref=e627]: 170칸 각각에 1~9 중 하나를 랜덤으로 넣는다
+        - listitem [ref=e628]: 전체 합을 계산한다
+        - listitem [ref=e629]: 합이 10의 배수이면 채택하고, 아니면 버리고 다시 만든다
+      - paragraph [ref=e630]: 우리가 구현한 방식으로 생성한 보드를 원본 데이터 500개와 비교 분석해 본 결과, 두 보드 데이터는 통계적으로 구별되지 않았다. 실제로 플레이했을 때 느껴지는 난이도 편차 역시 원작과 매우 비슷했다. 어떤 판은 이상하게 잘 풀리고, 어떤 판은 유독 어려운 그 부분까지 의도대로 원본과 똑같이 구현되었다.
+      - insertion [ref=e633]
+      - link "← 사과 게임 (Apple Game)" [ref=e635] [cursor=pointer]:
+        - /url: /ko/about/
+    - contentinfo [ref=e637]:
+      - link "Terms" [ref=e638] [cursor=pointer]:
+        - /url: /site-policy/terms/
+      - text: ·
+      - link "Privacy" [ref=e639] [cursor=pointer]:
+        - /url: /site-policy/privacy/
+      - text: ·
+      - link "Rules" [ref=e640] [cursor=pointer]:
+        - /url: /site-policy/rules/
+  - alert [ref=e641]
+  - dialog "쿠키 사용 안내" [ref=e642]:
+    - generic [ref=e643]:
+      - generic [ref=e644]:
+        - heading "쿠키 사용 안내" [level=2] [ref=e645]
+        - paragraph [ref=e646]:
+          - text: 게임 운영, 트래픽 분석(Google Analytics), 광고(Google AdSense, Taboola)를 위해 쿠키를 사용합니다. 전체 허용, 거부, 또는 원하는 항목만 선택할 수 있습니다.
+          - link "개인정보 및 약관" [ref=e647] [cursor=pointer]:
+            - /url: /site-policy/privacy
+          - text: .
+      - generic [ref=e648]:
+        - generic [ref=e649]:
+          - button "모두 허용" [ref=e650] [cursor=pointer]
+          - button "필수만" [ref=e651] [cursor=pointer]
+        - button "선택 관리" [ref=e653] [cursor=pointer]

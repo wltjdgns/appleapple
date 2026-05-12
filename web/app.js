@@ -1,5 +1,6 @@
 /**
  * app.js - 웹 UI 및 인터랙션 제어
+ * 드래그 감도 및 실시간 피드백 개선 버전
  */
 let engine;
 let canvas, ctx;
@@ -7,8 +8,9 @@ let isDragging = false;
 let startX, startY, endX, endY;
 let timeLeft = 120;
 let timerInterval;
+let currentSelection = { r1: -1, c1: -1, r2: -1, c2: -1, sum: 0 };
 
-const APPLE_SIZE = 40;
+const APPLE_SIZE = 44;
 const PADDING = 10;
 
 function startGame(mode) {
@@ -18,12 +20,11 @@ function startGame(mode) {
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
 
-    let rows = parseInt(document.getElementById('rowsInput').value) || 17;
-    let cols = parseInt(document.getElementById('colsInput').value) || 10;
+    let rows = parseInt(document.getElementById('rowsInput').value) || 10;
+    let cols = parseInt(document.getElementById('colsInput').value) || 17;
 
     engine = new GameEngine(rows, cols);
 
-    // 보드 생성
     let boardData;
     if (mode === 'perfect') {
         boardData = SeedGenerator.perfectGen(rows, cols);
@@ -32,11 +33,9 @@ function startGame(mode) {
     }
     engine.initBoard(boardData);
 
-    // 캔버스 크기 조절
     canvas.width = cols * APPLE_SIZE + PADDING * 2;
     canvas.height = rows * APPLE_SIZE + PADDING * 2;
 
-    // 타이머 설정
     if (mode === 'infinite') {
         document.getElementById('timer').innerText = 'Infinite';
     } else {
@@ -44,8 +43,8 @@ function startGame(mode) {
         startTimer();
     }
 
-    render();
     setupEvents();
+    requestAnimationFrame(render);
 }
 
 function startTimer() {
@@ -65,6 +64,7 @@ function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const board = engine.getBoard();
 
+    // 1. 사과 렌더링
     for (let r = 0; r < engine.rows; r++) {
         for (let c = 0; c < engine.cols; c++) {
             const val = board[r][c];
@@ -73,28 +73,58 @@ function render() {
             const x = c * APPLE_SIZE + PADDING;
             const y = r * APPLE_SIZE + PADDING;
 
-            // 사과 그리기 (간단한 원형)
+            // 선택된 사과 하이라이트
+            const isSelected = isDragging && 
+                               r >= currentSelection.r1 && r <= currentSelection.r2 && 
+                               c >= currentSelection.c1 && c <= currentSelection.c2;
+
+            if (isSelected) {
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = 'rgba(255, 255, 0, 0.8)';
+                ctx.fillStyle = '#ff6666'; // 선택 시 약간 더 밝은 빨강
+            } else {
+                ctx.shadowBlur = 0;
+                ctx.fillStyle = '#ff4d4d';
+            }
+
             ctx.beginPath();
-            ctx.arc(x + APPLE_SIZE/2, y + APPLE_SIZE/2, APPLE_SIZE/2 - 2, 0, Math.PI * 2);
-            ctx.fillStyle = '#ff4d4d';
+            ctx.arc(x + APPLE_SIZE/2, y + APPLE_SIZE/2, APPLE_SIZE/2 - 3, 0, Math.PI * 2);
             ctx.fill();
 
-            // 숫자 그리기
+            // 꼭지 그리기
+            ctx.fillStyle = '#4d2600';
+            ctx.fillRect(x + APPLE_SIZE/2 - 2, y + 2, 4, 8);
+
+            // 숫자
+            ctx.shadowBlur = 0;
             ctx.fillStyle = 'white';
-            ctx.font = 'bold 20px Arial';
+            ctx.font = 'bold 22px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(val, x + APPLE_SIZE/2, y + APPLE_SIZE/2);
+            ctx.fillText(val, x + APPLE_SIZE/2, y + APPLE_SIZE/2 + 2);
         }
     }
 
-    // 드래그 영역 표시
+    // 2. 드래그 영역 및 합계 표시
     if (isDragging) {
-        ctx.strokeStyle = 'rgba(0, 100, 255, 0.5)';
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'rgba(0, 120, 255, 0.8)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 5]); // 점선 효과
         ctx.strokeRect(startX, startY, endX - startX, endY - startY);
-        ctx.fillStyle = 'rgba(0, 100, 255, 0.1)';
+        ctx.setLineDash([]);
+        
+        ctx.fillStyle = 'rgba(0, 120, 255, 0.15)';
         ctx.fillRect(startX, startY, endX - startX, endY - startY);
+
+        // 현재 합계 표시 (마우스 근처)
+        if (currentSelection.sum > 0) {
+            ctx.fillStyle = currentSelection.sum === 10 ? '#00cc00' : '#0078ff';
+            ctx.font = 'bold 24px Arial';
+            ctx.shadowBlur = 4;
+            ctx.shadowColor = 'white';
+            ctx.fillText(currentSelection.sum, endX + 15, endY - 15);
+            ctx.shadowBlur = 0;
+        }
     }
 
     document.getElementById('score').innerText = `Score: ${engine.getScore()}`;
@@ -117,6 +147,39 @@ function setupEvents() {
         };
     };
 
+    const updateSelection = () => {
+        const left = Math.min(startX, endX) - PADDING;
+        const top = Math.min(startY, endY) - PADDING;
+        const right = Math.max(startX, endX) - PADDING;
+        const bottom = Math.max(startY, endY) - PADDING;
+
+        // 중심점 기반 선택 로직
+        // 셀의 중심이 드래그 사각형 안에 있는지 확인
+        let r1 = 1000, c1 = 1000, r2 = -1, c2 = -1;
+        let found = false;
+
+        for (let r = 0; r < engine.rows; r++) {
+            for (let c = 0; c < engine.cols; c++) {
+                const centerX = c * APPLE_SIZE + APPLE_SIZE / 2;
+                const centerY = r * APPLE_SIZE + APPLE_SIZE / 2;
+
+                if (centerX >= left && centerX <= right && centerY >= top && centerY <= bottom) {
+                    r1 = Math.min(r1, r);
+                    c1 = Math.min(c1, c);
+                    r2 = Math.max(r2, r);
+                    c2 = Math.max(c2, c);
+                    found = true;
+                }
+            }
+        }
+
+        if (found) {
+            currentSelection = { r1, c1, r2, c2, sum: engine.getAreaSum(r1, c1, r2, c2) };
+        } else {
+            currentSelection = { r1: -1, c1: -1, r2: -1, c2: -1, sum: 0 };
+        }
+    };
+
     const startAction = e => {
         isDragging = true;
         const coords = getCoords(e);
@@ -124,6 +187,7 @@ function setupEvents() {
         startY = coords.y;
         endX = startX;
         endY = startY;
+        updateSelection();
     };
 
     const moveAction = e => {
@@ -131,32 +195,16 @@ function setupEvents() {
         const coords = getCoords(e);
         endX = coords.x;
         endY = coords.y;
+        updateSelection();
     };
 
     const endAction = () => {
         if (!isDragging) return;
         isDragging = false;
 
-        // 드래그 방향에 상관없이 최소/최대 좌표 구함
-        const left = Math.min(startX, endX) - PADDING;
-        const top = Math.min(startY, endY) - PADDING;
-        const right = Math.max(startX, endX) - PADDING;
-        const bottom = Math.max(startY, endY) - PADDING;
-
-        // 인덱스 계산 (셀의 절반 이상이 포함되면 선택된 것으로 간주)
-        const c1 = Math.round(left / APPLE_SIZE);
-        const r1 = Math.round(top / APPLE_SIZE);
-        const c2 = Math.round((right - APPLE_SIZE) / APPLE_SIZE);
-        const r2 = Math.round((bottom - APPLE_SIZE) / APPLE_SIZE);
-
-        // 유효 범위 내에서 평가
-        const validR1 = Math.max(0, Math.min(r1, engine.rows - 1));
-        const validC1 = Math.max(0, Math.min(c1, engine.cols - 1));
-        const validR2 = Math.max(validR1, Math.min(r2 + 1, engine.rows - 1));
-        const validC2 = Math.max(validC1, Math.min(c2 + 1, engine.cols - 1));
-
-        if (engine.evaluateSelection(validR1, validC1, validR2, validC2)) {
-            // 사과가 모두 제거되었는지 확인
+        if (currentSelection.sum === 10) {
+            engine.evaluateSelection(currentSelection.r1, currentSelection.c1, currentSelection.r2, currentSelection.c2);
+            
             if (engine.getRemainingApples() === 0) {
                 clearInterval(timerInterval);
                 setTimeout(() => {
@@ -165,14 +213,14 @@ function setupEvents() {
                 }, 100);
             }
         }
+        currentSelection = { r1: -1, c1: -1, r2: -1, c2: -1, sum: 0 };
     };
 
     canvas.addEventListener('mousedown', startAction);
     window.addEventListener('mousemove', moveAction);
     window.addEventListener('mouseup', endAction);
 
-    // 터치 이벤트 지원
-    canvas.addEventListener('touchstart', e => { e.preventDefault(); startAction(e); });
-    window.addEventListener('touchmove', e => { moveAction(e); });
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); startAction(e); }, { passive: false });
+    window.addEventListener('touchmove', e => { moveAction(e); }, { passive: false });
     window.addEventListener('touchend', endAction);
 }
