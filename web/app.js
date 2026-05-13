@@ -228,7 +228,7 @@ function drawApple(ctx, cx, cy, r, value, isSelected) {
     // Selection ring
     if (isSelected) {
         ctx.beginPath();
-        ctx.arc(cx, cy + r*0.1, r * 1.15, 0, Math.PI * 2);
+        ctx.arc(cx, cy, r * 1.25, 0, Math.PI * 2);
         ctx.strokeStyle = '#FFD166';
         ctx.lineWidth = r * 0.2;
         ctx.globalAlpha = 0.95;
@@ -238,8 +238,8 @@ function drawApple(ctx, cx, cy, r, value, isSelected) {
 
     // Stem
     ctx.beginPath();
-    ctx.moveTo(cx, cy - r * 0.6);
-    ctx.quadraticCurveTo(cx + r*0.1, cy - r*0.8, cx + r*0.2, cy - r*0.7);
+    ctx.moveTo(cx, cy - r * 0.7);
+    ctx.quadraticCurveTo(cx + r*0.1, cy - r*1.0, cx + r*0.2, cy - r*0.9);
     ctx.strokeStyle = '#6B4226'; // var(--bark)
     ctx.lineWidth = r * 0.15;
     ctx.lineCap = 'round';
@@ -247,44 +247,50 @@ function drawApple(ctx, cx, cy, r, value, isSelected) {
 
     // Leaf
     ctx.beginPath();
-    ctx.moveTo(cx + r*0.1, cy - r*0.7);
-    ctx.quadraticCurveTo(cx + r*0.6, cy - r*0.9, cx + r*0.7, cy - r*0.5);
-    ctx.quadraticCurveTo(cx + r*0.4, cy - r*0.4, cx + r*0.1, cy - r*0.7);
+    ctx.moveTo(cx + r*0.1, cy - r*0.9);
+    ctx.quadraticCurveTo(cx + r*0.6, cy - r*1.1, cx + r*0.7, cy - r*0.6);
+    ctx.quadraticCurveTo(cx + r*0.4, cy - r*0.5, cx + r*0.1, cy - r*0.9);
     ctx.fillStyle = '#2D6A4F'; // var(--leaf)
     ctx.fill();
 
-    // Body (gradient)
-    const gradient = ctx.createRadialGradient(cx - r*0.3, cy - r*0.4, r*0.1, cx, cy, r*1.2);
+    // Body (gradient) - 원형에 가깝게
+    const gradient = ctx.createRadialGradient(cx - r*0.3, cy - r*0.3, r*0.1, cx, cy, r*1.2);
     gradient.addColorStop(0, '#F25C54'); // var(--apple-bright)
     gradient.addColorStop(0.55, '#D62828'); // var(--apple)
     gradient.addColorStop(1, '#9B1C1C'); // var(--apple-deep)
     
     ctx.beginPath();
-    ctx.moveTo(cx, cy - r * 0.5);
-    ctx.bezierCurveTo(cx + r * 0.5, cy - r * 1.1, cx + r * 1.3, cy - r * 0.3, cx + r, cy);
-    ctx.bezierCurveTo(cx + r * 0.9, cy + r * 1.1, cx + r * 0.1, cy + r * 1.1, cx, cy + r * 0.7);
-    ctx.bezierCurveTo(cx - r * 0.1, cy + r * 1.1, cx - r * 0.9, cy + r * 1.1, cx - r, cy);
-    ctx.bezierCurveTo(cx - r * 1.3, cy - r * 0.3, cx - r * 0.5, cy - r * 1.1, cx, cy - r * 0.5);
-    
+    // 완전히 원형에 가깝게 처리
+    ctx.arc(cx, cy, r * 1.05, 0, Math.PI * 2);
     ctx.fillStyle = gradient;
     ctx.fill();
     
     // Highlight
     ctx.save();
     ctx.beginPath();
-    ctx.translate(cx - r*0.3, cy - r*0.3);
-    ctx.rotate(-30 * Math.PI / 180);
-    ctx.ellipse(0, 0, r*0.25, r*0.15, 0, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.translate(cx - r*0.4, cy - r*0.4);
+    ctx.rotate(-45 * Math.PI / 180);
+    ctx.ellipse(0, 0, r*0.3, r*0.12, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
     ctx.fill();
     ctx.restore();
 
-    // Number
-    ctx.fillStyle = '#FFF7E8';
-    ctx.font = `900 ${Math.floor(r * 1.0)}px "Pretendard", "IBM Plex Sans KR", sans-serif`;
+    // Number - 고딕체, 가독성 향상
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = `800 ${Math.floor(r * 1.3)}px "Pretendard", sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(value, cx, cy + r*0.2);
+    
+    // 그림자를 진하게 주어 가독성을 높임
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+    ctx.shadowBlur = 4;
+    ctx.shadowOffsetY = 2;
+    
+    // 텍스트 테두리 (가독성 추가)
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.strokeText(value, cx, cy + r*0.05);
+    ctx.fillText(value, cx, cy + r*0.05);
     
     ctx.restore();
 }
