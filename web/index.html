@@ -200,6 +200,41 @@
             font-weight: 500;
         }
 
+        /* Result Popup */
+        #scene-result {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .result-score {
+            font-size: 5rem;
+            color: #ff4d4d;
+            font-weight: 800;
+            margin: 10px 0;
+            text-shadow: 0 5px 15px rgba(255, 77, 77, 0.3);
+        }
+
+        .combo-text {
+            position: absolute;
+            pointer-events: none;
+            font-weight: 900;
+            font-style: italic;
+            color: #ff4d4d;
+            text-shadow: 2px 2px 0 white, -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white;
+            animation: comboPop 0.5s ease-out forwards;
+            z-index: 50;
+        }
+
+        @keyframes comboPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0; transform: translateY(-50px); }
+        }
+
         .hidden { display: none !important; }
     </style>
 </head>
@@ -285,6 +320,7 @@
         </div>
         <div id="game-container">
             <canvas id="gameCanvas"></canvas>
+            <div id="combo-layer"></div>
         </div>
     </div>
 
@@ -310,13 +346,26 @@
         </div>
     </div>
 
+    <!-- 5. 게임 결과 팝업 -->
+    <div id="scene-result" class="scene">
+        <h2 style="margin: 0; color: #666;">GAME OVER</h2>
+        <div class="hud-label">최종 점수</div>
+        <div id="final-score" class="result-score">0</div>
+        <div id="result-badge" class="game-info-badge" style="margin-bottom: 30px;">17x10 | 오리지널</div>
+        <div class="menu-buttons">
+            <button onclick="startGame()">같은 모드로 재시작</button>
+            <button onclick="showScene('scene-settings')" class="secondary">다른 설정으로 하기</button>
+            <button onclick="showScene('scene-main')" class="secondary" style="background-color: #333;">메인으로</button>
+        </div>
+    </div>
+
     <!-- Firebase SDK (Modular) -->
     <script type="importmap">
         {
           "imports": {
             "firebase/app": "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js",
             "firebase/auth": "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js",
-            "firebase/firestore": "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js"
+            "firebase/firestore": "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.app"
           }
         }
     </script>

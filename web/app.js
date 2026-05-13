@@ -9,8 +9,16 @@ let startX, startY, endX, endY;
 let timeLeft = 120;
 let timerInterval;
 let gameConfig = {};
-let gameStartTime = 0; // 추가: 게임 시작 시간 기록용
+let gameStartTime = 0;
 let currentSelection = { r1: -1, c1: -1, r2: -1, c2: -1, sum: 0 };
+
+// 사운드 관리 (무료 라이브러리 소스 시뮬레이션)
+const sounds = {
+    bgm: new Audio('https://assets.mixkit.co/music/preview/mixkit-funny-puzzler-317.mp3'),
+    pop: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-bubble-pop-up-alert-2358.wav'),
+    clear: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-winning-chime-2035.wav')
+};
+sounds.bgm.loop = true;
 
 const APPLE_SIZE = 44;
 const PADDING = 10;
@@ -19,6 +27,11 @@ const PADDING = 10;
 function showScene(sceneId) {
     document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
     document.getElementById(sceneId).classList.add('active');
+    
+    // 게임 화면이나 결과 화면이 아니면 BGM 정지
+    if (sceneId !== 'scene-game' && sceneId !== 'scene-result') {
+        sounds.bgm.pause();
+    }
 }
 
 function startGame() {
@@ -47,7 +60,7 @@ function startGame() {
 
     // 엔진 초기화
     engine = new GameEngine(gameConfig.rows, gameConfig.cols);
-    gameStartTime = Date.now(); // 시작 시간 기록
+    gameStartTime = Date.now();
 
     let boardData;
     if (gameConfig.seedType === 'perfect') {
@@ -71,6 +84,10 @@ function startGame() {
         startTimer();
     }
 
+    // 사운드 재생
+    sounds.bgm.currentTime = 0;
+    sounds.bgm.play().catch(e => console.log("Audio play deferred by browser policy"));
+
     setupEvents();
     render();
 }
@@ -90,26 +107,28 @@ function startTimer() {
 
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            finishGame(`게임 종료! 최종 점수: ${engine.getScore()}`);
+            finishGame();
         }
     }, 1000);
 }
 
 /**
  * 게임 종료 통합 처리 함수
- * @param {string} message 알림 메시지
  */
-function finishGame(message) {
+function finishGame() {
+    sounds.bgm.pause();
     const playTime = Math.floor((Date.now() - gameStartTime) / 1000);
     const score = engine.getScore();
     
-    // 기록 저장 호출 (window.saveGameRecord가 firebase.js에서 등록됨)
+    // 기록 저장 호출 (Firebase)
     if (window.saveGameRecord) {
         window.saveGameRecord(gameConfig, score, playTime);
     }
 
-    if (message) alert(message);
-    showScene('scene-settings');
+    // 결과 화면 노출
+    document.getElementById('final-score').innerText = score;
+    document.getElementById('result-badge').innerText = document.getElementById('game-badge').innerText;
+    showScene('scene-result');
 }
 
 function updateTimerDisplay() {
@@ -119,7 +138,9 @@ function updateTimerDisplay() {
 }
 
 function render() {
-    if (!engine || !document.getElementById('scene-game').classList.contains('active')) return;
+    const isActive = document.getElementById('scene-game').classList.contains('active');
+    const isResult = document.getElementById('scene-result').classList.contains('active');
+    if (!engine || (!isActive && !isResult)) return;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const board = engine.getBoard();
@@ -149,17 +170,17 @@ function render() {
             ctx.arc(x + APPLE_SIZE/2, y + APPLE_SIZE/2, APPLE_SIZE/2 - 3, 0, Math.PI * 2);
             ctx.fill();
 
-            // 꼭지
-            ctx.fillStyle = '#4d2600';
-            ctx.fillRect(x + APPLE_SIZE/2 - 2, y + 2, 4, 8);
+            // 꼭지 디자인 개선 (가독성 확보를 위해 더 작고 연하게)
+            ctx.fillStyle = 'rgba(77, 38, 0, 0.3)';
+            ctx.fillRect(x + APPLE_SIZE/2 - 1, y + 4, 2, 5);
 
-            // 숫자
+            // 숫자 가독성 강화
             ctx.shadowBlur = 0;
             ctx.fillStyle = 'white';
-            ctx.font = 'bold 22px Arial';
+            ctx.font = 'bold 24px "Arial Black", sans-serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(val, x + APPLE_SIZE/2, y + APPLE_SIZE/2 + 2);
+            ctx.fillText(val, x + APPLE_SIZE/2, y + APPLE_SIZE/2 + 1);
         }
     }
 
@@ -191,9 +212,31 @@ function render() {
     requestAnimationFrame(render);
 }
 
+function showComboText(removedCount, x, y) {
+    const layer = document.getElementById('combo-layer');
+    const el = document.createElement('div');
+    el.className = 'combo-text';
+    
+    let text = 'Good!';
+    if (removedCount >= 10) text = 'Excellent!!';
+    else if (removedCount >= 6) text = 'Great!';
+    
+    el.innerText = `${text} +${removedCount}`;
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+    layer.appendChild(el);
+    
+    setTimeout(() => el.remove(), 600);
+    
+    // 타격 효과음
+    const pop = sounds.pop.cloneNode();
+    pop.volume = 0.5;
+    pop.play();
+}
+
 function quitGame() {
     clearInterval(timerInterval);
-    finishGame(); // 종료 시에도 현재까지의 기록 저장
+    finishGame();
 }
 
 function setupEvents() {
@@ -202,7 +245,6 @@ function setupEvents() {
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
         
-        // CSS scale 반영 (캔버스 크기가 화면보다 클 경우 대비)
         const scaleX = canvas.width / rect.width;
         const scaleY = canvas.height / rect.height;
         
@@ -265,18 +307,22 @@ function setupEvents() {
         if (!isDragging) return;
         isDragging = false;
 
+        const beforeApples = engine.getRemainingApples();
         if (engine.evaluateSelection(currentSelection.r1, currentSelection.c1, currentSelection.r2, currentSelection.c2, gameConfig.clearType)) {
+            const removed = beforeApples - engine.getRemainingApples();
+            showComboText(removed, endX, endY);
+            
             if (engine.getRemainingApples() === 0) {
                 clearInterval(timerInterval);
                 setTimeout(() => {
-                    finishGame(`축하합니다! 모든 사과를 제거했습니다. 최종 점수: ${engine.getScore()}`);
+                    sounds.clear.play();
+                    finishGame();
                 }, 100);
             }
         }
         currentSelection = { r1: -1, c1: -1, r2: -1, c2: -1, sum: 0 };
     };
 
-    // 기존 이벤트 제거 후 등록 (중복 방지)
     const newCanvas = canvas.cloneNode(true);
     canvas.parentNode.replaceChild(newCanvas, canvas);
     canvas = newCanvas;
