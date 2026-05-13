@@ -24,11 +24,11 @@ function HUD({ score, time, warn, mode, onThemeToggle, themeLabel, onQuit }) {
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
          <button onClick={onThemeToggle} style={{
-           padding: '8px 14px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.2)',
+           padding: '10px 18px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.2)',
            background: 'rgba(255,255,255,0.05)', color: '#fff', cursor: 'pointer',
-           fontSize: 16, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6
+           fontSize: 17, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8
          }}>
-           🎨 <span style={{ fontSize: 13 }}>{themeLabel === 'original' ? '오리지널' : '따뜻함'}</span>
+           🎨 색상 변경
          </button>
       </div>
     </div>
@@ -208,20 +208,24 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
         setBoard([...engine.getBoard().map(r => [...r])]);
         setScore(engine.getScore());
         
-        let comboMsg = 'Good!';
-        if (removed >= 10) comboMsg = 'Excellent!!';
-        else if (removed >= 6) comboMsg = 'Great!';
+        // 콤보 메시지 로직 (사용자 요청: 2개 good, 3개 great, 4개 excellent)
+        let comboMsg = '';
+        if (removed >= 4) comboMsg = 'Excellent!!';
+        else if (removed === 3) comboMsg = 'Great!';
+        else if (removed === 2) comboMsg = 'Good!';
         
-        const newEffect = {
-          id: Date.now(),
-          text: `${comboMsg} +${removed}`,
-          x: dragEnd.x,
-          y: dragEnd.y
-        };
-        setFloatingTexts(prev => [...prev, newEffect]);
-        setTimeout(() => {
-          setFloatingTexts(prev => prev.filter(t => t.id !== newEffect.id));
-        }, 600);
+        if (comboMsg) {
+          const newEffect = {
+            id: Date.now(),
+            text: `${comboMsg} +${removed}`,
+            x: dragEnd.x,
+            y: dragEnd.y
+          };
+          setFloatingTexts(prev => [...prev, newEffect]);
+          setTimeout(() => {
+            setFloatingTexts(prev => prev.filter(t => t.id !== newEffect.id));
+          }, 800);
+        }
 
         if (engine.getRemainingApples() === 0) {
           onFinish(engine.getScore(), 'clear');
@@ -316,13 +320,43 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
              }} />
            )}
 
+           {/* Sum Indicator (복구) */}
+           {isDragging && currentSum > 0 && (
+             <div style={{
+               position: 'absolute',
+               left: dragEnd.x + 12,
+               top: dragEnd.y - 24,
+               padding: '4px 10px',
+               background: (config.clearType === 'original' ? currentSum === 10 : (currentSum % 10 === 0 && currentSum <= 50)) ? 'var(--leaf)' : 'var(--ink)',
+               color: '#fff',
+               borderRadius: 8,
+               fontFamily: 'var(--font-num)', fontSize: 16, fontWeight: 700,
+               pointerEvents: 'none', whiteSpace: 'nowrap', boxShadow: '4px 4px 0 rgba(0,0,0,0.2)', zIndex: 100
+             }}>
+               {currentSum} {(config.clearType === 'original' ? currentSum === 10 : (currentSum % 10 === 0 && currentSum <= 50)) ? '✓' : ''}
+             </div>
+           )}
+
            {floatingTexts.map(t => (
-             <div key={t.id} className="combo-text" style={{ position: 'absolute', left: t.x, top: t.y, pointerEvents: 'none' }}>
+             <div key={t.id} className="combo-text" style={{ 
+               position: 'absolute', left: t.x, top: t.y, pointerEvents: 'none',
+               animation: 'floatUp 0.8s ease-out forwards',
+               fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 24,
+               color: 'var(--apple)', textShadow: '2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff',
+               zIndex: 200
+             }}>
                {t.text}
              </div>
            ))}
         </div>
       </div>
+
+      <style>{`
+        @keyframes floatUp {
+          0% { transform: translateY(0); opacity: 1; }
+          100% { transform: translateY(-50px); opacity: 0; }
+        }
+      `}</style>
 
       {/* Game Footer Actions */}
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 20, paddingBottom: 10 }}>
