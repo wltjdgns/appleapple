@@ -209,12 +209,12 @@ function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout
                   flex: 1, padding: '10px', fontFamily: 'inherit', fontSize: 12, fontWeight: 600,
                   background: 'var(--paper-warm)', color: 'var(--ink-soft)',
                   border: '1px solid var(--hairline)', borderRadius: 10, cursor: 'pointer'
-                }}>[버그제보]</button>
+                }}>버그제보</button>
                 <button onClick={() => openModal('suggestion')} style={{
                   flex: 1, padding: '10px', fontFamily: 'inherit', fontSize: 12, fontWeight: 600,
                   background: 'var(--paper-warm)', color: 'var(--ink-soft)',
                   border: '1px solid var(--hairline)', borderRadius: 10, cursor: 'pointer'
-                }}>[문의/개선점]</button>
+                }}>문의/개선점</button>
               </div>
               <button onClick={onLogout} style={{
                 padding: '8px', background: 'transparent', border: 'none', color: 'var(--ink-mute)',

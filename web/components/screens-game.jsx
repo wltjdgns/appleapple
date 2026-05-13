@@ -255,7 +255,8 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
       width: '100%', height: '100%',
       background: `radial-gradient(ellipse at 70% 0%, rgba(244,162,97,0.12), transparent 60%), var(--paper)`,
       padding: '24px 32px', display: 'flex', flexDirection: 'column', gap: 12,
-      fontFamily: 'var(--font-body)', position: 'relative', overflow: 'hidden'
+      fontFamily: 'var(--font-body)', position: 'relative', overflow: 'hidden',
+      userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none'
     }} onPointerUp={handlePointerUp} onPointerLeave={handlePointerUp}>
       
       <HUD
@@ -313,22 +314,6 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
                borderRadius: 8,
                pointerEvents: 'none'
              }} />
-           )}
-
-           {isDragging && currentSum > 0 && (
-             <div style={{
-               position: 'absolute',
-               left: dragEnd.x + 12,
-               top: dragEnd.y - 24,
-               padding: '4px 10px',
-               background: (config.clearType === 'original' ? currentSum === 10 : (currentSum % 10 === 0 && currentSum <= 50)) ? 'var(--leaf)' : 'var(--ink)',
-               color: '#fff',
-               borderRadius: 8,
-               fontFamily: 'var(--font-num)', fontSize: 16, fontWeight: 700,
-               pointerEvents: 'none', whiteSpace: 'nowrap', boxShadow: '4px 4px 0 rgba(0,0,0,0.2)', zIndex: 100
-             }}>
-               {currentSum} {(config.clearType === 'original' ? currentSum === 10 : (currentSum % 10 === 0 && currentSum <= 50)) ? '✓' : ''}
-             </div>
            )}
 
            {floatingTexts.map(t => (
