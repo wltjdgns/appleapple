@@ -150,6 +150,14 @@ function LeaderboardScreen({ leaderboard, onMain, onRefresh, filters, onFilterCh
              <option value="17x10">17x10</option>
              <option value="50x50">50x50</option>
            </select>
+           <select value={filters.clearType} onChange={(e) => onFilterChange('clearType', e.target.value)} style={{ padding: '8px', borderRadius: 8, border: '1px solid var(--hairline)' }}>
+             <option value="original">오리지널</option>
+             <option value="multiples">10의 배수</option>
+           </select>
+           <select value={filters.sort} onChange={(e) => onFilterChange('sort', e.target.value)} style={{ padding: '8px', borderRadius: 8, border: '1px solid var(--hairline)' }}>
+             <option value="highScore">최고 점수 순</option>
+             <option value="playCount">판수 순</option>
+           </select>
            <button onClick={onRefresh} style={{ padding: '8px 14px', background: 'var(--ink)', color: 'var(--paper)', border: 'none', borderRadius: 8, cursor: 'pointer' }}>조회</button>
            <button onClick={onMain} style={{ marginLeft: 16, padding: '10px 18px', background: 'transparent', border: '1.5px solid var(--hairline)', borderRadius: 12, color: 'var(--ink-soft)', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>메인으로</button>
         </div>

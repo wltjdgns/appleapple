@@ -29,7 +29,7 @@ function App() {
   const [engine, setEngine] = useState(null);
   const [records, setRecords] = useState({});
   const [leaderboard, setLeaderboard] = useState([]);
-  const [lbFilters, setLbFilters] = useState({ time: '120', size: '17x10' });
+  const [lbFilters, setLbFilters] = useState({ time: '120', size: '17x10', sort: 'highScore', clearType: 'original' });
   const [finalScore, setFinalScore] = useState(0);
 
   // Apply theme to :root
@@ -116,7 +116,7 @@ function App() {
   };
 
   const fetchLeaderboard = async () => {
-    const targetModeKey = `${lbFilters.time}_${lbFilters.size}_random_original`;
+    const targetModeKey = `${lbFilters.time}_${lbFilters.size}_random_${lbFilters.clearType}`;
     try {
       const usersSnap = await db.collection('users').get();
       let rankingData = [];
@@ -131,7 +131,7 @@ function App() {
           });
         }
       });
-      rankingData.sort((a, b) => b.highScore - a.highScore);
+      rankingData.sort((a, b) => b[lbFilters.sort] - a[lbFilters.sort]);
       setLeaderboard(rankingData);
     } catch (e) {
       console.error(e);

@@ -28,7 +28,7 @@ function GameGrid({ board, cellSize = 36, selection = null }) {
   );
 }
 
-function HUD({ score, time, warn = false, mode, combo = 0, onThemeToggle, themeLabel }) {
+function HUD({ score, time, warn = false, mode, combo = 0, onThemeToggle, themeLabel, onQuit }) {
   return (
     <div style={{
       display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: 24,
@@ -56,7 +56,7 @@ function HUD({ score, time, warn = false, mode, combo = 0, onThemeToggle, themeL
             border: '1px solid var(--hairline)', borderRadius: 4, cursor: 'pointer' 
           }}>🎨 {themeLabel === 'original' ? 'Original' : 'Warm'}</button>
         </div>
-        <button id="quit-btn-real" style={{
+        <button id="quit-btn-real" onClick={onQuit} style={{
           padding: '8px 14px', fontFamily: 'var(--font-mono)', fontSize: 10,
           letterSpacing: '0.2em', textTransform: 'uppercase',
           background: 'var(--paper-warm)', color: 'var(--ink-soft)',
@@ -110,18 +110,18 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
   }, [config.timeMode]);
 
   const updateSelection = (start, end) => {
-    const left = Math.min(start.x, end.x) - PADDING;
-    const top = Math.min(start.y, end.y) - PADDING;
-    const right = Math.max(start.x, end.x) - PADDING;
-    const bottom = Math.max(start.y, end.y) - PADDING;
+    const left = Math.min(start.x, end.x);
+    const top = Math.min(start.y, end.y);
+    const right = Math.max(start.x, end.x);
+    const bottom = Math.max(start.y, end.y);
 
     let r1 = 1000, c1 = 1000, r2 = -1, c2 = -1;
     let found = false;
 
     for (let r = 0; r < config.rows; r++) {
       for (let c = 0; c < config.cols; c++) {
-        const centerX = c * (APPLE_SIZE + GAP) + APPLE_SIZE / 2;
-        const centerY = r * (APPLE_SIZE + GAP) + APPLE_SIZE / 2;
+        const centerX = PADDING + c * (APPLE_SIZE + GAP) + APPLE_SIZE / 2;
+        const centerY = PADDING + r * (APPLE_SIZE + GAP) + APPLE_SIZE / 2;
 
         if (centerX >= left && centerX <= right && centerY >= top && centerY <= bottom) {
           r1 = Math.min(r1, r);
@@ -222,6 +222,7 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
         mode={`${config.cols}×${config.rows} · ${config.clearType === 'original' ? '오리지널' : '10의 배수'}`}
         onThemeToggle={onThemeToggle}
         themeLabel={theme}
+        onQuit={onQuit}
       />
 
       <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start', flex: 1, minHeight: 0 }}>
@@ -329,7 +330,7 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
         </aside>
       </div>
 
-      <button onClick={onQuit} style={{
+      <button onClick={() => onFinish(engine.getScore())} style={{
          position: 'absolute', bottom: 20, right: 20, padding: '10px 20px',
          background: 'var(--ink)', color: 'var(--paper)', border: 'none', borderRadius: 12,
          cursor: 'pointer', fontFamily: 'var(--font-body)', fontWeight: 700
@@ -339,3 +340,4 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
 }
 
 Object.assign(window, { GameScreen });
+ GameScreen });
