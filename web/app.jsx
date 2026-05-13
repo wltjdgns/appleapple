@@ -1,7 +1,23 @@
 const { useState, useEffect, useRef } = React;
 
+const PALETTES = {
+  original: {
+    '--paper': '#F8FBF2', '--paper-warm': '#EAF2DA', '--paper-dark': '#D6E4B8', '--hairline': '#C3D2A4',
+    '--apple': '#E63946', '--apple-deep': '#A91D29', '--apple-bright': '#FF6B6B',
+    '--leaf': '#1B4332', '--leaf-light': '#74C69D', '--gold': '#F4A261', '--honey': '#FFD166',
+    '--ink': '#1B2410', '--ink-soft': '#3D4C24', '--ink-mute': '#7B8868'
+  },
+  warm: {
+    '--paper': '#FFF9EB', '--paper-warm': '#F9F1D8', '--paper-dark': '#EDDFC2', '--hairline': '#E2D1B0',
+    '--apple': '#D62828', '--apple-deep': '#9B1C1C', '--apple-bright': '#F25C54',
+    '--leaf': '#386641', '--leaf-light': '#6A994E', '--gold': '#F4A261', '--honey': '#FFD166',
+    '--ink': '#2B1E16', '--ink-soft': '#5C4336', '--ink-mute': '#9C8476'
+  }
+};
+
 function App() {
   const [screen, setScreen] = useState('main');
+  const [theme, setTheme] = useState('original');
   const [user, setUser] = useState(null);
   const [gameConfig, setGameConfig] = useState({
     timeMode: '120',
@@ -11,17 +27,31 @@ function App() {
     clearType: 'original'
   });
   const [engine, setEngine] = useState(null);
-  const [records, setRecords] = useState([]);
+  const [records, setRecords] = useState({});
   const [leaderboard, setLeaderboard] = useState([]);
+  const [lbFilters, setLbFilters] = useState({ time: '120', size: '17x10' });
   const [finalScore, setFinalScore] = useState(0);
+
+  // Apply theme to :root
+  useEffect(() => {
+    const vars = PALETTES[theme];
+    for (const [k, v] of Object.entries(vars)) {
+      document.documentElement.style.setProperty(k, v);
+    }
+  }, [theme]);
 
   // Firebase Auth integration
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((u) => {
       if (u) {
         setUser(u);
-      } else if (!isGuest) {
-        setUser(null);
+      } else {
+        // If guest mode is active, currentUser is set in firebase.js
+        if (isGuest && currentUser) {
+          setUser(currentUser);
+        } else {
+          setUser(null);
+        }
       }
     });
     return () => unsubscribe();
@@ -36,13 +66,17 @@ function App() {
   };
 
   const handleLoginAsGuest = (name) => {
-    loginAsGuest(); // Existing logic in firebase.js sets isGuest = true and currentUser
-    setUser({ displayName: name || 'Guest' });
+    const nickname = name?.trim() || "Guest_" + Math.floor(Math.random() * 9000 + 1000);
+    isGuest = true;
+    currentUser = { uid: 'guest', displayName: nickname };
+    setUser(currentUser);
+    setScreen('main');
   };
 
   const handleLogout = async () => {
     await logout();
     setUser(null);
+    setScreen('main');
   };
 
   const startGame = () => {
@@ -60,19 +94,48 @@ function App() {
 
   const finishGame = (score) => {
     setFinalScore(score);
-    const playTime = 120; // Simplified for now
+    const playTime = 120; 
     if (window.saveGameRecord) {
       window.saveGameRecord(gameConfig, score, playTime);
     }
     setScreen('result');
   };
 
-  const showRecords = async () => {
+  const fetchRecords = async () => {
+    if (!user) return;
+    if (isGuest) {
+      setRecords(guestRecords);
+    } else {
+      const userRef = db.collection('users').doc(user.uid);
+      const userSnap = await userRef.get();
+      if (userSnap.exists) {
+        setRecords(userSnap.data().records || {});
+      }
+    }
     setScreen('records');
-    // We could fetch records here and set state
   };
 
-  const showLeaderboard = () => {
+  const fetchLeaderboard = async () => {
+    const targetModeKey = `${lbFilters.time}_${lbFilters.size}_random_original`;
+    try {
+      const usersSnap = await db.collection('users').get();
+      let rankingData = [];
+      usersSnap.forEach(doc => {
+        const data = doc.data();
+        if (data.records && data.records[targetModeKey]) {
+          const record = data.records[targetModeKey];
+          rankingData.push({
+            name: data.displayName || '익명 유저',
+            highScore: record.highScore || 0,
+            playCount: record.playCount || 0
+          });
+        }
+      });
+      rankingData.sort((a, b) => b.highScore - a.highScore);
+      setLeaderboard(rankingData);
+    } catch (e) {
+      console.error(e);
+    }
     setScreen('leaderboard');
   };
 
@@ -83,8 +146,8 @@ function App() {
           <MainScreen
             user={user}
             onStart={() => setScreen('settings')}
-            onRecords={showRecords}
-            onLeaderboard={showLeaderboard}
+            onRecords={fetchRecords}
+            onLeaderboard={fetchLeaderboard}
             onLogin={handleLogin}
             onLogout={handleLogout}
             onLoginAsGuest={handleLoginAsGuest}
@@ -104,6 +167,8 @@ function App() {
           <GameScreen
             engine={engine}
             config={gameConfig}
+            theme={theme}
+            onThemeToggle={() => setTheme(t => t === 'original' ? 'warm' : 'original')}
             onQuit={() => setScreen('main')}
             onFinish={() => finishGame(engine.getScore())}
           />
@@ -120,8 +185,18 @@ function App() {
         );
       case 'records':
         return <RecordsScreen records={records} onMain={() => setScreen('main')} />;
+      case 'leaderboard':
+        return (
+          <LeaderboardScreen 
+            leaderboard={leaderboard} 
+            filters={lbFilters}
+            onFilterChange={(k, v) => setLbFilters(prev => ({...prev, [k]: v}))}
+            onRefresh={fetchLeaderboard}
+            onMain={() => setScreen('main')} 
+          />
+        );
       default:
-        return <MainScreen onStart={() => setScreen('settings')} />;
+        return <MainScreen user={user} onStart={() => setScreen('settings')} onLogin={handleLogin} />;
     }
   })();
 

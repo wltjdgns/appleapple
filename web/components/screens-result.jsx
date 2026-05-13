@@ -57,7 +57,13 @@ function ResultScreen({ score, config, onRestart, onNewSettings, onMain }) {
   );
 }
 
-function RecordsScreen({ records, onMain, onRestart }) {
+function RecordsScreen({ records, onMain }) {
+  const [activeTab, setActiveTab] = React.useState('all');
+  
+  const filteredRecords = activeTab === 'all' 
+    ? Object.entries(records) 
+    : Object.entries(records).filter(([k]) => k.startsWith(activeTab === '2min' ? '120' : 'infinite'));
+
   return (
     <div style={{
       width: '100%', height: '100%', background: 'var(--paper)',
@@ -71,10 +77,12 @@ function RecordsScreen({ records, onMain, onRestart }) {
             한 해의 수확.
           </div>
         </div>
-        <button onClick={onMain} style={{
-          padding: '10px 18px', background: 'transparent', border: '1.5px solid var(--hairline)',
-          borderRadius: 12, color: 'var(--ink-soft)', fontSize: 14, fontWeight: 600, cursor: 'pointer'
-        }}>메인으로</button>
+        <div style={{ display: 'flex', gap: 8 }}>
+           <button onClick={() => setActiveTab('all')} style={{ padding: '8px 14px', background: activeTab === 'all' ? 'var(--ink)' : 'transparent', color: activeTab === 'all' ? 'var(--paper)' : 'var(--ink-soft)', border: '1px solid var(--hairline)', borderRadius: 999, cursor: 'pointer' }}>전체</button>
+           <button onClick={() => setActiveTab('2min')} style={{ padding: '8px 14px', background: activeTab === '2min' ? 'var(--ink)' : 'transparent', color: activeTab === '2min' ? 'var(--paper)' : 'var(--ink-soft)', border: '1px solid var(--hairline)', borderRadius: 999, cursor: 'pointer' }}>2분</button>
+           <button onClick={() => setActiveTab('infinite')} style={{ padding: '8px 14px', background: activeTab === 'infinite' ? 'var(--ink)' : 'transparent', color: activeTab === 'infinite' ? 'var(--paper)' : 'var(--ink-soft)', border: '1px solid var(--hairline)', borderRadius: 999, cursor: 'pointer' }}>무한</button>
+           <button onClick={onMain} style={{ marginLeft: 16, padding: '10px 18px', background: 'transparent', border: '1.5px solid var(--hairline)', borderRadius: 12, color: 'var(--ink-soft)', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>메인으로</button>
+        </div>
       </div>
 
       <div style={{
@@ -95,15 +103,86 @@ function RecordsScreen({ records, onMain, onRestart }) {
             </tr>
           </thead>
           <tbody>
-            {records.map((r, i) => (
-              <tr key={i} style={{ borderBottom: '1px solid var(--hairline)' }}>
-                <td style={{ padding: '16px 22px', display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <AppleCell n={(i % 9) + 1} size={28} shape="realistic" leaf={false} />
-                  <span style={{ fontWeight: 600 }}>{r.mode}</span>
+            {filteredRecords.length === 0 ? (
+               <tr><td colSpan="4" style={{ padding: 40, textAlign: 'center', color: 'var(--ink-mute)' }}>기록이 없습니다.</td></tr>
+            ) : filteredRecords.map(([key, r], i) => {
+              const parts = key.split('_');
+              const modeLabel = `${parts[1]} · ${parts[3] === 'original' ? '오리지널' : '10의 배수'}`;
+              return (
+                <tr key={key} style={{ borderBottom: '1px solid var(--hairline)' }}>
+                  <td style={{ padding: '16px 22px', display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <AppleCell n={(i % 9) + 1} size={28} shape="realistic" leaf={false} />
+                    <span style={{ fontWeight: 600 }}>{modeLabel}</span>
+                  </td>
+                  <td style={{ padding: '16px 22px', fontFamily: 'var(--font-num)', fontSize: 22 }}>{r.playCount}</td>
+                  <td style={{ padding: '16px 22px', fontFamily: 'var(--font-num)', fontSize: 22, color: 'var(--apple)' }}>{r.highScore}</td>
+                  <td style={{ padding: '16px 22px', fontFamily: 'var(--font-num)', fontSize: 22, color: 'var(--ink-soft)' }}>{(r.totalScore / r.playCount).toFixed(1)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function LeaderboardScreen({ leaderboard, onMain, onRefresh, filters, onFilterChange }) {
+  return (
+    <div style={{
+      width: '100%', height: '100%', background: 'var(--paper)',
+      padding: '36px 44px', display: 'flex', flexDirection: 'column', gap: 24,
+      fontFamily: 'var(--font-body)', overflow: 'hidden'
+    }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--gold)', letterSpacing: '0.22em', textTransform: 'uppercase' }}>● 글로벌 랭킹 · LEADERBOARD</div>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 48, color: 'var(--ink)', fontWeight: 700, marginTop: 4, lineHeight: 1 }}>
+            명예의 전당.
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 8 }}>
+           <select value={filters.time} onChange={(e) => onFilterChange('time', e.target.value)} style={{ padding: '8px', borderRadius: 8, border: '1px solid var(--hairline)' }}>
+             <option value="120">2분 모드</option>
+             <option value="infinite">무한 모드</option>
+           </select>
+           <select value={filters.size} onChange={(e) => onFilterChange('size', e.target.value)} style={{ padding: '8px', borderRadius: 8, border: '1px solid var(--hairline)' }}>
+             <option value="17x10">17x10</option>
+             <option value="50x50">50x50</option>
+           </select>
+           <button onClick={onRefresh} style={{ padding: '8px 14px', background: 'var(--ink)', color: 'var(--paper)', border: 'none', borderRadius: 8, cursor: 'pointer' }}>조회</button>
+           <button onClick={onMain} style={{ marginLeft: 16, padding: '10px 18px', background: 'transparent', border: '1.5px solid var(--hairline)', borderRadius: 12, color: 'var(--ink-soft)', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>메인으로</button>
+        </div>
+      </div>
+
+      <div style={{
+        background: 'var(--paper)', borderRadius: 16,
+        border: '1px solid var(--hairline)', overflow: 'auto', flex: 1
+      }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{
+              background: 'var(--paper-warm)', borderBottom: '1.5px solid var(--ink)',
+              fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.2em',
+              textTransform: 'uppercase', color: 'var(--ink-soft)', textAlign: 'left'
+            }}>
+              <th style={{ padding: '14px 22px', width: 80 }}>RANK</th>
+              <th style={{ padding: '14px 22px' }}>NAME</th>
+              <th style={{ padding: '14px 22px' }}>SCORE</th>
+              <th style={{ padding: '14px 22px' }}>PLAYS</th>
+            </tr>
+          </thead>
+          <tbody>
+            {leaderboard.length === 0 ? (
+               <tr><td colSpan="4" style={{ padding: 40, textAlign: 'center', color: 'var(--ink-mute)' }}>데이터를 불러오거나 기록이 없습니다.</td></tr>
+            ) : leaderboard.map((data, i) => (
+              <tr key={i} style={{ borderBottom: '1px solid var(--hairline)', background: i < 3 ? 'rgba(233,196,106,0.05)' : 'transparent' }}>
+                <td style={{ padding: '16px 22px', fontFamily: 'var(--font-num)', fontSize: 24, color: i === 0 ? 'var(--gold)' : 'var(--ink)' }}>
+                  {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : i + 1}
                 </td>
-                <td style={{ padding: '16px 22px', fontFamily: 'var(--font-num)', fontSize: 22 }}>{r.plays}</td>
-                <td style={{ padding: '16px 22px', fontFamily: 'var(--font-num)', fontSize: 22, color: 'var(--apple)' }}>{r.best}</td>
-                <td style={{ padding: '16px 22px', fontFamily: 'var(--font-num)', fontSize: 22, color: 'var(--ink-soft)' }}>{r.avg}</td>
+                <td style={{ padding: '16px 22px', fontWeight: 600 }}>{data.name}</td>
+                <td style={{ padding: '16px 22px', fontFamily: 'var(--font-num)', fontSize: 28, color: 'var(--apple)' }}>{data.highScore}</td>
+                <td style={{ padding: '16px 22px', color: 'var(--ink-mute)' }}>{data.playCount} 회</td>
               </tr>
             ))}
           </tbody>
@@ -113,4 +192,4 @@ function RecordsScreen({ records, onMain, onRestart }) {
   );
 }
 
-Object.assign(window, { ResultScreen, RecordsScreen });
+Object.assign(window, { ResultScreen, RecordsScreen, LeaderboardScreen });

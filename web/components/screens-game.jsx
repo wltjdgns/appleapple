@@ -1,6 +1,6 @@
-// Game scene with engine integration
+// Game scene with engine integration, real-time feedback, and effects
 
-function GameGrid({ board, cellSize = 36, selection = null, cleared = new Set() }) {
+function GameGrid({ board, cellSize = 36, selection = null }) {
   const rows = board.length;
   const cols = board[0].length;
   const gap = 4;
@@ -21,29 +21,14 @@ function GameGrid({ board, cellSize = 36, selection = null, cleared = new Set() 
     }}>
       {board.map((row, r) => row.map((n, c) => {
         const key = `${r}-${c}`;
-        const isGhost = n === 0 || cleared.has(key);
         const isSelected = selection && r >= selection.r1 && r <= selection.r2 && c >= selection.c1 && c <= selection.c2;
-        return <AppleCell key={key} n={n} size={cellSize} shape="realistic" ghost={isGhost} selected={isSelected} />;
+        return <AppleCell key={key} n={n} size={cellSize} shape="realistic" selected={isSelected} />;
       }))}
-
-      {/* drag overlay visual helper */}
-      {selection && (
-        <div style={{
-          position: 'absolute',
-          left: 18 + selection.c1 * (cellSize + gap),
-          top: 18 + selection.r1 * (cellSize + gap),
-          width: (selection.c2 - selection.c1 + 1) * (cellSize + gap) - gap,
-          height: (selection.r2 - selection.r1 + 1) * (cellSize + gap) - gap,
-          border: '2.5px solid var(--leaf-light)', borderRadius: 10,
-          background: 'rgba(82,183,136,0.12)',
-          pointerEvents: 'none', boxSizing: 'border-box'
-        }}/>
-      )}
     </div>
   );
 }
 
-function HUD({ score, time, warn = false, mode, combo = 0 }) {
+function HUD({ score, time, warn = false, mode, combo = 0, onThemeToggle, themeLabel }) {
   return (
     <div style={{
       display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: 24,
@@ -66,9 +51,12 @@ function HUD({ score, time, warn = false, mode, combo = 0 }) {
       <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 12 }}>
         <div style={{ textAlign: 'right' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.2em', color: 'var(--ink-mute)', textTransform: 'uppercase' }}>{mode}</div>
-          {combo > 0 && <div style={{ fontFamily: 'var(--font-num)', fontSize: 16, color: 'var(--apple)', fontWeight: 800 }}>COMBO ×{combo}</div>}
+          <button onClick={onThemeToggle} style={{ 
+            marginTop: 4, padding: '4px 8px', fontSize: 10, background: 'var(--paper-warm)', 
+            border: '1px solid var(--hairline)', borderRadius: 4, cursor: 'pointer' 
+          }}>🎨 {themeLabel === 'original' ? 'Original' : 'Warm'}</button>
         </div>
-        <button id="quit-btn" style={{
+        <button id="quit-btn-real" style={{
           padding: '8px 14px', fontFamily: 'var(--font-mono)', fontSize: 10,
           letterSpacing: '0.2em', textTransform: 'uppercase',
           background: 'var(--paper-warm)', color: 'var(--ink-soft)',
@@ -80,15 +68,21 @@ function HUD({ score, time, warn = false, mode, combo = 0 }) {
   );
 }
 
-function GameScreen({ engine, config, onQuit, onFinish }) {
+function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) {
   const [board, setBoard] = React.useState([]);
   const [score, setScore] = React.useState(0);
   const [timeLeft, setTimeLeft] = React.useState(120);
+  const [isDragging, setIsDragging] = React.useState(false);
+  const [dragStart, setDragStart] = React.useState({ x: 0, y: 0 });
+  const [dragEnd, setDragEnd] = React.useState({ x: 0, y: 0 });
   const [selection, setSelection] = React.useState(null);
-  const [combo, setCombo] = React.useState(0);
+  const [currentSum, setCurrentSum] = React.useState(0);
   const [floatingTexts, setFloatingTexts] = React.useState([]);
-  const canvasRef = React.useRef(null);
-  const requestRef = React.useRef();
+  const containerRef = React.useRef(null);
+
+  const APPLE_SIZE = 36;
+  const GAP = 4;
+  const PADDING = 18;
 
   React.useEffect(() => {
      if (engine) {
@@ -106,7 +100,7 @@ function GameScreen({ engine, config, onQuit, onFinish }) {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timer);
-          onFinish();
+          onFinish(engine.getScore());
           return 0;
         }
         return prev - 1;
@@ -115,37 +109,95 @@ function GameScreen({ engine, config, onQuit, onFinish }) {
     return () => clearInterval(timer);
   }, [config.timeMode]);
 
-  const handleDragStart = (r, c) => {
-    setSelection({ r1: r, c1: c, r2: r, c2: c });
-  };
+  const updateSelection = (start, end) => {
+    const left = Math.min(start.x, end.x) - PADDING;
+    const top = Math.min(start.y, end.y) - PADDING;
+    const right = Math.max(start.x, end.x) - PADDING;
+    const bottom = Math.max(start.y, end.y) - PADDING;
 
-  const handleDragMove = (r, c) => {
-    if (selection) {
-      setSelection(prev => ({
-        r1: Math.min(prev.r1, r),
-        c1: Math.min(prev.c1, c),
-        r2: Math.max(prev.r2, r),
-        c2: Math.max(prev.c2, c),
-      }));
+    let r1 = 1000, c1 = 1000, r2 = -1, c2 = -1;
+    let found = false;
+
+    for (let r = 0; r < config.rows; r++) {
+      for (let c = 0; c < config.cols; c++) {
+        const centerX = c * (APPLE_SIZE + GAP) + APPLE_SIZE / 2;
+        const centerY = r * (APPLE_SIZE + GAP) + APPLE_SIZE / 2;
+
+        if (centerX >= left && centerX <= right && centerY >= top && centerY <= bottom) {
+          r1 = Math.min(r1, r);
+          c1 = Math.min(c1, c);
+          r2 = Math.max(r2, r);
+          c2 = Math.max(c2, c);
+          found = true;
+        }
+      }
+    }
+
+    if (found) {
+      const sum = engine.getAreaSum(r1, c1, r2, c2);
+      setSelection({ r1, c1, r2, c2 });
+      setCurrentSum(sum);
+    } else {
+      setSelection(null);
+      setCurrentSum(0);
     }
   };
 
-  const handleDragEnd = () => {
+  const handlePointerDown = (e) => {
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setIsDragging(true);
+    setDragStart({ x, y });
+    setDragEnd({ x, y });
+    updateSelection({ x, y }, { x, y });
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isDragging) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setDragEnd({ x, y });
+    updateSelection(dragStart, { x, y });
+  };
+
+  const handlePointerUp = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+
     if (selection) {
       const beforeApples = engine.getRemainingApples();
       if (engine.evaluateSelection(selection.r1, selection.c1, selection.r2, selection.c2, config.clearType)) {
         const removed = beforeApples - engine.getRemainingApples();
         setBoard([...engine.getBoard().map(r => [...r])]);
         setScore(engine.getScore());
-        // Combo logic could be added here
+        
+        // Combo text effect
+        let comboMsg = 'Good!';
+        if (removed >= 10) comboMsg = 'Excellent!!';
+        else if (removed >= 6) comboMsg = 'Great!';
+        
+        const newEffect = {
+          id: Date.now(),
+          text: `${comboMsg} +${removed}`,
+          x: dragEnd.x,
+          y: dragEnd.y
+        };
+        setFloatingTexts(prev => [...prev, newEffect]);
+        setTimeout(() => {
+          setFloatingTexts(prev => prev.filter(t => t.id !== newEffect.id));
+        }, 600);
+
         if (engine.getRemainingApples() === 0) {
-          onFinish();
+          onFinish(engine.getScore());
         } else if (!engine.hasAvailableMoves(config.clearType)) {
-           setTimeout(onFinish, 1000);
+           setTimeout(() => onFinish(engine.getScore()), 1000);
         }
       }
-      setSelection(null);
     }
+    setSelection(null);
+    setCurrentSum(0);
   };
 
   const formatTime = (seconds) => {
@@ -155,49 +207,81 @@ function GameScreen({ engine, config, onQuit, onFinish }) {
     return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   };
 
-  // Drag event delegation for the grid
-  const handleGridPointerDown = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left - 18; // PADDING
-    const y = e.clientY - rect.top - 18;
-    const c = Math.floor(x / 40); // CellSize(36) + Gap(4)
-    const r = Math.floor(y / 40);
-    if (r >= 0 && r < config.rows && c >= 0 && c < config.cols) {
-      handleDragStart(r, c);
-    }
-  };
-
-  const handleGridPointerMove = (e) => {
-    if (!selection) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left - 18;
-    const y = e.clientY - rect.top - 18;
-    const c = Math.floor(x / 40);
-    const r = Math.floor(y / 40);
-    if (r >= 0 && r < config.rows && c >= 0 && c < config.cols) {
-      handleDragMove(r, c);
-    }
-  };
-
   return (
     <div style={{
       width: '100%', height: '100%',
       background: `radial-gradient(ellipse at 70% 0%, rgba(244,162,97,0.12), transparent 60%), var(--paper)`,
       padding: '28px 36px', display: 'flex', flexDirection: 'column', gap: 18,
       fontFamily: 'var(--font-body)', position: 'relative', overflow: 'hidden'
-    }} onPointerUp={handleDragEnd}>
+    }} onPointerUp={handlePointerUp} onPointerLeave={handlePointerUp}>
       
       <HUD
         score={score}
         time={formatTime(timeLeft)}
         warn={timeLeft <= 10 && config.timeMode !== 'infinite'}
         mode={`${config.cols}×${config.rows} · ${config.clearType === 'original' ? '오리지널' : '10의 배수'}`}
+        onThemeToggle={onThemeToggle}
+        themeLabel={theme}
       />
 
-      <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start', flex: 1 }}>
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'auto' }}>
-          <div onPointerDown={handleGridPointerDown} onPointerMove={handleGridPointerMove}>
-             {board.length > 0 && <GameGrid board={board} cellSize={36} selection={selection} />}
+      <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start', flex: 1, minHeight: 0 }}>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'auto', position: 'relative' }}>
+          <div 
+            ref={containerRef}
+            onPointerDown={handlePointerDown} 
+            onPointerMove={handlePointerMove}
+            style={{ position: 'relative', touchAction: 'none' }}
+          >
+             {board.length > 0 && <GameGrid board={board} cellSize={APPLE_SIZE} selection={selection} />}
+             
+             {/* Pixel-based Selection Rectangle */}
+             {isDragging && (
+               <div style={{
+                 position: 'absolute',
+                 left: Math.min(dragStart.x, dragEnd.x),
+                 top: Math.min(dragStart.y, dragEnd.y),
+                 width: Math.abs(dragEnd.x - dragStart.x),
+                 height: Math.abs(dragEnd.y - dragStart.y),
+                 border: '2px solid var(--leaf-light)',
+                 background: 'rgba(82,183,136,0.12)',
+                 borderRadius: 8,
+                 pointerEvents: 'none'
+               }} />
+             )}
+
+             {/* Sum Indicator */}
+             {isDragging && currentSum > 0 && (
+               <div style={{
+                 position: 'absolute',
+                 left: dragEnd.x + 12,
+                 top: dragEnd.y - 24,
+                 padding: '4px 10px',
+                 background: (config.clearType === 'original' ? currentSum === 10 : (currentSum % 10 === 0 && currentSum <= 50)) ? 'var(--leaf)' : 'var(--ink)',
+                 color: '#fff',
+                 borderRadius: 8,
+                 fontFamily: 'var(--font-num)',
+                 fontSize: 16,
+                 fontWeight: 700,
+                 pointerEvents: 'none',
+                 whiteSpace: 'nowrap',
+                 boxShadow: '4px 4px 0 rgba(0,0,0,0.2)',
+                 zIndex: 100
+               }}>
+                 ∑ {currentSum} {(config.clearType === 'original' ? currentSum === 10 : (currentSum % 10 === 0 && currentSum <= 50)) ? '✓' : ''}
+               </div>
+             )}
+
+             {/* Combo Text Effects */}
+             {floatingTexts.map(t => (
+               <div key={t.id} className="combo-text" style={{
+                 position: 'absolute',
+                 left: t.x,
+                 top: t.y,
+                 pointerEvents: 'none'
+               }}>
+                 {t.text}
+               </div>
+             ))}
           </div>
         </div>
 
@@ -232,9 +316,6 @@ function GameScreen({ engine, config, onQuit, onFinish }) {
             </div>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-soft)', marginTop: 6 }}>
               3 + 7 = <strong style={{ color: 'var(--apple)' }}>10</strong>
-            </div>
-            <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--ink-mute)', marginTop: 8, lineHeight: 1.4 }}>
-              드래그한 영역의 합이 10일 때 사과들이 사라져요.
             </div>
           </div>
 
