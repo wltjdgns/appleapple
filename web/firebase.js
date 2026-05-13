@@ -66,13 +66,17 @@ window.loginAsGuest = () => {
 
 async function ensureUserDocument(user) {
     const userRef = doc(db, 'users', user.uid);
-    const userSnap = await getDoc(userRef);
-    if (!userSnap.exists()) {
-        await setDoc(userRef, {
-            displayName: user.displayName,
-            email: user.email,
-            records: {}
-        });
+    try {
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.exists()) {
+            await setDoc(userRef, {
+                displayName: user.displayName,
+                email: user.email || '',
+                records: {}
+            });
+        }
+    } catch (e) {
+        console.error("Error ensuring user document:", e);
     }
 }
 
@@ -125,6 +129,8 @@ window.saveGameRecord = async (config, score, playTime) => {
     const userRef = doc(db, 'users', currentUser.uid);
     try {
         const userSnap = await getDoc(userRef);
+        if (!userSnap.exists()) return;
+
         const data = userSnap.data();
         const records = data.records || {};
         const prevRecord = records[modeKey] || { playCount: 0, highScore: 0, totalScore: 0, totalPlayTime: 0 };
@@ -149,7 +155,8 @@ window.saveGameRecord = async (config, score, playTime) => {
 window.fetchAndShowRecords = async () => {
     if (!currentUser) return;
     
-    showScene('scene-records');
+    // global scope의 showScene 함수 호출 (app.js에 정의됨)
+    if (window.showScene) window.showScene('scene-records');
     
     if (isGuest) {
         renderRecords(guestRecords);
@@ -161,7 +168,11 @@ window.fetchAndShowRecords = async () => {
     try {
         const userRef = doc(db, 'users', currentUser.uid);
         const userSnap = await getDoc(userRef);
-        renderRecords(userSnap.data().records || {});
+        if (userSnap.exists()) {
+            renderRecords(userSnap.data().records || {});
+        } else {
+            recordsList.innerHTML = '<tr><td colspan="5" style="padding: 20px; text-align: center;">기록이 없습니다.</td></tr>';
+        }
     } catch (error) {
         console.error("Failed to fetch records:", error);
         recordsList.innerHTML = '<tr><td colspan="5" style="padding: 20px; text-align: center; color: red;">데이터를 불러오지 못했습니다.</td></tr>';
@@ -177,7 +188,11 @@ function renderRecords(records) {
 
     recordsList.innerHTML = '';
     Object.entries(records).forEach(([key, record]) => {
-        const [time, size, seed, type] = key.split('_');
+        const parts = key.split('_');
+        const time = parts[0];
+        const size = parts[1];
+        const type = parts[3];
+        
         const avgScore = (record.totalScore / record.playCount).toFixed(1);
         const totalTimeMin = Math.floor(record.totalPlayTime / 60);
         const totalTimeSec = record.totalPlayTime % 60;

@@ -24,7 +24,7 @@ const APPLE_SIZE = 44;
 const PADDING = 10;
 
 // 화면 전환 함수
-function showScene(sceneId) {
+window.showScene = function(sceneId) {
     document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
     document.getElementById(sceneId).classList.add('active');
     
@@ -32,7 +32,7 @@ function showScene(sceneId) {
     if (sceneId !== 'scene-game' && sceneId !== 'scene-result') {
         sounds.bgm.pause();
     }
-}
+};
 
 function startGame() {
     // 설정값 가져오기
