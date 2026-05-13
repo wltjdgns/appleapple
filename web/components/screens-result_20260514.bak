@@ -3,7 +3,7 @@
 function ResultScreen({ score, config, reason, onRestart, onNewSettings, onMain, onLeaderboard }) {
   const getMessage = () => {
     switch (reason) {
-      case 'nomoves': return "더 이상 할 수 있는게 없어!";
+      case 'nomoves': return "더 이상 가능한 수가 없습니다!";
       case 'timeover': return "시간이 다 되었습니다!";
       case 'clear': return "축하합니다! 모든 사과를 수확했어요!";
       case 'quit': return "수확을 중단했습니다.";
@@ -37,7 +37,7 @@ function ResultScreen({ score, config, reason, onRestart, onNewSettings, onMain,
         <div className="mascot-result" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <AppleMascot size={320} mood={reason === 'clear' ? "happy" : "neutral"} />
           <div style={{ marginTop: 15, fontFamily: 'var(--font-display)', fontSize: 28, color: 'var(--ink)', fontWeight: 700, fontStyle: 'italic' }}>
-            {reason === 'clear' ? "완벽한 수확이야!" : (reason === 'nomoves' ? "더 이상 할 수 있는게 없어!" : "이만큼이나 땄어!")}
+            {reason === 'clear' ? "완벽한 수확이야!" : "이만큼이나 땄어!"}
           </div>
         </div>
 
