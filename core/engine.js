@@ -117,6 +117,29 @@ class GameEngine {
     }
 
     /**
+     * 현재 보드에서 더 이상 클리어 가능한 영역이 있는지 확인함.
+     * @param {string} clearType 'original' 또는 'multiples'
+     * @returns {boolean} 가능한 수가 있으면 true
+     */
+    hasAvailableMoves(clearType = 'original') {
+        const checkMatch = (sum) => clearType === 'multiples' 
+            ? (sum % 10 === 0 && sum > 0 && sum <= 50) 
+            : (sum === 10);
+
+        for (let r1 = 0; r1 < this.rows; r1++) {
+            for (let c1 = 0; c1 < this.cols; c1++) {
+                for (let r2 = r1; r2 < this.rows; r2++) {
+                    for (let c2 = c1; c2 < this.cols; c2++) {
+                        const sum = this.getAreaSum(r1, c1, r2, c2);
+                        if (checkMatch(sum)) return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * 현재 보드 상태 반환
      */
     getBoard() {

@@ -236,7 +236,7 @@ function showComboText(removedCount, x, y) {
 
 function quitGame() {
     clearInterval(timerInterval);
-    finishGame();
+    finishGame("게임을 중단했습니다.");
 }
 
 function setupEvents() {
@@ -316,8 +316,14 @@ function setupEvents() {
                 clearInterval(timerInterval);
                 setTimeout(() => {
                     sounds.clear.play();
-                    finishGame();
+                    finishGame("모든 사과를 제거했습니다!");
                 }, 100);
+            } else if (!engine.hasAvailableMoves(gameConfig.clearType)) {
+                // 더 이상 가능한 수가 없을 때 자동 종료
+                clearInterval(timerInterval);
+                setTimeout(() => {
+                    finishGame("더 이상 제거할 수 있는 사과가 없습니다!");
+                }, 500);
             }
         }
         currentSelection = { r1: -1, c1: -1, r2: -1, c2: -1, sum: 0 };
