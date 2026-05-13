@@ -2,7 +2,7 @@
 // Used both inside the game grid and as a brand element.
 
 function AppleCell({ n = 1, size = 44, shape = "round", selected = false, ghost = false, leaf = true }) {
-  if (n === 0) return null;
+  if (n === 0) return <div style={{ width: size, height: size }} />;
   const s = size;
   const fontSize = Math.round(s * 0.5);
   const ring = selected ? (
