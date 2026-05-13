@@ -340,4 +340,3 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
 }
 
 Object.assign(window, { GameScreen });
- GameScreen });
