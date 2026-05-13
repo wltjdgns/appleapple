@@ -23,30 +23,23 @@ let currentUser = null;
 let isGuest = false;
 let guestRecords = {}; // 게스트용 임시 메모리 기록
 
-// 인증 상태 감시
+// 인증 상태 감시 (글로벌 상태만 유지)
 auth.onAuthStateChanged((user) => {
     if (user) {
         currentUser = user;
         isGuest = false;
-        updateUIForLogin(user.displayName);
         ensureUserDocument(user);
     } else if (!isGuest) {
         currentUser = null;
-        updateUIForLogout();
     }
 });
 
 function updateUIForLogin(name) {
-    document.getElementById('user-name').innerText = name;
-    document.getElementById('user-info').classList.remove('hidden');
-    document.getElementById('login-menu').classList.add('hidden');
-    document.getElementById('logged-in-menu').classList.remove('hidden');
+    // React에서 처리하므로 삭제
 }
 
 function updateUIForLogout() {
-    document.getElementById('user-info').classList.add('hidden');
-    document.getElementById('login-menu').classList.remove('hidden');
-    document.getElementById('logged-in-menu').classList.add('hidden');
+    // React에서 처리하므로 삭제
 }
 
 // 게스트 로그인 함수
