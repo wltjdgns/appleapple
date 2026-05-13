@@ -256,7 +256,10 @@
             </div>
             <div id="logged-in-menu" class="hidden" style="display: flex; flex-direction: column; gap: 15px; width: 100%;">
                 <button onclick="showScene('scene-settings')">혼자하기</button>
-                <button onclick="fetchAndShowRecords()">나의 기록</button>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="fetchAndShowRecords()" style="flex: 1;">나의 기록</button>
+                    <button onclick="fetchAndShowLeaderboard()" style="flex: 1; background-color: #fbc02d; color: #333;">리더보드</button>
+                </div>
                 <button class="disabled">같이하기 (Coming Soon)</button>
                 <button onclick="logout()" class="secondary" style="margin-top: 10px; padding: 10px; font-size: 1rem;">로그아웃</button>
             </div>
@@ -346,7 +349,48 @@
         </div>
     </div>
 
-    <!-- 5. 게임 결과 팝업 -->
+    <!-- 5. 리더보드 (글로벌 랭킹) 화면 -->
+    <div id="scene-leaderboard" class="scene" style="max-width: 800px;">
+        <h2 style="margin: 0; color: #fbc02d; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">🏆 리더보드 (글로벌 랭킹)</h2>
+        <div class="settings-card" style="width: 90vw;">
+            <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                <select id="lb-time" style="padding: 8px;">
+                    <option value="120">2분 모드</option>
+                    <option value="infinite">무한 모드</option>
+                </select>
+                <select id="lb-size" style="padding: 8px;">
+                    <option value="17x10">17x10 (기본)</option>
+                    <option value="50x50">50x50 (최대)</option>
+                </select>
+                <select id="lb-sort" style="padding: 8px; background-color: #fff9c4;">
+                    <option value="highScore">최고 점수 순</option>
+                    <option value="playCount">판수 순</option>
+                    <option value="totalPlayTime">플레이 타임 순</option>
+                </select>
+                <button onclick="fetchAndShowLeaderboard()" style="padding: 8px 15px; font-size: 0.9rem;">조회</button>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 500px;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #eee; text-align: left; background-color: #fdfdfd;">
+                            <th style="padding: 12px; width: 60px;">순위</th>
+                            <th style="padding: 12px;">닉네임</th>
+                            <th style="padding: 12px;">기록</th>
+                            <th style="padding: 12px;">판수</th>
+                            <th style="padding: 12px;">시간</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-list">
+                        <!-- 랭킹 데이터 동적 삽입 -->
+                    </tbody>
+                </table>
+            </div>
+            <button onclick="showScene('scene-main')" class="secondary" style="margin-top: 20px;">메인으로</button>
+        </div>
+    </div>
+
+    <!-- 6. 게임 결과 팝업 -->
     <div id="scene-result" class="scene">
         <h2 style="margin: 0; color: #666;">GAME OVER</h2>
         <div class="hud-label">최종 점수</div>

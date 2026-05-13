@@ -210,3 +210,74 @@ function renderRecords(records) {
         recordsList.appendChild(row);
     });
 }
+
+// 글로벌 랭킹 조회
+window.fetchAndShowLeaderboard = async () => {
+    if (window.showScene) window.showScene('scene-leaderboard');
+    
+    const timeFilter = document.getElementById('lb-time') ? document.getElementById('lb-time').value : '120';
+    const sizeFilter = document.getElementById('lb-size') ? document.getElementById('lb-size').value : '17x10';
+    const sortFilter = document.getElementById('lb-sort') ? document.getElementById('lb-sort').value : 'highScore';
+    
+    // 조건: 시간_크기_랜덤_오리지널 (기본 모드 가정)
+    const targetModeKey = `${timeFilter}_${sizeFilter}_random_original`;
+    
+    const lbList = document.getElementById('leaderboard-list');
+    lbList.innerHTML = '<tr><td colspan="5" style="padding: 20px; text-align: center;">랭킹 데이터를 불러오는 중...</td></tr>';
+    
+    try {
+        const usersSnap = await db.collection('users').get();
+        let rankingData = [];
+        
+        usersSnap.forEach(doc => {
+            const data = doc.data();
+            if (data.records && data.records[targetModeKey]) {
+                const record = data.records[targetModeKey];
+                rankingData.push({
+                    name: data.displayName || '익명 유저',
+                    highScore: record.highScore || 0,
+                    playCount: record.playCount || 0,
+                    totalPlayTime: record.totalPlayTime || 0
+                });
+            }
+        });
+        
+        if (rankingData.length === 0) {
+            lbList.innerHTML = '<tr><td colspan="5" style="padding: 20px; text-align: center;">해당 모드의 랭킹 기록이 없습니다.</td></tr>';
+            return;
+        }
+        
+        // 정렬
+        rankingData.sort((a, b) => b[sortFilter] - a[sortFilter]);
+        
+        lbList.innerHTML = '';
+        rankingData.forEach((data, index) => {
+            let rankIcon = `${index + 1}위`;
+            if (index === 0) rankIcon = '🥇 1위';
+            if (index === 1) rankIcon = '🥈 2위';
+            if (index === 2) rankIcon = '🥉 3위';
+            
+            const totalTimeMin = Math.floor(data.totalPlayTime / 60);
+            const totalTimeSec = data.totalPlayTime % 60;
+            
+            const isHighlight = sortFilter === 'highScore';
+            const scoreColor = isHighlight ? '#ff4d4d' : '#333';
+            const scoreWeight = isHighlight ? '700' : 'normal';
+
+            const row = document.createElement('tr');
+            row.style.borderBottom = '1px solid #f0f0f0';
+            row.innerHTML = `
+                <td style="padding: 12px; font-weight: bold;">${rankIcon}</td>
+                <td style="padding: 12px;">${data.name}</td>
+                <td style="padding: 12px; color: ${scoreColor}; font-weight: ${scoreWeight};">${data.highScore}</td>
+                <td style="padding: 12px;">${data.playCount}</td>
+                <td style="padding: 12px;">${totalTimeMin}분 ${totalTimeSec}초</td>
+            `;
+            lbList.appendChild(row);
+        });
+        
+    } catch (error) {
+        console.error("Failed to fetch leaderboard:", error);
+        lbList.innerHTML = '<tr><td colspan="5" style="padding: 20px; text-align: center; color: red;">데이터를 불러오지 못했습니다.</td></tr>';
+    }
+};

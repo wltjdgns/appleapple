@@ -160,27 +160,11 @@ function render() {
             if (isSelected) {
                 ctx.shadowBlur = 15;
                 ctx.shadowColor = 'rgba(255, 255, 0, 0.8)';
-                ctx.fillStyle = '#ff6666';
             } else {
                 ctx.shadowBlur = 0;
-                ctx.fillStyle = '#ff4d4d';
             }
 
-            ctx.beginPath();
-            ctx.arc(x + APPLE_SIZE/2, y + APPLE_SIZE/2, APPLE_SIZE/2 - 3, 0, Math.PI * 2);
-            ctx.fill();
-
-            // 꼭지 디자인 개선 (가독성 확보를 위해 더 작고 연하게)
-            ctx.fillStyle = 'rgba(77, 38, 0, 0.3)';
-            ctx.fillRect(x + APPLE_SIZE/2 - 1, y + 4, 2, 5);
-
-            // 숫자 가독성 강화
-            ctx.shadowBlur = 0;
-            ctx.fillStyle = 'white';
-            ctx.font = 'bold 24px "Arial Black", sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(val, x + APPLE_SIZE/2, y + APPLE_SIZE/2 + 1);
+            drawApple(ctx, x + APPLE_SIZE / 2, y + APPLE_SIZE / 2, APPLE_SIZE / 2 - 3, val, isSelected);
         }
     }
 
@@ -210,6 +194,54 @@ function render() {
 
     document.getElementById('score').innerText = engine.getScore();
     requestAnimationFrame(render);
+}
+
+/**
+ * apple_image.png 스타일의 사과 렌더링
+ */
+function drawApple(ctx, cx, cy, r, value, isSelected) {
+    ctx.save();
+    
+    // 사과 몸체 그리기 (부드러운 하트형 곡선)
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - r * 0.5);
+    ctx.bezierCurveTo(cx + r * 0.5, cy - r * 1.1, cx + r * 1.3, cy - r * 0.3, cx + r, cy);
+    ctx.bezierCurveTo(cx + r * 0.9, cy + r * 1.1, cx + r * 0.1, cy + r * 1.1, cx, cy + r * 0.7);
+    ctx.bezierCurveTo(cx - r * 0.1, cy + r * 1.1, cx - r * 0.9, cy + r * 1.1, cx - r, cy);
+    ctx.bezierCurveTo(cx - r * 1.3, cy - r * 0.3, cx - r * 0.5, cy - r * 1.1, cx, cy - r * 0.5);
+    
+    // 색상 (isSelected일 경우 밝게)
+    ctx.fillStyle = isSelected ? '#ff7777' : '#e86a5e';
+    ctx.fill();
+    
+    // 외곽선
+    ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // 꼭지 (갈색)
+    ctx.shadowBlur = 0;
+    ctx.beginPath();
+    ctx.moveTo(cx - 1, cy - r * 0.6);
+    ctx.quadraticCurveTo(cx + 2, cy - r * 1.1, cx + 5, cy - r * 1.0);
+    ctx.strokeStyle = '#8d4e33';
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    // 숫자 가독성 강화
+    ctx.fillStyle = 'white';
+    ctx.font = `bold ${Math.floor(r * 1.3)}px "Pretendard", "Arial Black", sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+    ctx.shadowBlur = 3;
+    ctx.shadowOffsetY = 2;
+    
+    ctx.fillText(value, cx, cy + 2);
+    
+    ctx.restore();
 }
 
 function showComboText(removedCount, x, y) {
