@@ -169,26 +169,49 @@ function render() {
     }
 
     if (isDragging) {
-        ctx.strokeStyle = 'rgba(0, 120, 255, 0.8)';
-        ctx.lineWidth = 2;
-        ctx.setLineDash([5, 5]);
-        ctx.strokeRect(startX, startY, endX - startX, endY - startY);
-        ctx.setLineDash([]);
+        const minX = Math.min(startX, endX);
+        const minY = Math.min(startY, endY);
+        const w = Math.abs(endX - startX);
+        const h = Math.abs(endY - startY);
         
-        ctx.fillStyle = 'rgba(0, 120, 255, 0.15)';
-        ctx.fillRect(startX, startY, endX - startX, endY - startY);
+        ctx.strokeStyle = '#52B788';
+        ctx.lineWidth = 2.5;
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        if (ctx.roundRect) {
+            ctx.roundRect(minX, minY, w, h, 10);
+        } else {
+            ctx.rect(minX, minY, w, h);
+        }
+        ctx.stroke();
+        
+        ctx.fillStyle = 'rgba(82, 183, 136, 0.12)';
+        ctx.fill();
 
         if (currentSelection.sum > 0) {
             const isMatch = gameConfig.clearType === 'multiples' 
                 ? (currentSelection.sum % 10 === 0 && currentSelection.sum <= 50) 
                 : (currentSelection.sum === 10);
                 
-            ctx.fillStyle = isMatch ? '#00cc00' : '#0078ff';
-            ctx.font = 'bold 24px Arial';
-            ctx.shadowBlur = 4;
-            ctx.shadowColor = 'white';
-            ctx.fillText(currentSelection.sum, endX + 15, endY - 15);
-            ctx.shadowBlur = 0;
+            const textBgColor = isMatch ? '#2D6A4F' : '#1F1812';
+            const textString = '∑ ' + currentSelection.sum + (isMatch ? ' ✓' : '');
+            
+            ctx.font = 'bold 16px "Pretendard"';
+            const textWidth = ctx.measureText(textString).width;
+            
+            ctx.fillStyle = textBgColor;
+            ctx.beginPath();
+            if (ctx.roundRect) {
+                ctx.roundRect(endX + 8, endY - 20, textWidth + 20, 30, 8);
+            } else {
+                ctx.rect(endX + 8, endY - 20, textWidth + 20, 30);
+            }
+            ctx.fill();
+            
+            ctx.fillStyle = '#fff';
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'left';
+            ctx.fillText(textString, endX + 18, endY - 5);
         }
     }
 
@@ -202,7 +225,40 @@ function render() {
 function drawApple(ctx, cx, cy, r, value, isSelected) {
     ctx.save();
     
-    // 사과 몸체 그리기 (부드러운 하트형 곡선)
+    // Selection ring
+    if (isSelected) {
+        ctx.beginPath();
+        ctx.arc(cx, cy + r*0.1, r * 1.15, 0, Math.PI * 2);
+        ctx.strokeStyle = '#FFD166';
+        ctx.lineWidth = r * 0.2;
+        ctx.globalAlpha = 0.95;
+        ctx.stroke();
+        ctx.globalAlpha = 1.0;
+    }
+
+    // Stem
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - r * 0.6);
+    ctx.quadraticCurveTo(cx + r*0.1, cy - r*0.8, cx + r*0.2, cy - r*0.7);
+    ctx.strokeStyle = '#6B4226'; // var(--bark)
+    ctx.lineWidth = r * 0.15;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    // Leaf
+    ctx.beginPath();
+    ctx.moveTo(cx + r*0.1, cy - r*0.7);
+    ctx.quadraticCurveTo(cx + r*0.6, cy - r*0.9, cx + r*0.7, cy - r*0.5);
+    ctx.quadraticCurveTo(cx + r*0.4, cy - r*0.4, cx + r*0.1, cy - r*0.7);
+    ctx.fillStyle = '#2D6A4F'; // var(--leaf)
+    ctx.fill();
+
+    // Body (gradient)
+    const gradient = ctx.createRadialGradient(cx - r*0.3, cy - r*0.4, r*0.1, cx, cy, r*1.2);
+    gradient.addColorStop(0, '#F25C54'); // var(--apple-bright)
+    gradient.addColorStop(0.55, '#D62828'); // var(--apple)
+    gradient.addColorStop(1, '#9B1C1C'); // var(--apple-deep)
+    
     ctx.beginPath();
     ctx.moveTo(cx, cy - r * 0.5);
     ctx.bezierCurveTo(cx + r * 0.5, cy - r * 1.1, cx + r * 1.3, cy - r * 0.3, cx + r, cy);
@@ -210,36 +266,25 @@ function drawApple(ctx, cx, cy, r, value, isSelected) {
     ctx.bezierCurveTo(cx - r * 0.1, cy + r * 1.1, cx - r * 0.9, cy + r * 1.1, cx - r, cy);
     ctx.bezierCurveTo(cx - r * 1.3, cy - r * 0.3, cx - r * 0.5, cy - r * 1.1, cx, cy - r * 0.5);
     
-    // 색상 (isSelected일 경우 밝게)
-    ctx.fillStyle = isSelected ? '#ff7777' : '#e86a5e';
+    ctx.fillStyle = gradient;
     ctx.fill();
     
-    // 외곽선
-    ctx.strokeStyle = 'rgba(0,0,0,0.1)';
-    ctx.lineWidth = 1;
-    ctx.stroke();
-
-    // 꼭지 (갈색)
-    ctx.shadowBlur = 0;
+    // Highlight
+    ctx.save();
     ctx.beginPath();
-    ctx.moveTo(cx - 1, cy - r * 0.6);
-    ctx.quadraticCurveTo(cx + 2, cy - r * 1.1, cx + 5, cy - r * 1.0);
-    ctx.strokeStyle = '#8d4e33';
-    ctx.lineWidth = 3;
-    ctx.lineCap = 'round';
-    ctx.stroke();
+    ctx.translate(cx - r*0.3, cy - r*0.3);
+    ctx.rotate(-30 * Math.PI / 180);
+    ctx.ellipse(0, 0, r*0.25, r*0.15, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.fill();
+    ctx.restore();
 
-    // 숫자 가독성 강화
-    ctx.fillStyle = 'white';
-    ctx.font = `bold ${Math.floor(r * 1.3)}px "Pretendard", "Arial Black", sans-serif`;
+    // Number
+    ctx.fillStyle = '#FFF7E8';
+    ctx.font = `900 ${Math.floor(r * 1.0)}px "Pretendard", "IBM Plex Sans KR", sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-    ctx.shadowBlur = 3;
-    ctx.shadowOffsetY = 2;
-    
-    ctx.fillText(value, cx, cy + 2);
+    ctx.fillText(value, cx, cy + r*0.2);
     
     ctx.restore();
 }

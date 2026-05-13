@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사과게임 (Apple Game)</title>
+
+    <!-- 폰트 로드 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&family=DM+Serif+Display:ital@0;1&family=Hahmlet:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tokens.css">
+
     <style>
         body {
             margin: 0;
@@ -12,9 +19,12 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #f8f9fa;
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: var(--font-body);
             overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         .scene {
@@ -38,11 +48,20 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        h1, h2 {
+            font-family: var(--font-display);
+            color: var(--ink);
+            letter-spacing: -0.04em;
+        }
+
         h1 {
-            font-size: 3rem;
-            color: #ff4d4d;
+            font-size: 4rem;
             margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            line-height: 1.1;
+        }
+        
+        h1 span {
+            color: var(--apple);
         }
 
         .menu-buttons {
@@ -53,22 +72,23 @@
         }
 
         button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            font-weight: 600;
+            padding: 16px 24px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: var(--font-body);
             cursor: pointer;
-            border: none;
-            border-radius: 12px;
-            background-color: #ff4d4d;
+            border: 1.5px solid transparent;
+            border-radius: 14px;
+            background-color: var(--apple);
             color: white;
             transition: all 0.2s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 0 #6B1212 inset, 0 -2px 0 #8E1A1A inset, 0 8px 18px rgba(155,28,28,0.25);
+            letter-spacing: -0.01em;
         }
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-            background-color: #ff3333;
+            box-shadow: 0 1px 0 #6B1212 inset, 0 -2px 0 #8E1A1A inset, 0 10px 24px rgba(155,28,28,0.35);
         }
 
         button:active {
@@ -76,22 +96,32 @@
         }
 
         button.secondary {
-            background-color: #6c757d;
+            background-color: var(--paper-warm);
+            color: var(--ink);
+            border-color: var(--hairline);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 -2px 0 rgba(0,0,0,0.06) inset, 0 4px 12px rgba(107,66,38,0.08);
+        }
+
+        button.secondary:hover {
+            background-color: var(--paper-dark);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 -2px 0 rgba(0,0,0,0.06) inset, 0 6px 16px rgba(107,66,38,0.12);
         }
 
         button.disabled {
-            background-color: #dee2e6;
-            color: #adb5bd;
+            background-color: var(--paper-warm);
+            color: var(--ink-mute);
             cursor: not-allowed;
             box-shadow: none;
+            opacity: 0.6;
         }
 
         /* Settings Form */
         .settings-card {
-            background: white;
+            background: var(--paper-warm);
             padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-radius: var(--r-xl);
+            border: 1.5px solid var(--hairline);
+            box-shadow: var(--shadow-card);
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -106,22 +136,25 @@
         }
 
         .setting-item label {
-            font-weight: 600;
-            color: #495057;
-            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--ink);
+            font-size: 0.95rem;
         }
 
         select, input {
             padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
+            border: 1.5px solid var(--hairline);
+            border-radius: 10px;
             font-size: 1rem;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--font-body);
             transition: border-color 0.2s;
         }
 
         select:focus, input:focus {
             outline: none;
-            border-color: #ff4d4d;
+            border-color: var(--apple);
         }
 
         .grid-inputs {
@@ -141,47 +174,61 @@
         }
 
         canvas {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background-color: var(--paper);
+            border: 1.5px solid var(--ink);
+            border-radius: 18px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 8px 24px rgba(107,66,38,0.10);
             cursor: crosshair;
             max-width: 95vw;
             max-height: 80vh;
         }
 
         #hud {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
             width: 100%;
             margin-bottom: 15px;
-            padding: 15px 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 14px 22px;
+            background: var(--paper);
+            border: 1.5px solid var(--ink);
+            border-radius: 16px;
+            box-shadow: 4px 4px 0 var(--ink);
         }
 
         .hud-item {
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .hud-item.center {
             align-items: center;
+            text-align: center;
         }
 
         .hud-label {
-            font-size: 0.75rem;
-            color: #adb5bd;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--ink-mute);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.2em;
         }
 
         .hud-value {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #212529;
+            font-family: var(--font-num);
+            font-size: 36px;
+            color: var(--ink);
+            line-height: 1;
+            margin-top: 4px;
+        }
+
+        #timer {
+            font-size: 48px;
         }
 
         .timer-warning {
-            color: #ff4d4d;
+            color: var(--apple) !important;
             animation: pulse 1s infinite;
         }
 
@@ -192,47 +239,49 @@
         }
 
         .game-info-badge {
-            font-size: 0.8rem;
-            background: #f1f3f5;
-            padding: 4px 10px;
-            border-radius: 20px;
-            color: #495057;
-            font-weight: 500;
+            font-family: var(--font-body);
+            font-size: 13px;
+            color: var(--ink);
+            font-weight: 700;
+            margin-top: 4px;
         }
 
         /* Result Popup */
         #scene-result {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--paper-warm);
             padding: 40px;
             border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            backdrop-filter: blur(10px);
+            border: 1.5px solid var(--ink);
+            box-shadow: var(--shadow-deep);
             z-index: 100;
         }
 
         .result-score {
+            font-family: var(--font-num);
             font-size: 5rem;
-            color: #ff4d4d;
+            color: var(--apple);
             font-weight: 800;
             margin: 10px 0;
-            text-shadow: 0 5px 15px rgba(255, 77, 77, 0.3);
+            text-shadow: 0 5px 15px rgba(214, 40, 40, 0.2);
+            line-height: 1;
         }
 
         .combo-text {
             position: absolute;
             pointer-events: none;
+            font-family: var(--font-num);
             font-weight: 900;
             font-style: italic;
-            color: #ff4d4d;
-            text-shadow: 2px 2px 0 white, -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white;
+            color: var(--apple);
+            text-shadow: 2px 2px 0 var(--paper), -2px -2px 0 var(--paper), 2px -2px 0 var(--paper), -2px 2px 0 var(--paper), 4px 4px 0 var(--ink);
             animation: comboPop 0.5s ease-out forwards;
             z-index: 50;
         }
 
         @keyframes comboPop {
-            0% { transform: scale(0.5); opacity: 0; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); opacity: 0; transform: translateY(-50px); }
+            0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 0; transform: translateY(-50px); }
         }
 
         .hidden { display: none !important; }
@@ -242,7 +291,7 @@
 
     <!-- 1. 메인 화면 -->
     <div id="scene-main" class="scene active">
-        <h1>사과게임</h1>
+        <h1>사과<br>사과<span>게임</span></h1>
         <div id="user-info" class="hidden" style="margin-bottom: 20px; font-weight: 500;">
             환영합니다, <span id="user-name" style="color: #ff4d4d; font-weight: 700;"></span>님!
         </div>
