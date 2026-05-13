@@ -78,7 +78,7 @@ class GameEngine {
         const sum = this.getAreaSum(r1, c1, r2, c2);
         
         const isMatch = clearType === 'multiples' 
-            ? (sum % 10 === 0 && sum > 0) 
+            ? (sum % 10 === 0 && sum > 0 && sum <= 50) 
             : (sum === 10);
 
         if (isMatch) {

@@ -157,7 +157,7 @@ function render() {
 
         if (currentSelection.sum > 0) {
             const isMatch = gameConfig.clearType === 'multiples' 
-                ? (currentSelection.sum % 10 === 0) 
+                ? (currentSelection.sum % 10 === 0 && currentSelection.sum <= 50) 
                 : (currentSelection.sum === 10);
                 
             ctx.fillStyle = isMatch ? '#00cc00' : '#0078ff';
