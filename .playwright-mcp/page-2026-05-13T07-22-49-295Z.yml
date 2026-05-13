@@ -1,0 +1,7 @@
+- generic [ref=e2]:
+  - heading "사과게임" [level=1] [ref=e3]
+  - generic [ref=e5]:
+    - button "구글 로그인" [ref=e6] [cursor=pointer]
+    - generic [ref=e7]:
+      - textbox "게스트 닉네임" [ref=e8]
+      - button "게스트 시작" [ref=e9] [cursor=pointer]

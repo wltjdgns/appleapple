@@ -1,9 +1,7 @@
 /**
- * firebase.js - Firebase 인증 및 Firestore 연동 모듈
+ * firebase.js - Firebase 인증 및 Firestore 연동 (v8 Compat 버전)
+ * 로컬 file:// 프로토콜 호환성을 위해 전역 firebase 객체를 사용합니다.
  */
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc, updateDoc, increment } from 'firebase/firestore';
 
 // TODO: Firebase Console에서 발급받은 설정값으로 교체하세요.
 const firebaseConfig = {
@@ -15,17 +13,18 @@ const firebaseConfig = {
   appId: "1:1091859124353:web:db8b3cd581a6c778e53d80"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const provider = new GoogleAuthProvider();
+// 초기화
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const provider = new firebase.auth.GoogleAuthProvider();
 
 let currentUser = null;
 let isGuest = false;
 let guestRecords = {}; // 게스트용 임시 메모리 기록
 
 // 인증 상태 감시
-onAuthStateChanged(auth, (user) => {
+auth.onAuthStateChanged((user) => {
     if (user) {
         currentUser = user;
         isGuest = false;
@@ -65,11 +64,11 @@ window.loginAsGuest = () => {
 };
 
 async function ensureUserDocument(user) {
-    const userRef = doc(db, 'users', user.uid);
+    const userRef = db.collection('users').doc(user.uid);
     try {
-        const userSnap = await getDoc(userRef);
-        if (!userSnap.exists()) {
-            await setDoc(userRef, {
+        const userSnap = await userRef.get();
+        if (!userSnap.exists) {
+            await userRef.set({
                 displayName: user.displayName,
                 email: user.email || '',
                 records: {}
@@ -84,10 +83,10 @@ async function ensureUserDocument(user) {
 window.login = async () => {
     try {
         isGuest = false;
-        await signInWithPopup(auth, provider);
+        await auth.signInWithPopup(provider);
     } catch (error) {
         console.error("Login failed:", error);
-        alert("로그인에 실패했습니다.");
+        alert("로그인에 실패했습니다. (로컬 환경에서는 보안 정책으로 인해 작동하지 않을 수 있습니다.)");
     }
 };
 
@@ -99,7 +98,7 @@ window.logout = async () => {
             currentUser = null;
             updateUIForLogout();
         } else {
-            await signOut(auth);
+            await auth.signOut();
         }
     } catch (error) {
         console.error("Logout failed:", error);
@@ -126,10 +125,10 @@ window.saveGameRecord = async (config, score, playTime) => {
         return;
     }
 
-    const userRef = doc(db, 'users', currentUser.uid);
+    const userRef = db.collection('users').doc(currentUser.uid);
     try {
-        const userSnap = await getDoc(userRef);
-        if (!userSnap.exists()) return;
+        const userSnap = await userRef.get();
+        if (!userSnap.exists) return;
 
         const data = userSnap.data();
         const records = data.records || {};
@@ -142,10 +141,10 @@ window.saveGameRecord = async (config, score, playTime) => {
             totalPlayTime: prevRecord.totalPlayTime + playTime
         };
 
-        await updateDoc(userRef, {
-            [`records.${modeKey}`]: updatedRecord
-        });
-        console.log("Record saved successfully");
+        const updateData = {};
+        updateData[`records.${modeKey}`] = updatedRecord;
+        await userRef.update(updateData);
+        console.log("Record saved successfully to Firestore");
     } catch (error) {
         console.error("Failed to save record:", error);
     }
@@ -155,7 +154,6 @@ window.saveGameRecord = async (config, score, playTime) => {
 window.fetchAndShowRecords = async () => {
     if (!currentUser) return;
     
-    // global scope의 showScene 함수 호출 (app.js에 정의됨)
     if (window.showScene) window.showScene('scene-records');
     
     if (isGuest) {
@@ -166,9 +164,9 @@ window.fetchAndShowRecords = async () => {
     const recordsList = document.getElementById('records-list');
     recordsList.innerHTML = '<tr><td colspan="5" style="padding: 20px; text-align: center;">불러오는 중...</td></tr>';
     try {
-        const userRef = doc(db, 'users', currentUser.uid);
-        const userSnap = await getDoc(userRef);
-        if (userSnap.exists()) {
+        const userRef = db.collection('users').doc(currentUser.uid);
+        const userSnap = await userRef.get();
+        if (userSnap.exists) {
             renderRecords(userSnap.data().records || {});
         } else {
             recordsList.innerHTML = '<tr><td colspan="5" style="padding: 20px; text-align: center;">기록이 없습니다.</td></tr>';
