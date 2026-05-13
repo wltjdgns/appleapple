@@ -99,6 +99,27 @@ window.logout = async () => {
 };
 
 /**
+ * 피드백 저장 함수
+ */
+window.saveFeedback = async (type, title, content) => {
+    try {
+        await db.collection('feedback').add({
+            type,
+            title,
+            content,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            uid: currentUser ? currentUser.uid : 'anonymous',
+            displayName: currentUser ? currentUser.displayName : '익명'
+        });
+        console.log("Feedback saved successfully");
+        return true;
+    } catch (error) {
+        console.error("Failed to save feedback:", error);
+        return false;
+    }
+};
+
+/**
  * 게임 결과 저장
  */
 window.saveGameRecord = async (config, score, playTime) => {

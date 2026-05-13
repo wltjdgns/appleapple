@@ -1,4 +1,88 @@
-// Main scene variants
+// Main scene components with Feedback Modal
+
+function FeedbackModal({ isOpen, onClose, type }) {
+  const [title, setTitle] = React.useState('');
+  const [content, setContent] = React.useState('');
+  const [isSending, setIsSending] = React.useState(false);
+
+  if (!isOpen) return null;
+
+  const handleSubmit = async () => {
+    if (!title.trim() || !content.trim()) {
+      alert('제목과 내용을 모두 입력해주세요.');
+      return;
+    }
+    setIsSending(true);
+    const success = await window.saveFeedback(type, title, content);
+    setIsSending(false);
+    if (success) {
+      alert('소중한 의견 감사합니다!');
+      setTitle('');
+      setContent('');
+      onClose();
+    } else {
+      alert('전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    }
+  };
+
+  return (
+    <div style={{
+      position: 'absolute', inset: 0, zIndex: 1000,
+      background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      backdropFilter: 'blur(4px)'
+    }}>
+      <div style={{
+        width: '90%', maxWidth: 500, background: 'var(--paper-warm)', borderRadius: 24,
+        padding: 32, boxShadow: '0 20px 40px rgba(0,0,0,0.2)', border: '1.5px solid var(--ink)',
+        position: 'relative'
+      }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, marginBottom: 20, color: 'var(--ink)' }}>
+          {type === 'bug' ? '🐞 버그 제보' : '💡 문의 및 개선점'}
+        </h2>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <input 
+            type="text" 
+            placeholder="제목을 입력하세요" 
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            style={{
+              padding: '14px', borderRadius: 12, border: '1px solid var(--hairline)',
+              fontFamily: 'var(--font-body)', fontSize: 16
+            }}
+          />
+          <textarea 
+            placeholder="상세 내용을 입력하세요" 
+            rows={5}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            style={{
+              padding: '14px', borderRadius: 12, border: '1px solid var(--hairline)',
+              fontFamily: 'var(--font-body)', fontSize: 16, resize: 'none'
+            }}
+          />
+        </div>
+        <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
+          <button 
+            onClick={onClose}
+            style={{
+              flex: 1, padding: '14px', borderRadius: 12, border: '1px solid var(--hairline)',
+              background: 'var(--paper)', cursor: 'pointer', fontWeight: 600
+            }}
+          >취소</button>
+          <button 
+            onClick={handleSubmit}
+            disabled={isSending}
+            style={{
+              flex: 1, padding: '14px', borderRadius: 12, border: 'none',
+              background: 'var(--apple)', color: '#fff', cursor: 'pointer', fontWeight: 600,
+              opacity: isSending ? 0.7 : 1
+            }}
+          >{isSending ? '전송 중...' : '전송하기'}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function PrimaryButton({ children, variant = "primary", disabled = false, icon = null, onClick }) {
   const styles = {
@@ -26,6 +110,14 @@ function PrimaryButton({ children, variant = "primary", disabled = false, icon =
 }
 
 function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout, onLoginAsGuest }) {
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [modalType, setModalType] = React.useState('bug');
+
+  const openModal = (type) => {
+    setModalType(type);
+    setModalOpen(true);
+  };
+
   return (
     <>
     <style>{`
@@ -67,14 +159,8 @@ function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout
         </div>
 
         <div>
-          <div style={{
-            fontFamily: 'var(--font-en)', fontSize: 14, letterSpacing: '0.30em',
-            color: 'var(--apple-deep)', textTransform: 'uppercase', marginBottom: 14, marginTop: 20
-          }}>
-            Orchard · Sum to Ten
-          </div>
           <h1 className="main-title" style={{
-            fontFamily: 'var(--font-display)', color: 'var(--ink)', fontWeight: 700
+            fontFamily: 'var(--font-display)', color: 'var(--ink)', fontWeight: 700, marginTop: 40
           }}>
             사과<br/>사과<span style={{ color: 'var(--apple)' }}>게임</span>
           </h1>
@@ -118,6 +204,18 @@ function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout
                   border: '1px solid var(--hairline)', borderRadius: 10, cursor: 'pointer'
                 }}>리더보드</button>
               </div>
+              <div style={{ display: 'flex', gap: 12, marginTop: 4 }}>
+                <button onClick={() => openModal('bug')} style={{
+                  flex: 1, padding: '10px', fontFamily: 'inherit', fontSize: 12, fontWeight: 600,
+                  background: 'var(--paper-warm)', color: 'var(--ink-soft)',
+                  border: '1px solid var(--hairline)', borderRadius: 10, cursor: 'pointer'
+                }}>[버그제보]</button>
+                <button onClick={() => openModal('suggestion')} style={{
+                  flex: 1, padding: '10px', fontFamily: 'inherit', fontSize: 12, fontWeight: 600,
+                  background: 'var(--paper-warm)', color: 'var(--ink-soft)',
+                  border: '1px solid var(--hairline)', borderRadius: 10, cursor: 'pointer'
+                }}>[문의/개선점]</button>
+              </div>
               <button onClick={onLogout} style={{
                 padding: '8px', background: 'transparent', border: 'none', color: 'var(--ink-mute)',
                 fontSize: 12, cursor: 'pointer', textDecoration: 'underline'
@@ -128,9 +226,9 @@ function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout
 
         <div style={{
           fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.15em',
-          color: 'var(--ink-mute)', textTransform: 'uppercase'
+          color: 'var(--ink-mute)', textTransform: 'uppercase', textAlign: 'center'
         }}>
-          v0.1 · integrated orchard build · made with 🍎
+          Made By Sunghoon Ji
         </div>
       </div>
 
@@ -161,19 +259,13 @@ function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout
         }}>
           오늘도 한바구니, <span style={{ color: 'var(--apple)' }}>같이 따자!</span>
         </div>
-
-        {/* footer tape */}
-        <div style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0,
-          padding: '12px 28px', background: 'var(--ink)', color: 'var(--paper)',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase'
-        }}>
-          <span>토토 농장 직송</span>
-          <span style={{ color: 'var(--honey)' }}>★ ★ ★ ★ ★</span>
-          <span>Hand-Picked Daily</span>
-        </div>
       </div>
+
+      <FeedbackModal 
+        isOpen={modalOpen} 
+        onClose={() => setModalOpen(false)} 
+        type={modalType} 
+      />
     </div>
     </>
   );

@@ -1,14 +1,24 @@
 // Result & Records components
 
-function ResultScreen({ score, config, onRestart, onNewSettings, onMain }) {
+function ResultScreen({ score, config, reason, onRestart, onNewSettings, onMain, onLeaderboard }) {
+  const getMessage = () => {
+    switch (reason) {
+      case 'nomoves': return "더 이상 가능한 수가 없습니다!";
+      case 'timeover': return "시간이 다 되었습니다!";
+      case 'clear': return "축하합니다! 모든 사과를 수확했어요!";
+      case 'quit': return "수확을 중단했습니다.";
+      default: return "수확 완료!";
+    }
+  };
+
   return (
     <>
     <style>{`
-      .result-layout { padding: clamp(20px, 4vw, 36px); }
-      .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; position: relative; z-index: 1; flex: 1; }
-      .result-score { font-size: clamp(80px, 12vw, 180px); line-height: 0.9; }
-      .mascot-result svg { width: clamp(180px, 25vw, 280px); height: auto; }
-      @media (max-width: 800px) {
+      .result-layout { padding: clamp(24px, 5vw, 44px); }
+      .result-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; align-items: center; position: relative; z-index: 1; flex: 1; }
+      .result-score { font-size: clamp(100px, 15vw, 200px); line-height: 0.8; }
+      .mascot-result svg { width: clamp(200px, 30vw, 320px); height: auto; }
+      @media (max-width: 850px) {
         .result-grid { grid-template-columns: 1fr; text-align: center; }
         .mascot-result { display: none; }
       }
@@ -24,42 +34,54 @@ function ResultScreen({ score, config, onRestart, onNewSettings, onMain }) {
       <div style={{ position: 'absolute', right: '6%', top: '12%', transform: 'rotate(18deg)', opacity: 0.6 }}><AppleCell n={3} size={44} shape="realistic" /></div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 1 }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.22em', color: 'var(--ink-mute)', textTransform: 'uppercase' }}>
-          ── GAME OVER · FINISHED
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.22em', color: 'var(--ink-mute)', textTransform: 'uppercase' }}>
+          ── {getMessage()}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{
-            padding: '4px 12px', background: 'var(--paper-warm)',
+            padding: '6px 16px', background: 'var(--paper-warm)',
             borderRadius: 999, border: '1px solid var(--hairline)',
-            fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-soft)', letterSpacing: '0.05em'
+            fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-soft)', letterSpacing: '0.05em'
           }}>{config.cols} × {config.rows} · {config.clearType === 'original' ? '오리지널' : '10의 배수'}</span>
         </div>
       </div>
 
       <div className="result-grid">
         <div className="mascot-result" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <AppleMascot size={280} mood="happy" />
-          <div style={{ marginTop: 10, fontFamily: 'var(--font-display)', fontSize: 24, color: 'var(--ink)', fontWeight: 700, fontStyle: 'italic' }}>
-            "이만큼 따왔어!"
+          <AppleMascot size={320} mood={reason === 'clear' ? "happy" : "neutral"} />
+          <div style={{ marginTop: 15, fontFamily: 'var(--font-display)', fontSize: 28, color: 'var(--ink)', fontWeight: 700, fontStyle: 'italic' }}>
+            {reason === 'clear' ? "완벽한 수확이야!" : "이만큼이나 땄어!"}
           </div>
         </div>
 
         <div>
-          <div style={{ fontFamily: 'var(--font-en)', fontSize: 16, color: 'var(--apple-deep)', letterSpacing: '0.3em', textTransform: 'uppercase' }}>
+          <div style={{ fontFamily: 'var(--font-en)', fontSize: 18, color: 'var(--apple-deep)', letterSpacing: '0.3em', textTransform: 'uppercase' }}>
             Final Harvest
           </div>
           <div className="result-score" style={{
             fontFamily: 'var(--font-num)', color: 'var(--apple)',
-            letterSpacing: '-0.04em', marginTop: 8
+            letterSpacing: '-0.04em', marginTop: 10, fontWeight: 900
           }}>
             {score}
           </div>
 
-          <div style={{ marginTop: 30, display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <PrimaryButton onClick={onRestart} variant="primary">같은 모드로 한 번 더 →</PrimaryButton>
-            <div style={{ display: 'flex', gap: 10 }}>
-              <div style={{ flex: 1 }}><PrimaryButton onClick={onNewSettings} variant="secondary">다른 설정</PrimaryButton></div>
-              <div style={{ flex: 1 }}><PrimaryButton onClick={onMain} variant="ghost">메인으로</PrimaryButton></div>
+          <div style={{ marginTop: 40, display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <div style={{ width: '100%', maxWidth: 400 }}>
+              <PrimaryButton onClick={onRestart} variant="primary">같은 모드로 한 번 더 →</PrimaryButton>
+            </div>
+            <div style={{ display: 'flex', gap: 12, width: '100%', maxWidth: 400 }}>
+              <button onClick={onNewSettings} style={{
+                flex: 1, padding: '14px', borderRadius: 14, border: '1.5px solid var(--hairline)',
+                background: 'var(--paper-warm)', color: 'var(--ink)', fontWeight: 700, cursor: 'pointer', fontSize: 15
+              }}>다른 설정</button>
+              <button onClick={onMain} style={{
+                flex: 1, padding: '14px', borderRadius: 14, border: '1.5px solid var(--hairline)',
+                background: 'var(--paper)', color: 'var(--ink-soft)', fontWeight: 700, cursor: 'pointer', fontSize: 15
+              }}>메인으로</button>
+              <button onClick={onLeaderboard} style={{
+                flex: 1, padding: '14px', borderRadius: 14, border: '1.5px solid var(--hairline)',
+                background: 'var(--ink)', color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: 15
+              }}>리더보드</button>
             </div>
           </div>
         </div>

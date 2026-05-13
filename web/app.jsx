@@ -31,6 +31,7 @@ function App() {
   const [leaderboard, setLeaderboard] = useState([]);
   const [lbFilters, setLbFilters] = useState({ time: '120', size: '17x10', sort: 'highScore', clearType: 'original' });
   const [finalScore, setFinalScore] = useState(0);
+  const [finishReason, setFinishReason] = useState('quit');
 
   // Apply theme to :root
   useEffect(() => {
@@ -92,8 +93,9 @@ function App() {
     setScreen('game');
   };
 
-  const finishGame = (score) => {
+  const finishGame = (score, reason = 'quit') => {
     setFinalScore(score);
+    setFinishReason(reason);
     const playTime = 120; 
     if (window.saveGameRecord) {
       window.saveGameRecord(gameConfig, score, playTime);
@@ -172,7 +174,7 @@ function App() {
             theme={theme}
             onThemeToggle={() => setTheme(t => t === 'original' ? 'warm' : 'original')}
             onQuit={() => setScreen('main')}
-            onFinish={() => finishGame(engine.getScore())}
+            onFinish={(score, reason) => finishGame(score, reason)}
           />
         );
       case 'result':
@@ -180,9 +182,11 @@ function App() {
           <ResultScreen
             score={finalScore}
             config={gameConfig}
+            reason={finishReason}
             onRestart={startGame}
             onNewSettings={() => setScreen('settings')}
             onMain={() => setScreen('main')}
+            onLeaderboard={fetchLeaderboard}
           />
         );
       case 'records':

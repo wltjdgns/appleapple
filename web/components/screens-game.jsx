@@ -1,69 +1,77 @@
-// Game scene with engine integration, real-time feedback, and effects
+// Game scene components
 
-function GameGrid({ board, cellSize = 36, selection = null }) {
+function HUD({ score, time, warn, mode, onThemeToggle, themeLabel, onQuit }) {
+  return (
+    <div style={{
+      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      padding: '12px 20px', background: 'var(--ink)', borderRadius: 18, color: '#fff',
+      boxShadow: '0 8px 24px rgba(0,0,0,0.12)', zIndex: 10
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', opacity: 0.6, letterSpacing: '0.1em' }}>SCORE</span>
+          <span style={{ fontSize: 28, fontFamily: 'var(--font-num)', fontWeight: 800, lineHeight: 1 }}>{score}</span>
+        </div>
+        <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.1)' }}/>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', opacity: 0.6, letterSpacing: '0.1em' }}>TIME</span>
+          <span style={{ 
+            fontSize: 28, fontFamily: 'var(--font-num)', fontWeight: 800, lineHeight: 1,
+            color: warn ? '#ff4d4d' : '#fff'
+          }}>{time}</span>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+         <button onClick={onThemeToggle} style={{
+           padding: '8px 14px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.2)',
+           background: 'rgba(255,255,255,0.05)', color: '#fff', cursor: 'pointer',
+           fontSize: 16, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6
+         }}>
+           🎨 <span style={{ fontSize: 13 }}>{themeLabel === 'original' ? '오리지널' : '따뜻함'}</span>
+         </button>
+      </div>
+    </div>
+  );
+}
+
+function GameGrid({ board, cellSize, selection }) {
+  const GAP = 2;
   const rows = board.length;
   const cols = board[0].length;
-  const gap = 4;
 
   return (
     <div style={{
       display: 'grid',
       gridTemplateColumns: `repeat(${cols}, ${cellSize}px)`,
       gridTemplateRows: `repeat(${rows}, ${cellSize}px)`,
-      gap,
-      background: 'var(--paper-warm)',
-      padding: 18, borderRadius: 18,
-      border: '1.5px solid var(--ink)',
-      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.6), 0 8px 24px rgba(107,66,38,0.10)',
-      position: 'relative',
-      userSelect: 'none',
-      touchAction: 'none'
+      gap: GAP,
+      padding: 4,
+      background: 'var(--paper-dark)',
+      borderRadius: 12,
+      border: '2px solid var(--hairline)',
+      boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
     }}>
-      {board.map((row, r) => row.map((n, c) => {
-        const key = `${r}-${c}`;
-        const isSelected = selection && r >= selection.r1 && r <= selection.r2 && c >= selection.c1 && c <= selection.c2;
-        return <AppleCell key={key} n={n} size={cellSize} shape="realistic" selected={isSelected} />;
+      {board.map((row, r) => row.map((apple, c) => {
+        const isSelected = selection && 
+          r >= selection.r1 && r <= selection.r2 && 
+          c >= selection.c1 && c <= selection.c2;
+        
+        return (
+          <div key={`${r}-${c}`} style={{ position: 'relative' }}>
+            {apple > 0 ? (
+              <AppleCell 
+                n={apple} 
+                size={cellSize} 
+                shape="realistic" 
+                selected={isSelected} 
+              />
+            ) : (
+              <div style={{ width: cellSize, height: cellSize }} />
+            )}
+          </div>
+        );
       }))}
-    </div>
-  );
-}
-
-function HUD({ score, time, warn = false, mode, combo = 0, onThemeToggle, themeLabel, onQuit }) {
-  return (
-    <div style={{
-      display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: 24,
-      padding: '14px 22px', background: 'var(--paper)',
-      borderRadius: 16, border: '1.5px solid var(--ink)',
-      boxShadow: '4px 4px 0 var(--ink)'
-    }}>
-      <div>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.2em', color: 'var(--ink-mute)', textTransform: 'uppercase' }}>SCORE</div>
-        <div style={{ fontFamily: 'var(--font-num)', fontSize: 36, color: 'var(--ink)', lineHeight: 1 }}>{score}</div>
-      </div>
-      <div style={{ textAlign: 'center' }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.2em', color: 'var(--ink-mute)', textTransform: 'uppercase' }}>TIME</div>
-        <div style={{
-          fontFamily: 'var(--font-num)', fontSize: 56, color: warn ? 'var(--apple)' : 'var(--ink)',
-          lineHeight: 1, letterSpacing: '0.02em',
-          animation: warn ? 'pulse 1s infinite' : 'none'
-        }}>{time}</div>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 12 }}>
-        <div style={{ textAlign: 'right' }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.2em', color: 'var(--ink-mute)', textTransform: 'uppercase' }}>{mode}</div>
-          <button onClick={onThemeToggle} style={{ 
-            marginTop: 4, padding: '4px 8px', fontSize: 10, background: 'var(--paper-warm)', 
-            border: '1px solid var(--hairline)', borderRadius: 4, cursor: 'pointer' 
-          }}>🎨 {themeLabel === 'original' ? 'Original' : 'Warm'}</button>
-        </div>
-        <button id="quit-btn-real" onClick={onQuit} style={{
-          padding: '8px 14px', fontFamily: 'var(--font-mono)', fontSize: 10,
-          letterSpacing: '0.2em', textTransform: 'uppercase',
-          background: 'var(--paper-warm)', color: 'var(--ink-soft)',
-          border: '1.5px solid var(--ink)', borderRadius: 8, cursor: 'pointer',
-          boxShadow: '2px 2px 0 var(--ink)'
-        }}>나가기</button>
-      </div>
     </div>
   );
 }
@@ -71,18 +79,18 @@ function HUD({ score, time, warn = false, mode, combo = 0, onThemeToggle, themeL
 function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) {
   const [board, setBoard] = React.useState([]);
   const [score, setScore] = React.useState(0);
-  const [timeLeft, setTimeLeft] = React.useState(120);
+  const [timeLeft, setTimeLeft] = React.useState(0);
   const [isDragging, setIsDragging] = React.useState(false);
   const [dragStart, setDragStart] = React.useState({ x: 0, y: 0 });
   const [dragEnd, setDragEnd] = React.useState({ x: 0, y: 0 });
   const [selection, setSelection] = React.useState(null);
   const [currentSum, setCurrentSum] = React.useState(0);
   const [floatingTexts, setFloatingTexts] = React.useState([]);
+  const [appleSize, setAppleSize] = React.useState(40);
   const containerRef = React.useRef(null);
 
-  const [appleSize, setAppleSize] = React.useState(36);
-  const GAP = 4;
-  const PADDING = 18;
+  const GAP = 2;
+  const PADDING = 4;
 
   React.useEffect(() => {
     const updateSize = () => {
@@ -104,7 +112,6 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
 
     updateSize();
     window.addEventListener('resize', updateSize);
-    // ensure calculation after rendering
     const timer = setTimeout(updateSize, 50);
     return () => {
       window.removeEventListener('resize', updateSize);
@@ -128,7 +135,7 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timer);
-          onFinish(engine.getScore());
+          onFinish(engine.getScore(), 'timeover');
           return 0;
         }
         return prev - 1;
@@ -201,7 +208,6 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
         setBoard([...engine.getBoard().map(r => [...r])]);
         setScore(engine.getScore());
         
-        // Combo text effect
         let comboMsg = 'Good!';
         if (removed >= 10) comboMsg = 'Excellent!!';
         else if (removed >= 6) comboMsg = 'Great!';
@@ -218,7 +224,7 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
         }, 600);
 
         if (engine.getRemainingApples() === 0) {
-          onFinish(engine.getScore());
+          onFinish(engine.getScore(), 'clear');
         } else if (!engine.hasAvailableMoves(config.clearType)) {
            const endEffect = {
              id: Date.now() + 1,
@@ -227,7 +233,7 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
              y: containerRef.current.getBoundingClientRect().height / 2
            };
            setFloatingTexts(prev => [...prev, endEffect]);
-           setTimeout(() => onFinish(engine.getScore()), 1500);
+           setTimeout(() => onFinish(engine.getScore(), 'nomoves'), 1500);
         }
       }
     }
@@ -242,11 +248,13 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
     return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   };
 
+  const progressPercent = Math.round((score / (config.rows * config.cols)) * 100);
+
   return (
     <div style={{
       width: '100%', height: '100%',
       background: `radial-gradient(ellipse at 70% 0%, rgba(244,162,97,0.12), transparent 60%), var(--paper)`,
-      padding: '28px 36px', display: 'flex', flexDirection: 'column', gap: 18,
+      padding: '24px 32px', display: 'flex', flexDirection: 'column', gap: 12,
       fontFamily: 'var(--font-body)', position: 'relative', overflow: 'hidden'
     }} onPointerUp={handlePointerUp} onPointerLeave={handlePointerUp}>
       
@@ -254,127 +262,103 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
         score={score}
         time={formatTime(timeLeft)}
         warn={timeLeft <= 10 && config.timeMode !== 'infinite'}
-        mode={`${config.cols}×${config.rows} · ${config.clearType === 'original' ? '오리지널' : '10의 배수'}`}
+        mode={`${config.cols}×${config.rows}`}
         onThemeToggle={onThemeToggle}
         themeLabel={theme}
         onQuit={onQuit}
       />
 
-      <style>{`
-        .game-layout { display: flex; gap: 24px; align-items: flex-start; flex: 1; min-height: 0; }
-        .game-aside { width: 200px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px; padding: 16px; background: var(--paper-warm); border-radius: 16px; border: 1px solid var(--hairline); height: 100%; }
-        @media (max-width: 768px) {
-          .game-layout { flex-direction: column; }
-          .game-aside { width: 100%; height: auto; flex-direction: row; flex-wrap: wrap; }
-          .game-aside > div { flex: 1; min-width: 140px; }
-        }
-      `}</style>
-      <div className="game-layout">
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'auto', position: 'relative', width: '100%', height: '100%' }}>
-          <div 
-            ref={containerRef}
-            onPointerDown={handlePointerDown} 
-            onPointerMove={handlePointerMove}
-            style={{ position: 'relative', touchAction: 'none' }}
-          >
-             {board.length > 0 && <GameGrid board={board} cellSize={appleSize} selection={selection} />}
-             
-             {/* Pixel-based Selection Rectangle */}
-             {isDragging && (
-               <div style={{
-                 position: 'absolute',
-                 left: Math.min(dragStart.x, dragEnd.x),
-                 top: Math.min(dragStart.y, dragEnd.y),
-                 width: Math.abs(dragEnd.x - dragStart.x),
-                 height: Math.abs(dragEnd.y - dragStart.y),
-                 border: '2px solid var(--leaf-light)',
-                 background: 'rgba(82,183,136,0.12)',
-                 borderRadius: 8,
-                 pointerEvents: 'none'
-               }} />
-             )}
-
-             {/* Sum Indicator */}
-             {isDragging && currentSum > 0 && (
-               <div style={{
-                 position: 'absolute',
-                 left: dragEnd.x + 12,
-                 top: dragEnd.y - 24,
-                 padding: '4px 10px',
-                 background: (config.clearType === 'original' ? currentSum === 10 : (currentSum % 10 === 0 && currentSum <= 50)) ? 'var(--leaf)' : 'var(--ink)',
-                 color: '#fff',
-                 borderRadius: 8,
-                 fontFamily: 'var(--font-num)',
-                 fontSize: 16,
-                 fontWeight: 700,
-                 pointerEvents: 'none',
-                 whiteSpace: 'nowrap',
-                 boxShadow: '4px 4px 0 rgba(0,0,0,0.2)',
-                 zIndex: 100
-               }}>
-                 {currentSum} {(config.clearType === 'original' ? currentSum === 10 : (currentSum % 10 === 0 && currentSum <= 50)) ? '✓' : ''}
-               </div>
-             )}
-
-             {/* Combo Text Effects */}
-             {floatingTexts.map(t => (
-               <div key={t.id} className="combo-text" style={{
-                 position: 'absolute',
-                 left: t.x,
-                 top: t.y,
-                 pointerEvents: 'none'
-               }}>
-                 {t.text}
-               </div>
-             ))}
+      {/* Mini Info Bar (Progress & Guide) */}
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 20, padding: '8px 20px',
+        background: 'rgba(0,0,0,0.03)', borderRadius: 12, border: '1px solid var(--hairline)'
+      }}>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 12 }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--ink-mute)', fontWeight: 700 }}>PROGRESS</span>
+          <div style={{ flex: 1, height: 8, background: 'var(--paper-dark)', borderRadius: 999, overflow: 'hidden' }}>
+            <div style={{ width: `${progressPercent}%`, height: '100%', background: 'var(--apple)', borderRadius: 999, transition: 'width 0.3s' }} />
+          </div>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-soft)', minWidth: 60 }}>{score}/{config.rows * config.cols} ({progressPercent}%)</span>
+        </div>
+        <div style={{ width: 1, height: 16, background: 'var(--hairline)' }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--ink-mute)', fontWeight: 700 }}>가이드</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'var(--paper)', padding: '2px 8px', borderRadius: 6, border: '1px solid var(--hairline)' }}>
+            <AppleCell n={3} size={18} shape="realistic" leaf={false}/>
+            <span style={{ fontSize: 12, fontWeight: 700 }}>+</span>
+            <AppleCell n={7} size={18} shape="realistic" leaf={false}/>
+            <span style={{ fontSize: 12, fontWeight: 700 }}>= 10</span>
           </div>
         </div>
-
-        <aside className="game-aside">
-          <div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>PROGRESS</div>
-            <div style={{
-              height: 6, background: 'var(--paper)', borderRadius: 999, marginTop: 6, overflow: 'hidden',
-              border: '1px solid var(--hairline)'
-            }}>
-              <div style={{
-                width: `${Math.round((score / (config.rows * config.cols)) * 100)}%`,
-                height: '100%', background: 'var(--apple)', borderRadius: 999
-              }}/>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4,
-              fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--ink-soft)' }}>
-              <span>{score} / {config.rows * config.cols}</span>
-              <span>{Math.round((score / (config.rows * config.cols)) * 100)}%</span>
-            </div>
-          </div>
-
-          <div style={{ borderTop: '1px dashed var(--hairline)', paddingTop: 12 }}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>가이드</div>
-            <div style={{ display: 'flex', gap: 4, marginTop: 8 }}>
-              <AppleCell n={3} size={28} shape="realistic" leaf={false}/>
-              <AppleCell n={7} size={28} shape="realistic" leaf={false}/>
-            </div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-soft)', marginTop: 6 }}>
-              3 + 7 = <strong style={{ color: 'var(--apple)' }}>10</strong>
-            </div>
-          </div>
-
-          <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: 8 }}>
-            <AppleMascot size={56} mood={timeLeft <= 10 && config.timeMode !== 'infinite' ? "panic" : "happy"}/>
-            <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--ink-soft)', lineHeight: 1.3 }}>
-              <strong style={{ color: 'var(--ink)' }}>토토:</strong><br/>
-              {timeLeft <= 10 && config.timeMode !== 'infinite' ? "빨리, 빨리!!" : "좋은 페이스야!"}
-            </div>
-          </div>
-        </aside>
       </div>
 
-      <button onClick={() => onFinish(engine.getScore())} style={{
-         position: 'absolute', bottom: 20, right: 20, padding: '10px 20px',
-         background: 'var(--ink)', color: 'var(--paper)', border: 'none', borderRadius: 12,
-         cursor: 'pointer', fontFamily: 'var(--font-body)', fontWeight: 700
-      }}>그만하기</button>
+      <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'auto', position: 'relative' }}>
+        <div 
+          ref={containerRef}
+          onPointerDown={handlePointerDown} 
+          onPointerMove={handlePointerMove}
+          style={{ position: 'relative', touchAction: 'none' }}
+        >
+           {board.length > 0 && <GameGrid board={board} cellSize={appleSize} selection={selection} />}
+           
+           {isDragging && (
+             <div style={{
+               position: 'absolute',
+               left: Math.min(dragStart.x, dragEnd.x),
+               top: Math.min(dragStart.y, dragEnd.y),
+               width: Math.abs(dragEnd.x - dragStart.x),
+               height: Math.abs(dragEnd.y - dragStart.y),
+               border: '2px solid var(--leaf-light)',
+               background: 'rgba(82,183,136,0.12)',
+               borderRadius: 8,
+               pointerEvents: 'none'
+             }} />
+           )}
+
+           {isDragging && currentSum > 0 && (
+             <div style={{
+               position: 'absolute',
+               left: dragEnd.x + 12,
+               top: dragEnd.y - 24,
+               padding: '4px 10px',
+               background: (config.clearType === 'original' ? currentSum === 10 : (currentSum % 10 === 0 && currentSum <= 50)) ? 'var(--leaf)' : 'var(--ink)',
+               color: '#fff',
+               borderRadius: 8,
+               fontFamily: 'var(--font-num)', fontSize: 16, fontWeight: 700,
+               pointerEvents: 'none', whiteSpace: 'nowrap', boxShadow: '4px 4px 0 rgba(0,0,0,0.2)', zIndex: 100
+             }}>
+               {currentSum} {(config.clearType === 'original' ? currentSum === 10 : (currentSum % 10 === 0 && currentSum <= 50)) ? '✓' : ''}
+             </div>
+           )}
+
+           {floatingTexts.map(t => (
+             <div key={t.id} className="combo-text" style={{ position: 'absolute', left: t.x, top: t.y, pointerEvents: 'none' }}>
+               {t.text}
+             </div>
+           ))}
+        </div>
+      </div>
+
+      {/* Game Footer Actions */}
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 20, paddingBottom: 10 }}>
+        <button onClick={() => onFinish(engine.getScore(), 'quit')} style={{
+           padding: '14px 32px', background: 'var(--ink)', color: 'var(--paper)', border: 'none', borderRadius: 16,
+           cursor: 'pointer', fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: 18, boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+        }}>그만하기</button>
+        <button onClick={onQuit} style={{
+           padding: '14px 32px', background: 'var(--paper-warm)', color: 'var(--ink)', border: '1.5px solid var(--hairline)', borderRadius: 16,
+           cursor: 'pointer', fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: 18
+        }}>나가기</button>
+      </div>
+
+      <div style={{ position: 'absolute', bottom: 20, left: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <AppleMascot size={48} mood={timeLeft <= 10 && config.timeMode !== 'infinite' ? "panic" : "happy"}/>
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--ink-soft)', lineHeight: 1.3, background: 'var(--paper)', padding: '6px 12px', borderRadius: 12, border: '1px solid var(--hairline)' }}>
+            <strong style={{ color: 'var(--ink)' }}>토토:</strong> {timeLeft <= 10 && config.timeMode !== 'infinite' ? "빨리, 빨리!!" : "좋은 페이스야!"}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
