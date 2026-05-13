@@ -27,11 +27,20 @@ function PrimaryButton({ children, variant = "primary", disabled = false, icon =
 
 function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout, onLoginAsGuest }) {
   return (
-    <div style={{
-      width: '100%', height: '100%', background: 'var(--paper)',
-      position: 'relative', overflow: 'hidden',
-      display: 'grid', gridTemplateColumns: '1.05fr 0.95fr',
-      fontFamily: 'var(--font-body)'
+    <>
+    <style>{`
+      .main-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; width: 100%; height: 100%; }
+      .main-left { padding: clamp(24px, 5vw, 52px) clamp(24px, 5vw, 56px); display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1; }
+      .main-title { font-size: clamp(60px, 8vw, 124px); line-height: 0.9; margin: 0; letter-spacing: -0.045em; }
+      .mascot-container { position: absolute; left: 50%; top: 50%; transform: translate(-55%, -50%); }
+      .mascot-container svg { width: clamp(150px, 20vw, 300px); height: auto; }
+      @media (max-width: 850px) {
+        .main-grid { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+        .main-right { display: none; }
+      }
+    `}</style>
+    <div className="main-grid" style={{
+      background: 'var(--paper)', position: 'relative', overflow: 'hidden', fontFamily: 'var(--font-body)'
     }}>
       {/* paper texture */}
       <div style={{
@@ -42,10 +51,7 @@ function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout
       }}/>
 
       {/* Left: brand + actions */}
-      <div style={{
-        padding: '52px 56px', display: 'flex', flexDirection: 'column',
-        justifyContent: 'space-between', position: 'relative', zIndex: 1
-      }}>
+      <div className="main-left">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8,
             padding: '6px 14px', background: 'var(--paper-warm)', borderRadius: 999,
@@ -63,13 +69,12 @@ function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout
         <div>
           <div style={{
             fontFamily: 'var(--font-en)', fontSize: 14, letterSpacing: '0.30em',
-            color: 'var(--apple-deep)', textTransform: 'uppercase', marginBottom: 14
+            color: 'var(--apple-deep)', textTransform: 'uppercase', marginBottom: 14, marginTop: 20
           }}>
             Orchard · Sum to Ten
           </div>
-          <h1 style={{
-            fontFamily: 'var(--font-display)', fontSize: 124, lineHeight: 0.9,
-            color: 'var(--ink)', fontWeight: 700, margin: 0, letterSpacing: '-0.045em'
+          <h1 className="main-title" style={{
+            fontFamily: 'var(--font-display)', color: 'var(--ink)', fontWeight: 700
           }}>
             사과<br/>사과<span style={{ color: 'var(--apple)' }}>게임</span>
           </h1>
@@ -82,18 +87,18 @@ function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout
           </p>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 360 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 360, marginTop: 20, marginBottom: 20 }}>
           {!user ? (
             <>
               <PrimaryButton onClick={onLogin} icon={<span>G</span>}>구글 로그인</PrimaryButton>
               <div style={{ display: 'flex', gap: 10 }}>
                 <input type="text" id="guest-name-input" placeholder="게스트 닉네임" style={{
                   flex: 1, padding: '12px', borderRadius: 10, border: '1px solid var(--hairline)',
-                  fontFamily: 'var(--font-body)'
+                  fontFamily: 'var(--font-body)', minWidth: 0
                 }} />
                 <button onClick={() => onLoginAsGuest(document.getElementById('guest-name-input').value)} style={{
                    padding: '12px 20px', borderRadius: 10, border: '1px solid var(--hairline)',
-                   background: 'var(--paper-warm)', cursor: 'pointer', fontWeight: 600
+                   background: 'var(--paper-warm)', cursor: 'pointer', fontWeight: 600, whiteSpace: 'nowrap'
                 }}>게스트 시작</button>
               </div>
             </>
@@ -130,7 +135,7 @@ function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout
       </div>
 
       {/* Right: mascot + apple stack */}
-      <div style={{
+      <div className="main-right" style={{
         position: 'relative', background: 'var(--paper-warm)',
         borderLeft: '1px solid var(--hairline)', overflow: 'hidden'
       }}>
@@ -142,16 +147,16 @@ function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout
         <div style={{ position: 'absolute', bottom: 60, right: 50, opacity: 0.9 }}><AppleCell n={8} size={64} shape="realistic" /></div>
 
         {/* mascot */}
-        <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-55%, -50%)' }}>
+        <div className="mascot-container">
           <AppleMascot size={300} mood="happy" />
         </div>
 
         {/* speech bubble */}
         <div style={{
-          position: 'absolute', left: 60, top: 80,
+          position: 'absolute', left: '10%', top: '10%',
           padding: '14px 18px', background: 'var(--paper)', borderRadius: '20px 20px 20px 4px',
           border: '1.5px solid var(--ink)',
-          fontFamily: 'var(--font-display)', fontSize: 22, color: 'var(--ink)', fontWeight: 700,
+          fontFamily: 'var(--font-display)', fontSize: 'clamp(14px, 2vw, 22px)', color: 'var(--ink)', fontWeight: 700,
           boxShadow: '4px 4px 0 var(--ink)'
         }}>
           오늘도 한바구니, <span style={{ color: 'var(--apple)' }}>같이 따자!</span>
@@ -170,6 +175,7 @@ function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout
         </div>
       </div>
     </div>
+    </>
   );
 }
 

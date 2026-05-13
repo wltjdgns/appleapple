@@ -80,9 +80,37 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
   const [floatingTexts, setFloatingTexts] = React.useState([]);
   const containerRef = React.useRef(null);
 
-  const APPLE_SIZE = 36;
+  const [appleSize, setAppleSize] = React.useState(36);
   const GAP = 4;
   const PADDING = 18;
+
+  React.useEffect(() => {
+    const updateSize = () => {
+      if (!containerRef.current) return;
+      const parent = containerRef.current.parentElement;
+      if (!parent) return;
+      const rect = parent.getBoundingClientRect();
+      const maxW = rect.width - PADDING * 2;
+      const maxH = rect.height - PADDING * 2;
+      
+      let newSize = Math.min(
+        (maxW - (config.cols - 1) * GAP) / config.cols,
+        (maxH - (config.rows - 1) * GAP) / config.rows
+      );
+      
+      newSize = Math.max(16, Math.min(newSize, 70));
+      setAppleSize(Math.floor(newSize));
+    };
+
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    // ensure calculation after rendering
+    const timer = setTimeout(updateSize, 50);
+    return () => {
+      window.removeEventListener('resize', updateSize);
+      clearTimeout(timer);
+    };
+  }, [config.cols, config.rows]);
 
   React.useEffect(() => {
      if (engine) {
@@ -120,8 +148,8 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
 
     for (let r = 0; r < config.rows; r++) {
       for (let c = 0; c < config.cols; c++) {
-        const centerX = PADDING + c * (APPLE_SIZE + GAP) + APPLE_SIZE / 2;
-        const centerY = PADDING + r * (APPLE_SIZE + GAP) + APPLE_SIZE / 2;
+        const centerX = PADDING + c * (appleSize + GAP) + appleSize / 2;
+        const centerY = PADDING + r * (appleSize + GAP) + appleSize / 2;
 
         if (centerX >= left && centerX <= right && centerY >= top && centerY <= bottom) {
           r1 = Math.min(r1, r);
@@ -192,7 +220,14 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
         if (engine.getRemainingApples() === 0) {
           onFinish(engine.getScore());
         } else if (!engine.hasAvailableMoves(config.clearType)) {
-           setTimeout(() => onFinish(engine.getScore()), 1000);
+           const endEffect = {
+             id: Date.now() + 1,
+             text: `No More Moves!`,
+             x: containerRef.current.getBoundingClientRect().width / 2 - 50,
+             y: containerRef.current.getBoundingClientRect().height / 2
+           };
+           setFloatingTexts(prev => [...prev, endEffect]);
+           setTimeout(() => onFinish(engine.getScore()), 1500);
         }
       }
     }
@@ -225,15 +260,24 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
         onQuit={onQuit}
       />
 
-      <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start', flex: 1, minHeight: 0 }}>
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'auto', position: 'relative' }}>
+      <style>{`
+        .game-layout { display: flex; gap: 24px; align-items: flex-start; flex: 1; min-height: 0; }
+        .game-aside { width: 200px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px; padding: 16px; background: var(--paper-warm); border-radius: 16px; border: 1px solid var(--hairline); height: 100%; }
+        @media (max-width: 768px) {
+          .game-layout { flex-direction: column; }
+          .game-aside { width: 100%; height: auto; flex-direction: row; flex-wrap: wrap; }
+          .game-aside > div { flex: 1; min-width: 140px; }
+        }
+      `}</style>
+      <div className="game-layout">
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'auto', position: 'relative', width: '100%', height: '100%' }}>
           <div 
             ref={containerRef}
             onPointerDown={handlePointerDown} 
             onPointerMove={handlePointerMove}
             style={{ position: 'relative', touchAction: 'none' }}
           >
-             {board.length > 0 && <GameGrid board={board} cellSize={APPLE_SIZE} selection={selection} />}
+             {board.length > 0 && <GameGrid board={board} cellSize={appleSize} selection={selection} />}
              
              {/* Pixel-based Selection Rectangle */}
              {isDragging && (
@@ -268,7 +312,7 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
                  boxShadow: '4px 4px 0 rgba(0,0,0,0.2)',
                  zIndex: 100
                }}>
-                 ∑ {currentSum} {(config.clearType === 'original' ? currentSum === 10 : (currentSum % 10 === 0 && currentSum <= 50)) ? '✓' : ''}
+                 {currentSum} {(config.clearType === 'original' ? currentSum === 10 : (currentSum % 10 === 0 && currentSum <= 50)) ? '✓' : ''}
                </div>
              )}
 
@@ -286,11 +330,7 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
           </div>
         </div>
 
-        <aside style={{
-          width: 200, display: 'flex', flexDirection: 'column', gap: 14,
-          padding: 16, background: 'var(--paper-warm)', borderRadius: 16,
-          border: '1px solid var(--hairline)', height: '100%'
-        }}>
+        <aside className="game-aside">
           <div>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>PROGRESS</div>
             <div style={{

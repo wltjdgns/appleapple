@@ -2,11 +2,22 @@
 
 function ResultScreen({ score, config, onRestart, onNewSettings, onMain }) {
   return (
-    <div style={{
+    <>
+    <style>{`
+      .result-layout { padding: clamp(20px, 4vw, 36px); }
+      .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; position: relative; z-index: 1; flex: 1; }
+      .result-score { font-size: clamp(80px, 12vw, 180px); line-height: 0.9; }
+      .mascot-result svg { width: clamp(180px, 25vw, 280px); height: auto; }
+      @media (max-width: 800px) {
+        .result-grid { grid-template-columns: 1fr; text-align: center; }
+        .mascot-result { display: none; }
+      }
+    `}</style>
+    <div className="result-layout" style={{
       width: '100%', height: '100%',
       background: `radial-gradient(ellipse at 50% 30%, rgba(244,162,97,0.30), transparent 60%), var(--paper)`,
-      padding: 36, display: 'flex', flexDirection: 'column',
-      fontFamily: 'var(--font-body)', position: 'relative', overflow: 'hidden'
+      display: 'flex', flexDirection: 'column',
+      fontFamily: 'var(--font-body)', position: 'relative', overflow: 'auto'
     }}>
       {/* confetti apples decoration */}
       <div style={{ position: 'absolute', left: '6%', top: '8%', transform: 'rotate(-12deg)', opacity: 0.6 }}><AppleCell n={7} size={36} shape="realistic" /></div>
@@ -25,8 +36,8 @@ function ResultScreen({ score, config, onRestart, onNewSettings, onMain }) {
         </div>
       </div>
 
-      <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 36, alignItems: 'center', position: 'relative', zIndex: 1 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div className="result-grid">
+        <div className="mascot-result" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <AppleMascot size={280} mood="happy" />
           <div style={{ marginTop: 10, fontFamily: 'var(--font-display)', fontSize: 24, color: 'var(--ink)', fontWeight: 700, fontStyle: 'italic' }}>
             "이만큼 따왔어!"
@@ -37,9 +48,9 @@ function ResultScreen({ score, config, onRestart, onNewSettings, onMain }) {
           <div style={{ fontFamily: 'var(--font-en)', fontSize: 16, color: 'var(--apple-deep)', letterSpacing: '0.3em', textTransform: 'uppercase' }}>
             Final Harvest
           </div>
-          <div style={{
-            fontFamily: 'var(--font-num)', fontSize: 180, color: 'var(--apple)',
-            lineHeight: 0.9, letterSpacing: '-0.04em', marginTop: 8
+          <div className="result-score" style={{
+            fontFamily: 'var(--font-num)', color: 'var(--apple)',
+            letterSpacing: '-0.04em', marginTop: 8
           }}>
             {score}
           </div>
@@ -54,6 +65,7 @@ function ResultScreen({ score, config, onRestart, onNewSettings, onMain }) {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
@@ -65,23 +77,32 @@ function RecordsScreen({ records, onMain }) {
     : Object.entries(records).filter(([k]) => k.startsWith(activeTab === '2min' ? '120' : 'infinite'));
 
   return (
-    <div style={{
+    <>
+    <style>{`
+      .records-layout { padding: clamp(20px, 4vw, 36px) clamp(20px, 5vw, 44px); }
+      .records-header { flex-direction: row; }
+      @media (max-width: 600px) {
+        .records-header { flex-direction: column; gap: 16px; }
+        .records-controls { width: 100%; flex-wrap: wrap; justify-content: flex-start; }
+      }
+    `}</style>
+    <div className="records-layout" style={{
       width: '100%', height: '100%', background: 'var(--paper)',
-      padding: '36px 44px', display: 'flex', flexDirection: 'column', gap: 24,
+      display: 'flex', flexDirection: 'column', gap: 24,
       fontFamily: 'var(--font-body)', overflow: 'hidden'
     }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="records-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--apple-deep)', letterSpacing: '0.22em', textTransform: 'uppercase' }}>● 나의 기록 · ARCHIVE</div>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: 48, color: 'var(--ink)', fontWeight: 700, marginTop: 4, lineHeight: 1 }}>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 6vw, 48px)', color: 'var(--ink)', fontWeight: 700, marginTop: 4, lineHeight: 1 }}>
             한 해의 수확.
           </div>
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div className="records-controls" style={{ display: 'flex', gap: 8 }}>
            <button onClick={() => setActiveTab('all')} style={{ padding: '8px 14px', background: activeTab === 'all' ? 'var(--ink)' : 'transparent', color: activeTab === 'all' ? 'var(--paper)' : 'var(--ink-soft)', border: '1px solid var(--hairline)', borderRadius: 999, cursor: 'pointer' }}>전체</button>
            <button onClick={() => setActiveTab('2min')} style={{ padding: '8px 14px', background: activeTab === '2min' ? 'var(--ink)' : 'transparent', color: activeTab === '2min' ? 'var(--paper)' : 'var(--ink-soft)', border: '1px solid var(--hairline)', borderRadius: 999, cursor: 'pointer' }}>2분</button>
            <button onClick={() => setActiveTab('infinite')} style={{ padding: '8px 14px', background: activeTab === 'infinite' ? 'var(--ink)' : 'transparent', color: activeTab === 'infinite' ? 'var(--paper)' : 'var(--ink-soft)', border: '1px solid var(--hairline)', borderRadius: 999, cursor: 'pointer' }}>무한</button>
-           <button onClick={onMain} style={{ marginLeft: 16, padding: '10px 18px', background: 'transparent', border: '1.5px solid var(--hairline)', borderRadius: 12, color: 'var(--ink-soft)', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>메인으로</button>
+           <button onClick={onMain} style={{ marginLeft: 'auto', padding: '10px 18px', background: 'transparent', border: '1.5px solid var(--hairline)', borderRadius: 12, color: 'var(--ink-soft)', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>메인으로</button>
         </div>
       </div>
 
@@ -89,7 +110,7 @@ function RecordsScreen({ records, onMain }) {
         background: 'var(--paper)', borderRadius: 16,
         border: '1px solid var(--hairline)', overflow: 'auto', flex: 1
       }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 500 }}>
           <thead>
             <tr style={{
               background: 'var(--paper-warm)', borderBottom: '1.5px solid var(--ink)',
@@ -124,42 +145,52 @@ function RecordsScreen({ records, onMain }) {
         </table>
       </div>
     </div>
+    </>
   );
 }
 
 function LeaderboardScreen({ leaderboard, onMain, onRefresh, filters, onFilterChange }) {
   return (
-    <div style={{
+    <>
+    <style>{`
+      .lb-layout { padding: clamp(20px, 4vw, 36px) clamp(20px, 5vw, 44px); }
+      .lb-header { flex-direction: row; }
+      @media (max-width: 800px) {
+        .lb-header { flex-direction: column; gap: 16px; }
+        .lb-controls { width: 100%; flex-wrap: wrap; justify-content: flex-start; }
+      }
+    `}</style>
+    <div className="lb-layout" style={{
       width: '100%', height: '100%', background: 'var(--paper)',
-      padding: '36px 44px', display: 'flex', flexDirection: 'column', gap: 24,
+      display: 'flex', flexDirection: 'column', gap: 24,
       fontFamily: 'var(--font-body)', overflow: 'hidden'
     }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="lb-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--gold)', letterSpacing: '0.22em', textTransform: 'uppercase' }}>● 글로벌 랭킹 · LEADERBOARD</div>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: 48, color: 'var(--ink)', fontWeight: 700, marginTop: 4, lineHeight: 1 }}>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 6vw, 48px)', color: 'var(--ink)', fontWeight: 700, marginTop: 4, lineHeight: 1 }}>
             명예의 전당.
           </div>
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
-           <select value={filters.time} onChange={(e) => onFilterChange('time', e.target.value)} style={{ padding: '8px', borderRadius: 8, border: '1px solid var(--hairline)' }}>
+        <div className="lb-controls" style={{ display: 'flex', gap: 8 }}>
+           <select value={filters.time} onChange={(e) => onFilterChange('time', e.target.value)} style={{ padding: '8px', borderRadius: 8, border: '1px solid var(--hairline)', flex: 1, minWidth: 100 }}>
              <option value="120">2분 모드</option>
              <option value="infinite">무한 모드</option>
            </select>
-           <select value={filters.size} onChange={(e) => onFilterChange('size', e.target.value)} style={{ padding: '8px', borderRadius: 8, border: '1px solid var(--hairline)' }}>
+           <select value={filters.size} onChange={(e) => onFilterChange('size', e.target.value)} style={{ padding: '8px', borderRadius: 8, border: '1px solid var(--hairline)', flex: 1, minWidth: 100 }}>
              <option value="17x10">17x10</option>
              <option value="50x50">50x50</option>
            </select>
-           <select value={filters.clearType} onChange={(e) => onFilterChange('clearType', e.target.value)} style={{ padding: '8px', borderRadius: 8, border: '1px solid var(--hairline)' }}>
+           <select value={filters.clearType} onChange={(e) => onFilterChange('clearType', e.target.value)} style={{ padding: '8px', borderRadius: 8, border: '1px solid var(--hairline)', flex: 1, minWidth: 100 }}>
              <option value="original">오리지널</option>
              <option value="multiples">10의 배수</option>
            </select>
-           <select value={filters.sort} onChange={(e) => onFilterChange('sort', e.target.value)} style={{ padding: '8px', borderRadius: 8, border: '1px solid var(--hairline)' }}>
+           <select value={filters.sort} onChange={(e) => onFilterChange('sort', e.target.value)} style={{ padding: '8px', borderRadius: 8, border: '1px solid var(--hairline)', flex: 1, minWidth: 100 }}>
              <option value="highScore">최고 점수 순</option>
              <option value="playCount">판수 순</option>
            </select>
-           <button onClick={onRefresh} style={{ padding: '8px 14px', background: 'var(--ink)', color: 'var(--paper)', border: 'none', borderRadius: 8, cursor: 'pointer' }}>조회</button>
-           <button onClick={onMain} style={{ marginLeft: 16, padding: '10px 18px', background: 'transparent', border: '1.5px solid var(--hairline)', borderRadius: 12, color: 'var(--ink-soft)', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>메인으로</button>
+           <button onClick={onRefresh} style={{ padding: '8px 14px', background: 'var(--ink)', color: 'var(--paper)', border: 'none', borderRadius: 8, cursor: 'pointer', whiteSpace: 'nowrap' }}>조회</button>
+           <button onClick={onMain} style={{ marginLeft: 'auto', padding: '10px 18px', background: 'transparent', border: '1.5px solid var(--hairline)', borderRadius: 12, color: 'var(--ink-soft)', fontSize: 14, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>메인으로</button>
         </div>
       </div>
 
@@ -167,7 +198,7 @@ function LeaderboardScreen({ leaderboard, onMain, onRefresh, filters, onFilterCh
         background: 'var(--paper)', borderRadius: 16,
         border: '1px solid var(--hairline)', overflow: 'auto', flex: 1
       }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 500 }}>
           <thead>
             <tr style={{
               background: 'var(--paper-warm)', borderBottom: '1.5px solid var(--ink)',
@@ -197,6 +228,7 @@ function LeaderboardScreen({ leaderboard, onMain, onRefresh, filters, onFilterCh
         </table>
       </div>
     </div>
+    </>
   );
 }
 

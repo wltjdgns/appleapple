@@ -3,15 +3,15 @@ const { useState, useEffect, useRef } = React;
 const PALETTES = {
   original: {
     '--paper': '#F8FBF2', '--paper-warm': '#EAF2DA', '--paper-dark': '#D6E4B8', '--hairline': '#C3D2A4',
-    '--apple': '#E63946', '--apple-deep': '#A91D29', '--apple-bright': '#FF6B6B',
+    '--apple': '#ff3333', '--apple-deep': '#A91D29', '--apple-bright': '#FF6B6B',
     '--leaf': '#1B4332', '--leaf-light': '#74C69D', '--gold': '#F4A261', '--honey': '#FFD166',
     '--ink': '#1B2410', '--ink-soft': '#3D4C24', '--ink-mute': '#7B8868'
   },
   warm: {
-    '--paper': '#FFF9EB', '--paper-warm': '#F9F1D8', '--paper-dark': '#EDDFC2', '--hairline': '#E2D1B0',
-    '--apple': '#D62828', '--apple-deep': '#9B1C1C', '--apple-bright': '#F25C54',
-    '--leaf': '#386641', '--leaf-light': '#6A994E', '--gold': '#F4A261', '--honey': '#FFD166',
-    '--ink': '#2B1E16', '--ink-soft': '#5C4336', '--ink-mute': '#9C8476'
+    '--paper': '#F8FBF2', '--paper-warm': '#EAF2DA', '--paper-dark': '#D6E4B8', '--hairline': '#C3D2A4',
+    '--apple': '#e56f5b', '--apple-deep': '#A91D29', '--apple-bright': '#FF6B6B',
+    '--leaf': '#1B4332', '--leaf-light': '#74C69D', '--gold': '#F4A261', '--honey': '#FFD166',
+    '--ink': '#1B2410', '--ink-soft': '#3D4C24', '--ink-mute': '#7B8868'
   }
 };
 
@@ -158,6 +158,8 @@ function App() {
           <SettingsScreen
             config={gameConfig}
             onChange={(key, val) => setGameConfig(prev => ({ ...prev, [key]: val }))}
+            theme={theme}
+            onThemeChange={(val) => setTheme(val)}
             onStart={startGame}
             onBack={() => setScreen('main')}
           />
@@ -204,15 +206,13 @@ function App() {
     <div style={{
       width: '100vw', height: '100vh',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      background: '#1B2410'
+      background: 'var(--paper)'
     }}>
       <div style={{
         position: 'relative',
-        width: 'min(100vw, 1280px)',
-        aspectRatio: '16 / 10',
-        maxHeight: '100vh',
+        width: '100%',
+        height: '100%',
         background: 'var(--paper)',
-        boxShadow: '0 30px 80px rgba(0,0,0,0.35)',
         overflow: 'hidden'
       }}>
         {screenComponent}
