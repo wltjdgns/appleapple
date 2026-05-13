@@ -212,7 +212,13 @@
             환영합니다, <span id="user-name" style="color: #ff4d4d; font-weight: 700;"></span>님!
         </div>
         <div class="menu-buttons">
-            <button id="btn-login" onclick="login()">구글 로그인</button>
+            <div id="login-menu" style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                <button id="btn-login" onclick="login()">구글 로그인</button>
+                <div style="display: flex; gap: 10px; margin-top: 5px;">
+                    <input type="text" id="guest-name" placeholder="게스트 닉네임" style="flex: 1; padding: 10px; font-size: 0.9rem;">
+                    <button onclick="loginAsGuest()" class="secondary" style="padding: 10px 20px; font-size: 0.9rem; white-space: nowrap;">게스트 시작</button>
+                </div>
+            </div>
             <div id="logged-in-menu" class="hidden" style="display: flex; flex-direction: column; gap: 15px; width: 100%;">
                 <button onclick="showScene('scene-settings')">혼자하기</button>
                 <button onclick="fetchAndShowRecords()">나의 기록</button>
