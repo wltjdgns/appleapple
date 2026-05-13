@@ -12,70 +12,266 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #f0f0f0;
-            font-family: 'Pretendard', sans-serif;
+            background-color: #f8f9fa;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            overflow: hidden;
         }
-        #menu {
+        
+        .scene {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .scene.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #ff4d4d;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .menu-buttons {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            text-align: center;
+            gap: 15px;
+            width: 100%;
         }
+
         button {
             padding: 15px 30px;
             font-size: 1.2rem;
+            font-weight: 600;
             cursor: pointer;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             background-color: #ff4d4d;
             color: white;
-            transition: transform 0.2s;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
+
         button:hover {
-            transform: scale(1.05);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            background-color: #ff3333;
         }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background-color: #6c757d;
+        }
+
+        button.disabled {
+            background-color: #dee2e6;
+            color: #adb5bd;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Settings Form */
+        .settings-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: left;
+        }
+
+        .setting-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .setting-item label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9rem;
+        }
+
+        select, input {
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #ff4d4d;
+        }
+
+        .grid-inputs {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .grid-inputs input {
+            width: 100%;
+        }
+
+        /* Game UI */
         #game-container {
-            display: none;
             position: relative;
+            max-width: none;
         }
+
         canvas {
             background-color: white;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             cursor: crosshair;
+            max-width: 95vw;
+            max-height: 80vh;
         }
+
         #hud {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             width: 100%;
-            margin-bottom: 10px;
-            font-size: 1.5rem;
-            font-weight: bold;
+            margin-bottom: 15px;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
+
+        .hud-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hud-label {
+            font-size: 0.75rem;
+            color: #adb5bd;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hud-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #212529;
+        }
+
+        .timer-warning {
+            color: #ff4d4d;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .game-info-badge {
+            font-size: 0.8rem;
+            background: #f1f3f5;
+            padding: 4px 10px;
+            border-radius: 20px;
+            color: #495057;
+            font-weight: 500;
+        }
+
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <div id="menu">
+    <!-- 1. 메인 화면 -->
+    <div id="scene-main" class="scene active">
         <h1>사과게임</h1>
-        <div style="margin-bottom: 20px;">
-            <label>가로: <input type="number" id="colsInput" value="17" min="5" max="50" style="width: 50px;"></label>
-            <label>세로: <input type="number" id="rowsInput" value="10" min="5" max="50" style="width: 50px;"></label>
+        <div class="menu-buttons">
+            <button onclick="showScene('scene-settings')">혼자하기</button>
+            <button class="disabled">같이하기 (Coming Soon)</button>
         </div>
-        <button onclick="startGame('normal')">일반 모드 (120초)</button>
-        <button onclick="startGame('infinite')">무한 시간 모드</button>
-        <button onclick="startGame('custom')">가변 모드 (설정 크기)</button>
-        <button onclick="startGame('perfect')">퍼펙트 시드 (100% 제거)</button>
     </div>
 
-    <div id="game-container">
-        <div id="hud">
-            <div id="score">Score: 0</div>
-            <div id="timer">Time: 120</div>
-            <button onclick="quitGame()" style="padding: 5px 15px; font-size: 1rem; background-color: #666;">종료</button>
+    <!-- 2. 설정 화면 -->
+    <div id="scene-settings" class="scene">
+        <h2 style="margin: 0; color: #333;">게임 설정</h2>
+        <div class="settings-card">
+            <div class="setting-item">
+                <label>⏳ 시간 모드</label>
+                <select id="timeMode">
+                    <option value="120">2분 (제한 시간)</option>
+                    <option value="infinite">무한 시간</option>
+                </select>
+            </div>
+            
+            <div class="setting-item">
+                <label>📏 배열 크기 (최대 50x50)</label>
+                <div class="grid-inputs">
+                    <input type="number" id="colsInput" value="17" min="5" max="50" placeholder="가로">
+                    <span style="color: #adb5bd;">×</span>
+                    <input type="number" id="rowsInput" value="10" min="5" max="50" placeholder="세로">
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <label>🍎 클리어 가능 여부</label>
+                <select id="seedType">
+                    <option value="random">랜덤 생성 (일반)</option>
+                    <option value="perfect">퍼펙트 시드 (100% 가능)</option>
+                </select>
+            </div>
+
+            <div class="setting-item">
+                <label>✨ 클리어 타입</label>
+                <select id="clearType">
+                    <option value="original">오리지널 (합계 10)</option>
+                    <option value="multiples">10의 배수 (10, 20...)</option>
+                </select>
+            </div>
+
+            <button onclick="startGame()" style="margin-top: 10px;">게임 시작!</button>
+            <button onclick="showScene('scene-main')" class="secondary">뒤로 가기</button>
         </div>
-        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <!-- 3. 게임 화면 -->
+    <div id="scene-game" class="scene" style="max-width: none;">
+        <div id="hud">
+            <div class="hud-item">
+                <span class="hud-label">Score</span>
+                <span id="score" class="hud-value">0</span>
+            </div>
+            <div class="hud-item" style="align-items: center; gap: 5px;">
+                <div id="timer" class="hud-value">02:00</div>
+                <div id="game-badge" class="game-info-badge">17x10 | 오리지널</div>
+            </div>
+            <button onclick="quitGame()" style="padding: 8px 16px; font-size: 0.9rem; background-color: #6c757d; box-shadow: none;">종료</button>
+        </div>
+        <div id="game-container">
+            <canvas id="gameCanvas"></canvas>
+        </div>
     </div>
 
     <!-- Core Logic -->

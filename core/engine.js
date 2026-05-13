@@ -69,14 +69,19 @@ class GameEngine {
     }
 
     /**
-     * 선택된 영역의 사과들을 평가하고 합이 10이면 제거함.
+     * 선택된 영역의 사과들을 평가하고 합이 조건에 맞으면 제거함.
      * @param {number} r1, c1, r2, c2 영역 좌표
+     * @param {string} clearType 'original' (합계 10) 또는 'multiples' (10의 배수)
      * @returns {boolean} 제거 성공 여부
      */
-    evaluateSelection(r1, c1, r2, c2) {
+    evaluateSelection(r1, c1, r2, c2, clearType = 'original') {
         const sum = this.getAreaSum(r1, c1, r2, c2);
         
-        if (sum === 10) {
+        const isMatch = clearType === 'multiples' 
+            ? (sum % 10 === 0 && sum > 0) 
+            : (sum === 10);
+
+        if (isMatch) {
             const startRow = Math.min(r1, r2);
             const endRow = Math.max(r1, r2);
             const startCol = Math.min(c1, c2);
