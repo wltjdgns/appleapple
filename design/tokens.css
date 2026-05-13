@@ -1,0 +1,55 @@
+/* ==========================================================================
+   사과사과게임 — Design Tokens
+   "Sun-Dried Orchard" — warm cream + ripe red + leaf green
+   ========================================================================== */
+
+:root {
+  /* Palette: Orchard (default) ------------------------------------------ */
+  --paper:        #FAF5EC;   /* cream paper background */
+  --paper-warm:   #F2E8D0;   /* sun-bleached canvas */
+  --paper-dark:   #E8DCC0;   /* deeper cream */
+  --ink:          #1F1812;   /* deep coffee-bean text */
+  --ink-soft:     #4A3D2F;   /* muted brown text */
+  --ink-mute:     #8B7E6B;   /* fade-out brown */
+  --hairline:     #D9CBAA;   /* divider on paper */
+
+  --apple:        #D62828;   /* primary apple red */
+  --apple-deep:   #9B1C1C;   /* shadow side of apple */
+  --apple-bright: #F25C54;   /* highlight side */
+  --apple-bite:   #FFB199;   /* flesh / inner glow */
+
+  --leaf:         #2D6A4F;   /* stem / leaf */
+  --leaf-light:   #52B788;   /* leaf highlight */
+  --bark:         #6B4226;   /* twig / stem */
+
+  --gold:         #F4A261;   /* secondary accent */
+  --honey:        #E9C46A;   /* tertiary */
+
+  --tomato-glow:  rgba(214, 40, 40, 0.18);
+  --shadow-soft:  0 1px 0 rgba(31, 24, 18, 0.05), 0 8px 20px rgba(155, 28, 28, 0.06);
+  --shadow-card:  0 1px 0 rgba(31, 24, 18, 0.08), 0 12px 32px rgba(107, 66, 38, 0.10);
+  --shadow-deep:  0 2px 0 rgba(31, 24, 18, 0.10), 0 28px 60px rgba(155, 28, 28, 0.15);
+
+  /* Type ---------------------------------------------------------------- */
+  --font-display: "Hahmlet", "Gowun Batang", "Source Serif Pro", Georgia, serif;
+  --font-body:    "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif;
+  --font-en:      "DM Serif Display", "Hahmlet", Georgia, serif;
+  --font-num:     "Pretendard", "IBM Plex Sans KR", system-ui, sans-serif;
+  --font-num-weight: 900;
+  --font-mono:    "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Radius -------------------------------------------------------------- */
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-full: 999px;
+}
+
+/* Pretendard webfont */
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+}
