@@ -9,6 +9,7 @@ let startX, startY, endX, endY;
 let timeLeft = 120;
 let timerInterval;
 let gameConfig = {};
+let gameStartTime = 0; // 추가: 게임 시작 시간 기록용
 let currentSelection = { r1: -1, c1: -1, r2: -1, c2: -1, sum: 0 };
 
 const APPLE_SIZE = 44;
@@ -46,6 +47,7 @@ function startGame() {
 
     // 엔진 초기화
     engine = new GameEngine(gameConfig.rows, gameConfig.cols);
+    gameStartTime = Date.now(); // 시작 시간 기록
 
     let boardData;
     if (gameConfig.seedType === 'perfect') {
@@ -88,10 +90,26 @@ function startTimer() {
 
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            alert(`게임 종료! 최종 점수: ${engine.getScore()}`);
-            showScene('scene-settings');
+            finishGame(`게임 종료! 최종 점수: ${engine.getScore()}`);
         }
     }, 1000);
+}
+
+/**
+ * 게임 종료 통합 처리 함수
+ * @param {string} message 알림 메시지
+ */
+function finishGame(message) {
+    const playTime = Math.floor((Date.now() - gameStartTime) / 1000);
+    const score = engine.getScore();
+    
+    // 기록 저장 호출 (window.saveGameRecord가 firebase.js에서 등록됨)
+    if (window.saveGameRecord) {
+        window.saveGameRecord(gameConfig, score, playTime);
+    }
+
+    if (message) alert(message);
+    showScene('scene-settings');
 }
 
 function updateTimerDisplay() {
@@ -175,7 +193,7 @@ function render() {
 
 function quitGame() {
     clearInterval(timerInterval);
-    showScene('scene-settings');
+    finishGame(); // 종료 시에도 현재까지의 기록 저장
 }
 
 function setupEvents() {
@@ -251,8 +269,7 @@ function setupEvents() {
             if (engine.getRemainingApples() === 0) {
                 clearInterval(timerInterval);
                 setTimeout(() => {
-                    alert(`축하합니다! 모든 사과를 제거했습니다. 최종 점수: ${engine.getScore()}`);
-                    showScene('scene-settings');
+                    finishGame(`축하합니다! 모든 사과를 제거했습니다. 최종 점수: ${engine.getScore()}`);
                 }, 100);
             }
         }
@@ -260,8 +277,9 @@ function setupEvents() {
     };
 
     // 기존 이벤트 제거 후 등록 (중복 방지)
-    canvas.replaceWith(canvas.cloneNode(true));
-    canvas = document.getElementById('gameCanvas');
+    const newCanvas = canvas.cloneNode(true);
+    canvas.parentNode.replaceChild(newCanvas, canvas);
+    canvas = newCanvas;
     ctx = canvas.getContext('2d');
 
     canvas.addEventListener('mousedown', startAction);

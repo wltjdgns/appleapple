@@ -208,9 +208,17 @@
     <!-- 1. 메인 화면 -->
     <div id="scene-main" class="scene active">
         <h1>사과게임</h1>
+        <div id="user-info" class="hidden" style="margin-bottom: 20px; font-weight: 500;">
+            환영합니다, <span id="user-name" style="color: #ff4d4d; font-weight: 700;"></span>님!
+        </div>
         <div class="menu-buttons">
-            <button onclick="showScene('scene-settings')">혼자하기</button>
-            <button class="disabled">같이하기 (Coming Soon)</button>
+            <button id="btn-login" onclick="login()">구글 로그인</button>
+            <div id="logged-in-menu" class="hidden" style="display: flex; flex-direction: column; gap: 15px; width: 100%;">
+                <button onclick="showScene('scene-settings')">혼자하기</button>
+                <button onclick="fetchAndShowRecords()">나의 기록</button>
+                <button class="disabled">같이하기 (Coming Soon)</button>
+                <button onclick="logout()" class="secondary" style="margin-top: 10px; padding: 10px; font-size: 1rem;">로그아웃</button>
+            </div>
         </div>
     </div>
 
@@ -273,6 +281,40 @@
             <canvas id="gameCanvas"></canvas>
         </div>
     </div>
+
+    <!-- 4. 나의 기록 화면 -->
+    <div id="scene-records" class="scene" style="max-width: 800px;">
+        <h2 style="margin: 0; color: #333;">나의 기록</h2>
+        <div class="settings-card" style="overflow-x: auto; width: 90vw;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 500px;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #eee; text-align: left;">
+                        <th style="padding: 12px;">모드</th>
+                        <th style="padding: 12px;">판수</th>
+                        <th style="padding: 12px;">최고</th>
+                        <th style="padding: 12px;">평균</th>
+                        <th style="padding: 12px;">시간</th>
+                    </tr>
+                </thead>
+                <tbody id="records-list">
+                    <!-- 데이터 동적 삽입 -->
+                </tbody>
+            </table>
+            <button onclick="showScene('scene-main')" class="secondary" style="margin-top: 20px;">메인으로</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (Modular) -->
+    <script type="importmap">
+        {
+          "imports": {
+            "firebase/app": "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js",
+            "firebase/auth": "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js",
+            "firebase/firestore": "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js"
+          }
+        }
+    </script>
+    <script type="module" src="firebase.js"></script>
 
     <!-- Core Logic -->
     <script src="../core/engine.js"></script>
