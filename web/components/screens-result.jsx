@@ -33,19 +33,6 @@ function ResultScreen({ score, config, reason, onRestart, onNewSettings, onMain,
       <div style={{ position: 'absolute', left: '6%', top: '8%', transform: 'rotate(-12deg)', opacity: 0.6 }}><AppleCell n={7} size={36} shape="realistic" /></div>
       <div style={{ position: 'absolute', right: '6%', top: '12%', transform: 'rotate(18deg)', opacity: 0.6 }}><AppleCell n={3} size={44} shape="realistic" /></div>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 1 }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.22em', color: 'var(--ink-mute)', textTransform: 'uppercase' }}>
-          ── {getMessage()}
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{
-            padding: '6px 16px', background: 'var(--paper-warm)',
-            borderRadius: 999, border: '1px solid var(--hairline)',
-            fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-soft)', letterSpacing: '0.05em'
-          }}>{config.cols} × {config.rows} · {config.clearType === 'original' ? '오리지널' : '10의 배수'}</span>
-        </div>
-      </div>
-
       <div className="result-grid">
         <div className="mascot-result" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <AppleMascot size={320} mood={reason === 'clear' ? "happy" : "neutral"} />
@@ -56,7 +43,7 @@ function ResultScreen({ score, config, reason, onRestart, onNewSettings, onMain,
 
         <div>
           <div style={{ fontFamily: 'var(--font-en)', fontSize: 18, color: 'var(--apple-deep)', letterSpacing: '0.3em', textTransform: 'uppercase' }}>
-            Final Harvest
+            Result
           </div>
           <div className="result-score" style={{
             fontFamily: 'var(--font-num)', color: 'var(--apple)',
