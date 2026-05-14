@@ -44,16 +44,17 @@ function App() {
 
   // Apply theme to :root
   useEffect(() => {
-    const vars = PALETTES[theme] || PALETTES['original'];
+    const activeTheme = screen === 'game' ? theme : 'original';
+    const vars = PALETTES[activeTheme] || PALETTES['original'];
     for (const [k, v] of Object.entries(vars)) {
       document.documentElement.style.setProperty(k, v);
     }
-    if (theme === 'custom') {
+    if (activeTheme === 'custom') {
       document.documentElement.style.setProperty('--apple', customColor);
       // Darken color slightly for apple-deep
       document.documentElement.style.setProperty('--apple-deep', '#8B0000'); // generic deep for custom
     }
-  }, [theme, customColor]);
+  }, [theme, customColor, screen]);
 
   // Firebase Auth integration
   useEffect(() => {

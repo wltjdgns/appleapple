@@ -247,11 +247,11 @@ function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout
         borderLeft: '1px solid var(--hairline)', overflow: 'hidden'
       }}>
         {/* decorative apples */}
-        <div style={{ position: 'absolute', top: 60, right: 80 }}><AppleCell n={3} size={88} shape={appleShape || "realistic"} /></div>
-        <div style={{ position: 'absolute', top: 130, right: 200 }}><AppleCell n={7} size={68} shape={appleShape || "realistic"} /></div>
-        <div style={{ position: 'absolute', top: 220, right: 50 }}><AppleCell n={5} size={56} shape={appleShape || "realistic"} /></div>
-        <div style={{ position: 'absolute', bottom: 110, right: 160 }}><AppleCell n={2} size={50} shape={appleShape || "realistic"} /></div>
-        <div style={{ position: 'absolute', bottom: 60, right: 50, opacity: 0.9 }}><AppleCell n={8} size={64} shape={appleShape || "realistic"} /></div>
+        <div style={{ position: 'absolute', top: 60, right: 80 }}><AppleCell n={3} size={88} shape="realistic" /></div>
+        <div style={{ position: 'absolute', top: 130, right: 200 }}><AppleCell n={7} size={68} shape="realistic" /></div>
+        <div style={{ position: 'absolute', top: 220, right: 50 }}><AppleCell n={5} size={56} shape="realistic" /></div>
+        <div style={{ position: 'absolute', bottom: 110, right: 160 }}><AppleCell n={2} size={50} shape="realistic" /></div>
+        <div style={{ position: 'absolute', bottom: 60, right: 50, opacity: 0.9 }}><AppleCell n={8} size={64} shape="realistic" /></div>
 
         {/* mascot */}
         <div className="mascot-container">

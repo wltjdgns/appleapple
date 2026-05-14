@@ -21,7 +21,7 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, customColor, o
       fontFamily: 'var(--font-body)', position: 'relative', overflow: 'auto'
     }}>
       {/* background decoration */}
-      <div style={{ position: 'absolute', top: -40, right: -40, opacity: 0.1, pointerEvents: 'none' }}><AppleCell n={9} size={240} shape={appleShape || "realistic"}/></div>
+      <div style={{ position: 'absolute', top: -40, right: -40, opacity: 0.1, pointerEvents: 'none' }}><AppleCell n={9} size={240} shape="realistic"/></div>
       
       <div style={{ zIndex: 1, position: 'relative' }}>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--apple-deep)', letterSpacing: '0.22em', textTransform: 'uppercase' }}>● 준비 작업 · SETTINGS</div>
@@ -187,10 +187,10 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, customColor, o
           position: 'relative', overflow: 'hidden', minHeight: 500
         }}>
           {/* decorative apples */}
-          <div style={{ position: 'absolute', top: 40, left: 40 }}><AppleCell n={3} size={56} shape={appleShape || "realistic"} /></div>
-          <div style={{ position: 'absolute', top: 120, right: 60 }}><AppleCell n={7} size={48} shape={appleShape || "realistic"} /></div>
-          <div style={{ position: 'absolute', bottom: 100, left: 70 }}><AppleCell n={5} size={44} shape={appleShape || "realistic"} /></div>
-          <div style={{ position: 'absolute', bottom: 50, right: 80 }}><AppleCell n={2} size={52} shape={appleShape || "realistic"} /></div>
+          <div style={{ position: 'absolute', top: 40, left: 40 }}><AppleCell n={3} size={56} shape="realistic" /></div>
+          <div style={{ position: 'absolute', top: 120, right: 60 }}><AppleCell n={7} size={48} shape="realistic" /></div>
+          <div style={{ position: 'absolute', bottom: 100, left: 70 }}><AppleCell n={5} size={44} shape="realistic" /></div>
+          <div style={{ position: 'absolute', bottom: 50, right: 80 }}><AppleCell n={2} size={52} shape="realistic" /></div>
 
           <AppleMascot size={220} mood="happy" />
           
