@@ -98,13 +98,13 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, customColor, o
               </select>
             </div>
 
-            <div className="setting-item" style={{ flex: 2 }}>
+            <div className="setting-item" style={{ flex: 1.5 }}>
               <label className="setting-label">🎨 사과 색상</label>
-              <div style={{ display: 'flex', gap: 10, height: '100%' }}>
+              <div style={{ display: 'flex', gap: 8, height: '100%' }}>
                 <button 
                   onClick={() => onThemeChange('original')}
                   style={{
-                    flex: '0 0 auto', padding: '0 16px', borderRadius: 16, 
+                    flex: '0 0 auto', padding: '0 12px', borderRadius: 16, 
                     border: `2px solid ${theme === 'original' ? '#ff3333' : 'var(--hairline)'}`,
                     background: 'var(--paper-warm)', cursor: 'pointer',
                     display: 'flex', alignItems: 'center', justifyContent: 'center'
@@ -115,7 +115,7 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, customColor, o
                 <button 
                   onClick={() => onThemeChange('warm')}
                   style={{
-                    flex: '0 0 auto', padding: '0 16px', borderRadius: 16, 
+                    flex: '0 0 auto', padding: '0 12px', borderRadius: 16, 
                     border: `2px solid ${theme === 'warm' ? '#e56f5b' : 'var(--hairline)'}`,
                     background: 'var(--paper-warm)', cursor: 'pointer',
                     display: 'flex', alignItems: 'center', justifyContent: 'center'
@@ -125,24 +125,42 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, customColor, o
                 </button>
                 <div 
                   style={{
-                    flex: 1, padding: '0 12px', borderRadius: 16, 
+                    flex: 1, padding: '0 10px', borderRadius: 16, 
                     border: `2px solid ${theme === 'custom' ? customColor : 'var(--hairline)'}`,
                     background: 'var(--paper-warm)', cursor: 'pointer',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6
                   }}
                   onClick={() => onThemeChange('custom')}
                 >
-                  <input 
-                    type="color" 
-                    value={customColor} 
-                    onChange={(e) => {
-                      onCustomColorChange(e.target.value);
-                      onThemeChange('custom');
-                    }}
-                    style={{ width: 32, height: 32, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
-                  />
-                  <span style={{ fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: theme === 'custom' ? 700 : 400, color: 'var(--ink)', whiteSpace: 'nowrap' }}>사용자 지정</span>
+                  <div style={{
+                    width: 24, height: 24, borderRadius: '50%',
+                    background: 'conic-gradient(#ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)',
+                    position: 'relative', overflow: 'hidden', flexShrink: 0
+                  }}>
+                    <input 
+                      type="color" 
+                      value={customColor} 
+                      onChange={(e) => {
+                        onCustomColorChange(e.target.value);
+                        onThemeChange('custom');
+                      }}
+                      style={{ position: 'absolute', top: -10, left: -10, width: 44, height: 44, opacity: 0, cursor: 'pointer' }}
+                    />
+                  </div>
+                  <span style={{ fontFamily: 'var(--font-body)', fontSize: 14, fontWeight: theme === 'custom' ? 700 : 400, color: 'var(--ink)', whiteSpace: 'nowrap' }}>사용자 지정</span>
                 </div>
+              </div>
+            </div>
+
+            <div className="setting-item" style={{ flex: 0.8, display: 'flex', flexDirection: 'column' }}>
+              <label className="setting-label">미리보기</label>
+              <div style={{
+                flex: 1, borderRadius: 16, border: '1.5px solid var(--hairline)',
+                background: 'var(--paper-warm)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                '--apple': theme === 'custom' ? customColor : (theme === 'warm' ? '#e56f5b' : '#ff3333'),
+                '--apple-deep': theme === 'custom' ? '#8B0000' : undefined
+              }}>
+                <AppleCell n={1} size={42} shape={appleShape} />
               </div>
             </div>
           </div>
