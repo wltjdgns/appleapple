@@ -86,96 +86,95 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, customColor, o
             </div>
           </div>
 
-          <div className="setting-item">
-            <label className="setting-label">🍎 사과 모양</label>
-            <select value={appleShape} onChange={(e) => onAppleShapeChange(e.target.value)} style={{
-              padding: '16px 20px', borderRadius: 16, border: '1.5px solid var(--hairline)',
-              background: 'var(--paper-warm)', color: 'var(--ink)', fontFamily: 'var(--font-body)', fontSize: 18
-            }}>
-              <option value="realistic">2D 모드</option>
-              <option value="3d">3D 입체 모드</option>
-            </select>
-          </div>
+          <div style={{ display: 'flex', gap: 16 }}>
+            <div className="setting-item" style={{ flex: 1 }}>
+              <label className="setting-label">🍎 모양</label>
+              <select value={appleShape} onChange={(e) => onAppleShapeChange(e.target.value)} style={{
+                padding: '16px 12px', borderRadius: 16, border: '1.5px solid var(--hairline)',
+                background: 'var(--paper-warm)', color: 'var(--ink)', fontFamily: 'var(--font-body)', fontSize: 18
+              }}>
+                <option value="realistic">2D</option>
+                <option value="3d">3D</option>
+              </select>
+            </div>
 
-          <div className="setting-item">
-            <label className="setting-label">🎨 사과 색상</label>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <button 
-                onClick={() => onThemeChange('original')}
-                style={{
-                  flex: '1 1 auto', padding: '16px 12px', borderRadius: 16, 
-                  border: `2px solid ${theme === 'original' ? '#ff3333' : 'var(--hairline)'}`,
-                  background: 'var(--paper-warm)', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8
-                }}
-              >
-                <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#ff3333' }}></div>
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: theme === 'original' ? 700 : 400, color: 'var(--ink)' }}>오리지널</span>
-              </button>
-              <button 
-                onClick={() => onThemeChange('warm')}
-                style={{
-                  flex: '1 1 auto', padding: '16px 12px', borderRadius: 16, 
-                  border: `2px solid ${theme === 'warm' ? '#e56f5b' : 'var(--hairline)'}`,
-                  background: 'var(--paper-warm)', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8
-                }}
-              >
-                <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#e56f5b' }}></div>
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: theme === 'warm' ? 700 : 400, color: 'var(--ink)' }}>따뜻한 색감</span>
-              </button>
-              <div 
-                style={{
-                  flex: '1 1 auto', padding: '8px 12px', borderRadius: 16, 
-                  border: `2px solid ${theme === 'custom' ? customColor : 'var(--hairline)'}`,
-                  background: 'var(--paper-warm)', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8
-                }}
-                onClick={() => onThemeChange('custom')}
-              >
-                <input 
-                  type="color" 
-                  value={customColor} 
-                  onChange={(e) => {
-                    onCustomColorChange(e.target.value);
-                    onThemeChange('custom');
+            <div className="setting-item" style={{ flex: 2 }}>
+              <label className="setting-label">🎨 사과 색상</label>
+              <div style={{ display: 'flex', gap: 10, height: '100%' }}>
+                <button 
+                  onClick={() => onThemeChange('original')}
+                  style={{
+                    flex: '0 0 auto', padding: '0 16px', borderRadius: 16, 
+                    border: `2px solid ${theme === 'original' ? '#ff3333' : 'var(--hairline)'}`,
+                    background: 'var(--paper-warm)', cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center'
                   }}
-                  style={{ width: 32, height: 32, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
-                />
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: theme === 'custom' ? 700 : 400, color: 'var(--ink)' }}>사용자 지정</span>
+                >
+                  <div style={{ width: 24, height: 24, borderRadius: '50%', background: '#ff3333' }}></div>
+                </button>
+                <button 
+                  onClick={() => onThemeChange('warm')}
+                  style={{
+                    flex: '0 0 auto', padding: '0 16px', borderRadius: 16, 
+                    border: `2px solid ${theme === 'warm' ? '#e56f5b' : 'var(--hairline)'}`,
+                    background: 'var(--paper-warm)', cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  }}
+                >
+                  <div style={{ width: 24, height: 24, borderRadius: '50%', background: '#e56f5b' }}></div>
+                </button>
+                <div 
+                  style={{
+                    flex: 1, padding: '0 12px', borderRadius: 16, 
+                    border: `2px solid ${theme === 'custom' ? customColor : 'var(--hairline)'}`,
+                    background: 'var(--paper-warm)', cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8
+                  }}
+                  onClick={() => onThemeChange('custom')}
+                >
+                  <input 
+                    type="color" 
+                    value={customColor} 
+                    onChange={(e) => {
+                      onCustomColorChange(e.target.value);
+                      onThemeChange('custom');
+                    }}
+                    style={{ width: 32, height: 32, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
+                  />
+                  <span style={{ fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: theme === 'custom' ? 700 : 400, color: 'var(--ink)', whiteSpace: 'nowrap' }}>사용자 지정</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="setting-item" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', background: 'var(--paper-warm)', borderRadius: 16, border: '1.5px solid var(--hairline)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <span style={{ fontSize: 24 }}>🎵</span>
-              <span style={{ fontFamily: 'var(--font-body)', fontSize: 18, fontWeight: 700, color: 'var(--ink)' }}>배경음악</span>
-            </div>
-            <div 
-              onClick={() => onMusicToggle()}
-              style={{
-                width: 50, height: 28, background: musicEnabled ? 'var(--apple)' : 'var(--hairline)',
-                borderRadius: 999, position: 'relative', cursor: 'pointer', transition: 'background 0.2s'
-              }}
-            >
-              <div style={{
-                position: 'absolute', top: 3, left: musicEnabled ? 25 : 3, width: 22, height: 22,
-                background: '#fff', borderRadius: '50%', boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                transition: 'left 0.2s'
-              }}/>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: 16, marginTop: 10 }}>
+          <div style={{ display: 'flex', gap: 12, marginTop: 10, alignItems: 'stretch' }}>
             <div style={{ flex: 1.5 }}>
               <PrimaryButton onClick={onStart} variant="primary">게임 시작! →</PrimaryButton>
             </div>
+            
+            <div style={{ 
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', 
+              padding: '0 16px', background: 'var(--paper-warm)', borderRadius: 14, border: '1.5px solid var(--hairline)',
+              cursor: 'pointer'
+            }} onClick={() => onMusicToggle()}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--ink-soft)', marginBottom: 6, letterSpacing: '0.05em' }}>🎵 BGM</span>
+              <div style={{
+                width: 44, height: 24, background: musicEnabled ? 'var(--apple)' : 'var(--hairline)',
+                borderRadius: 999, position: 'relative', transition: 'background 0.2s'
+              }}>
+                <div style={{
+                  position: 'absolute', top: 2, left: musicEnabled ? 22 : 2, width: 20, height: 20,
+                  background: '#fff', borderRadius: '50%', boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                  transition: 'left 0.2s'
+                }}/>
+              </div>
+            </div>
+
             <div style={{ flex: 1 }}>
               <button onClick={onBack} style={{
-                width: '100%', height: '100%', minHeight: 56,
-                padding: '16px 24px', background: 'var(--paper)', border: '1.5px solid var(--hairline)',
-                borderRadius: 14, color: 'var(--ink-soft)', fontSize: 17, fontWeight: 700, cursor: 'pointer'
+                width: '100%', height: '100%', minHeight: 60,
+                padding: '0 16px', background: 'var(--paper)', border: '1.5px solid var(--hairline)',
+                borderRadius: 14, color: 'var(--ink-soft)', fontSize: 16, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap'
               }}>뒤로 가기</button>
             </div>
           </div>
