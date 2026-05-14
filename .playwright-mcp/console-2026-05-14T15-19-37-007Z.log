@@ -1,0 +1,129 @@
+[    3466ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:29904
+[    3498ms] [WARNING] You are using the in-browser Babel transformer. Be sure to precompile your scripts for production - https://babeljs.io/docs/setup/ @ https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:2
+[    3503ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/apple-cell.jsx?v=3:0
+[    3503ms] Error: Could not load http://localhost:8081/components/apple-cell.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    3503ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-main.jsx?v=3:0
+[    3504ms] Error: Could not load http://localhost:8081/components/screens-main.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    3504ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-settings.jsx?v=3:0
+[    3504ms] Error: Could not load http://localhost:8081/components/screens-settings.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    3504ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-game.jsx?v=3:0
+[    3504ms] Error: Could not load http://localhost:8081/components/screens-game.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    3504ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-result.jsx?v=3:0
+[    3504ms] Error: Could not load http://localhost:8081/components/screens-result.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    3504ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/app.jsx?v=3:0
+[    3504ms] Error: Could not load http://localhost:8081/app.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    6783ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:29904
+[    6847ms] [WARNING] You are using the in-browser Babel transformer. Be sure to precompile your scripts for production - https://babeljs.io/docs/setup/ @ https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:2
+[    6849ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/apple-cell.jsx?v=3:0
+[    6850ms] Error: Could not load http://localhost:8081/components/apple-cell.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    6850ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-main.jsx?v=3:0
+[    6850ms] Error: Could not load http://localhost:8081/components/screens-main.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    6850ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-settings.jsx?v=3:0
+[    6850ms] Error: Could not load http://localhost:8081/components/screens-settings.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    6850ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-game.jsx?v=3:0
+[    6851ms] Error: Could not load http://localhost:8081/components/screens-game.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    6851ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-result.jsx?v=3:0
+[    6851ms] Error: Could not load http://localhost:8081/components/screens-result.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    6851ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/app.jsx?v=3:0
+[    6851ms] Error: Could not load http://localhost:8081/app.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    6853ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/favicon.ico:0
+[    7964ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:29904
+[    8047ms] [WARNING] You are using the in-browser Babel transformer. Be sure to precompile your scripts for production - https://babeljs.io/docs/setup/ @ https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:2
+[    8049ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/apple-cell.jsx?v=3:0
+[    8050ms] Error: Could not load http://localhost:8081/components/apple-cell.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    8050ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-main.jsx?v=3:0
+[    8050ms] Error: Could not load http://localhost:8081/components/screens-main.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    8051ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-settings.jsx?v=3:0
+[    8052ms] Error: Could not load http://localhost:8081/components/screens-settings.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    8051ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-game.jsx?v=3:0
+[    8052ms] Error: Could not load http://localhost:8081/components/screens-game.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    8051ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-result.jsx?v=3:0
+[    8052ms] Error: Could not load http://localhost:8081/components/screens-result.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    8051ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/app.jsx?v=3:0
+[    8053ms] Error: Could not load http://localhost:8081/app.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    8051ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/favicon.ico:0
+[    8712ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:29904
+[    8786ms] [WARNING] You are using the in-browser Babel transformer. Be sure to precompile your scripts for production - https://babeljs.io/docs/setup/ @ https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:2
+[    8802ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/apple-cell.jsx?v=3:0
+[    8802ms] Error: Could not load http://localhost:8081/components/apple-cell.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    8803ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-main.jsx?v=3:0
+[    8803ms] Error: Could not load http://localhost:8081/components/screens-main.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    8804ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-settings.jsx?v=3:0
+[    8805ms] Error: Could not load http://localhost:8081/components/screens-settings.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    8804ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-game.jsx?v=3:0
+[    8806ms] Error: Could not load http://localhost:8081/components/screens-game.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    8805ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-result.jsx?v=3:0
+[    8806ms] Error: Could not load http://localhost:8081/components/screens-result.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    8805ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/app.jsx?v=3:0
+[    8806ms] Error: Could not load http://localhost:8081/app.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    8805ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/favicon.ico:0
+[    9395ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:29904
+[    9513ms] [WARNING] You are using the in-browser Babel transformer. Be sure to precompile your scripts for production - https://babeljs.io/docs/setup/ @ https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:2
+[    9515ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/apple-cell.jsx?v=3:0
+[    9515ms] Error: Could not load http://localhost:8081/components/apple-cell.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    9517ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-main.jsx?v=3:0
+[    9519ms] Error: Could not load http://localhost:8081/components/screens-main.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    9517ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-settings.jsx?v=3:0
+[    9519ms] Error: Could not load http://localhost:8081/components/screens-settings.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    9517ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-game.jsx?v=3:0
+[    9519ms] Error: Could not load http://localhost:8081/components/screens-game.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    9517ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-result.jsx?v=3:0
+[    9519ms] Error: Could not load http://localhost:8081/components/screens-result.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    9518ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/app.jsx?v=3:0
+[    9519ms] Error: Could not load http://localhost:8081/app.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[    9518ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/favicon.ico:0
+[    9914ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:29904
+[   10079ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:29904
+[   10250ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:29904
+[   10419ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:29904
+[   10921ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:29904
+[   11001ms] [WARNING] You are using the in-browser Babel transformer. Be sure to precompile your scripts for production - https://babeljs.io/docs/setup/ @ https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:2
+[   11004ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/apple-cell.jsx?v=3:0
+[   11004ms] Error: Could not load http://localhost:8081/components/apple-cell.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[   11005ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-main.jsx?v=3:0
+[   11004ms] Error: Could not load http://localhost:8081/components/screens-main.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[   11006ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-settings.jsx?v=3:0
+[   11005ms] Error: Could not load http://localhost:8081/components/screens-settings.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[   11006ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-game.jsx?v=3:0
+[   11006ms] Error: Could not load http://localhost:8081/components/screens-game.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[   11006ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/components/screens-result.jsx?v=3:0
+[   11006ms] Error: Could not load http://localhost:8081/components/screens-result.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[   11006ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/app.jsx?v=3:0
+[   11006ms] Error: Could not load http://localhost:8081/app.jsx?v=3
+    at XMLHttpRequest.<anonymous> (https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:3:3129264)
+[   11007ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8081/favicon.ico:0

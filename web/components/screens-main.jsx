@@ -14,15 +14,24 @@ function FeedbackModal({ isOpen, onClose, type }) {
     }
     const prefix = type === 'bug' ? '[버그제보]' : '[문의/개선점]';
     const subject = `${prefix} ${title}`;
-    // 받는 분의 이메일 주소를 입력해주세요.
-    const email = 'jikeho@gmail.com';
-    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(content)}`;
     
-    window.location.href = mailtoLink;
+    setIsSending(true);
     
-    setTitle('');
-    setContent('');
-    onClose();
+    if (window.saveFeedback) {
+      const success = await window.saveFeedback(type, title, content);
+      setIsSending(false);
+      if (success) {
+        alert('소중한 의견 감사합니다. 성공적으로 전송되었습니다.');
+        setTitle('');
+        setContent('');
+        onClose();
+      } else {
+        alert('전송에 실패했습니다. 나중에 다시 시도해주세요.');
+      }
+    } else {
+      setIsSending(false);
+      alert('저장 기능을 찾을 수 없습니다.');
+    }
   };
 
   return (

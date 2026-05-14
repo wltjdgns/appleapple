@@ -1,0 +1,17 @@
+[      61ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:29904
+[     188ms] [WARNING] You are using the in-browser Babel transformer. Be sure to precompile your scripts for production - https://babeljs.io/docs/setup/ @ https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:2
+[     701ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8082/favicon.ico:0
+[  130078ms] [WARNING] Failed to decode downloaded font: https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css @ http://localhost:8082/index.html:0
+[  130079ms] [WARNING] OTS parsing error: invalid sfntVersion: 791292426 @ http://localhost:8082/index.html:0
+[  144827ms] [WARNING] Failed to decode downloaded font: https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:11108
+[  144828ms] [WARNING] OTS parsing error: invalid sfntVersion: 791292426 @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:11108
+[  159366ms] [WARNING] Failed to decode downloaded font: https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:11108
+[  159366ms] [WARNING] OTS parsing error: invalid sfntVersion: 791292426 @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:11108
+[  279411ms] [ERROR] Warning: Cannot update a component (`%s`) while rendering a different component (`%s`). To locate the bad setState() call inside `%s`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render%s App GameScreen GameScreen 
+    at GameScreen (<anonymous>:168:22)
+    at div
+    at div
+    at App (<anonymous>:58:19) @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:72
+[  279412ms] [LOG] Guest record saved in memory @ http://localhost:8082/firebase.js:137
+[  279429ms] [WARNING] Failed to decode downloaded font: https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css @ http://localhost:8082/index.html:0
+[  279429ms] [WARNING] OTS parsing error: invalid sfntVersion: 791292426 @ http://localhost:8082/index.html:0
