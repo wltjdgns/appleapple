@@ -284,44 +284,99 @@ function GameScreen({ engine, config, theme, onThemeToggle, customColor, onCusto
         <div style={{
           position: 'absolute', top: 90, right: 32, background: 'var(--paper-warm)', padding: 20, 
           borderRadius: 16, border: '1.5px solid var(--ink)', boxShadow: '0 10px 30px rgba(0,0,0,0.2)', 
-          zIndex: 1000, display: 'flex', flexDirection: 'column', gap: 16, minWidth: 200
+          zIndex: 1000, display: 'flex', flexDirection: 'column', gap: 20, minWidth: 260
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div style={{ fontWeight: 700, color: 'var(--ink)' }}>사과 모양</div>
-            <select value={appleShape} onChange={(e) => onAppleShapeChange(e.target.value)} style={{
-              padding: '6px', borderRadius: 8, border: '1px solid var(--hairline)', fontFamily: 'var(--font-body)'
-            }}>
-              <option value="realistic">2D</option>
-              <option value="3d">3D</option>
-            </select>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div style={{ fontWeight: 700, color: 'var(--ink)' }}>색상 테마</div>
-            <select value={theme === 'custom' ? 'custom' : theme} onChange={(e) => onThemeToggle(e.target.value)} style={{
-              padding: '6px', borderRadius: 8, border: '1px solid var(--hairline)', fontFamily: 'var(--font-body)'
-            }}>
-              <option value="original">오리지널</option>
-              <option value="warm">따뜻한 색감</option>
-              <option value="custom">사용자 지정</option>
-            </select>
-          </div>
-          {theme === 'custom' && (
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ fontWeight: 700, color: 'var(--ink)' }}>커스텀 색상</div>
-              <input 
-                type="color" 
-                value={customColor} 
-                onChange={(e) => {
-                  onCustomColorChange(e.target.value);
-                  onThemeToggle('custom');
+          
+          {/* Shape Selection */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div style={{ fontWeight: 700, color: 'var(--ink)', fontSize: 14 }}>🍎 사과 모양</div>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <button 
+                onClick={() => onAppleShapeChange('realistic')}
+                style={{
+                  flex: 1, padding: '12px 0', borderRadius: 12, 
+                  border: `2px solid ${appleShape === 'realistic' ? 'var(--apple)' : 'var(--hairline)'}`,
+                  background: 'var(--paper)', cursor: 'pointer',
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+                  boxShadow: appleShape === 'realistic' ? '0 4px 12px rgba(0,0,0,0.1)' : 'none'
                 }}
-                style={{ width: 32, height: 32, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
-              />
+              >
+                <AppleCell n={1} size={36} shape="realistic" leaf={true} />
+                <span style={{ fontSize: 13, fontWeight: appleShape === 'realistic' ? 700 : 500, color: 'var(--ink)' }}>2D</span>
+              </button>
+              <button 
+                onClick={() => onAppleShapeChange('3d')}
+                style={{
+                  flex: 1, padding: '12px 0', borderRadius: 12, 
+                  border: `2px solid ${appleShape === '3d' ? 'var(--apple)' : 'var(--hairline)'}`,
+                  background: 'var(--paper)', cursor: 'pointer',
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+                  boxShadow: appleShape === '3d' ? '0 4px 12px rgba(0,0,0,0.1)' : 'none'
+                }}
+              >
+                <AppleCell n={1} size={36} shape="3d" leaf={true} />
+                <span style={{ fontSize: 13, fontWeight: appleShape === '3d' ? 700 : 500, color: 'var(--ink)' }}>3D</span>
+              </button>
             </div>
-          )}
+          </div>
+
+          {/* Color Selection */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div style={{ fontWeight: 700, color: 'var(--ink)', fontSize: 14 }}>🎨 사과 색상</div>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <button 
+                onClick={() => onThemeToggle('original')}
+                style={{
+                  flex: '0 0 auto', padding: '0 12px', height: 44, borderRadius: 12, 
+                  border: `2px solid ${theme === 'original' ? '#ff3333' : 'var(--hairline)'}`,
+                  background: 'var(--paper)', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center'
+                }}
+              >
+                <div style={{ width: 22, height: 22, borderRadius: '50%', background: '#ff3333' }}></div>
+              </button>
+              <button 
+                onClick={() => onThemeToggle('warm')}
+                style={{
+                  flex: '0 0 auto', padding: '0 12px', height: 44, borderRadius: 12, 
+                  border: `2px solid ${theme === 'warm' ? '#e56f5b' : 'var(--hairline)'}`,
+                  background: 'var(--paper)', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center'
+                }}
+              >
+                <div style={{ width: 22, height: 22, borderRadius: '50%', background: '#e56f5b' }}></div>
+              </button>
+              <div 
+                style={{
+                  flex: 1, padding: '0 10px', height: 44, borderRadius: 12, 
+                  border: `2px solid ${theme === 'custom' ? customColor : 'var(--hairline)'}`,
+                  background: 'var(--paper)', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                  position: 'relative', overflow: 'hidden'
+                }}
+                onClick={() => onThemeToggle('custom')}
+              >
+                <div style={{
+                   position: 'absolute', inset: 0, opacity: 0.2, pointerEvents: 'none',
+                   background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff)'
+                }}/>
+                <input 
+                  type="color" 
+                  value={customColor} 
+                  onChange={(e) => {
+                    onCustomColorChange(e.target.value);
+                    onThemeToggle('custom');
+                  }}
+                  style={{ width: 28, height: 28, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer', zIndex: 1 }}
+                />
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: theme === 'custom' ? 700 : 500, color: 'var(--ink)', whiteSpace: 'nowrap', zIndex: 1 }}>사용자 지정</span>
+              </div>
+            </div>
+          </div>
+
           <button onClick={() => setStyleModalOpen(false)} style={{
-            marginTop: 8, padding: '10px', background: 'var(--ink)', color: '#fff', 
-            borderRadius: 12, border: 'none', cursor: 'pointer', fontWeight: 600
+            marginTop: 4, padding: '12px', background: 'var(--ink)', color: '#fff', 
+            borderRadius: 12, border: 'none', cursor: 'pointer', fontWeight: 700, fontSize: 15
           }}>닫기</button>
         </div>
       )}
