@@ -34,52 +34,56 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, customColor, o
       <div className="settings-grid" style={{ zIndex: 1, position: 'relative' }}>
         {/* Left: form */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-          <div className="setting-item">
-            <label className="setting-label">⏳ 시간 모드</label>
-            <select value={config.timeMode} onChange={(e) => onChange('timeMode', e.target.value)} style={{
-              padding: '16px 20px', borderRadius: 16, border: '1.5px solid var(--hairline)',
-              background: 'var(--paper-warm)', color: 'var(--ink)', fontFamily: 'var(--font-body)', fontSize: 18
-            }}>
-              <option value="120">시간 제한 있음</option>
-              <option value="infinite">시간 제한 없음</option>
-            </select>
-          </div>
+          <div style={{ display: 'flex', gap: 16 }}>
+            <div className="setting-item" style={{ flex: 1 }}>
+              <label className="setting-label">⏳ 시간 모드</label>
+              <select value={config.timeMode} onChange={(e) => onChange('timeMode', e.target.value)} style={{
+                padding: '16px 20px', borderRadius: 16, border: '1.5px solid var(--hairline)',
+                background: 'var(--paper-warm)', color: 'var(--ink)', fontFamily: 'var(--font-body)', fontSize: 18
+              }}>
+                <option value="120">제한 있음</option>
+                <option value="infinite">제한 없음</option>
+              </select>
+            </div>
 
-          <div className="setting-item">
-            <label className="setting-label">📏 배열 크기 (기본: 17 * 10)</label>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-              <input type="number" value={config.cols} onChange={(e) => onChange('cols', parseInt(e.target.value))} min="5" max="50" style={{
-                flex: 1, padding: '16px', borderRadius: 16, border: '1.5px solid var(--hairline)',
-                background: 'var(--paper-warm)', textAlign: 'center', fontSize: 18, fontFamily: 'var(--font-num)'
-              }} />
-              <span style={{ color: 'var(--ink-mute)', fontWeight: 700, fontSize: 20 }}>×</span>
-              <input type="number" value={config.rows} onChange={(e) => onChange('rows', parseInt(e.target.value))} min="5" max="50" style={{
-                flex: 1, padding: '16px', borderRadius: 16, border: '1.5px solid var(--hairline)',
-                background: 'var(--paper-warm)', textAlign: 'center', fontSize: 18, fontFamily: 'var(--font-num)'
-              }} />
+            <div className="setting-item" style={{ flex: 1 }}>
+              <label className="setting-label">📏 배열 크기</label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <input type="number" value={config.cols} onChange={(e) => onChange('cols', parseInt(e.target.value))} min="5" max="50" style={{
+                  flex: 1, padding: '16px 8px', borderRadius: 16, border: '1.5px solid var(--hairline)',
+                  background: 'var(--paper-warm)', textAlign: 'center', fontSize: 18, fontFamily: 'var(--font-num)', minWidth: 0
+                }} />
+                <span style={{ color: 'var(--ink-mute)', fontWeight: 700, fontSize: 20 }}>×</span>
+                <input type="number" value={config.rows} onChange={(e) => onChange('rows', parseInt(e.target.value))} min="5" max="50" style={{
+                  flex: 1, padding: '16px 8px', borderRadius: 16, border: '1.5px solid var(--hairline)',
+                  background: 'var(--paper-warm)', textAlign: 'center', fontSize: 18, fontFamily: 'var(--font-num)', minWidth: 0
+                }} />
+              </div>
             </div>
           </div>
 
-          <div className="setting-item">
-            <label className="setting-label">🍎 클리어 가능 여부</label>
-            <select value={config.seedType} onChange={(e) => onChange('seedType', e.target.value)} style={{
-              padding: '16px 20px', borderRadius: 16, border: '1.5px solid var(--hairline)',
-              background: 'var(--paper-warm)', color: 'var(--ink)', fontFamily: 'var(--font-body)', fontSize: 18
-            }}>
-              <option value="random">랜덤</option>
-              <option value="perfect">퍼펙트(모든 사과 제거 가능)</option>
-            </select>
-          </div>
+          <div style={{ display: 'flex', gap: 16 }}>
+            <div className="setting-item" style={{ flex: 1 }}>
+              <label className="setting-label">🍎 클리어 방식</label>
+              <select value={config.seedType} onChange={(e) => onChange('seedType', e.target.value)} style={{
+                padding: '16px 20px', borderRadius: 16, border: '1.5px solid var(--hairline)',
+                background: 'var(--paper-warm)', color: 'var(--ink)', fontFamily: 'var(--font-body)', fontSize: 18
+              }}>
+                <option value="random">랜덤 생성</option>
+                <option value="perfect">퍼펙트 보장</option>
+              </select>
+            </div>
 
-          <div className="setting-item">
-            <label className="setting-label">✨ 클리어 타입</label>
-            <select value={config.clearType} onChange={(e) => onChange('clearType', e.target.value)} style={{
-              padding: '16px 20px', borderRadius: 16, border: '1.5px solid var(--hairline)',
-              background: 'var(--paper-warm)', color: 'var(--ink)', fontFamily: 'var(--font-body)', fontSize: 18
-            }}>
-              <option value="original">오리지널</option>
-              <option value="multiples">10의 배수(max 50)</option>
-            </select>
+            <div className="setting-item" style={{ flex: 1 }}>
+              <label className="setting-label">✨ 클리어 타입</label>
+              <select value={config.clearType} onChange={(e) => onChange('clearType', e.target.value)} style={{
+                padding: '16px 20px', borderRadius: 16, border: '1.5px solid var(--hairline)',
+                background: 'var(--paper-warm)', color: 'var(--ink)', fontFamily: 'var(--font-body)', fontSize: 18
+              }}>
+                <option value="original">오리지널</option>
+                <option value="multiples">10의 배수</option>
+              </select>
+            </div>
           </div>
 
           <div className="setting-item">
@@ -143,31 +147,23 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, customColor, o
             </div>
           </div>
 
-          <div className="setting-item">
-            <label className="setting-label">🎵 배경음악</label>
-            <div style={{ display: 'flex', gap: 16 }}>
-              <button 
-                onClick={() => onMusicToggle()}
-                style={{
-                  flex: 1, padding: '16px', borderRadius: 16, 
-                  border: `2px solid ${!musicEnabled ? 'var(--ink)' : 'var(--hairline)'}`,
-                  background: 'var(--paper-warm)', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10
-                }}
-              >
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 16, fontWeight: !musicEnabled ? 700 : 400, color: 'var(--ink)' }}>OFF</span>
-              </button>
-              <button 
-                onClick={() => onMusicToggle()}
-                style={{
-                  flex: 1, padding: '16px', borderRadius: 16, 
-                  border: `2px solid ${musicEnabled ? 'var(--ink)' : 'var(--hairline)'}`,
-                  background: 'var(--paper-warm)', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10
-                }}
-              >
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 16, fontWeight: musicEnabled ? 700 : 400, color: 'var(--ink)' }}>ON</span>
-              </button>
+          <div className="setting-item" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', background: 'var(--paper-warm)', borderRadius: 16, border: '1.5px solid var(--hairline)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <span style={{ fontSize: 24 }}>🎵</span>
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 18, fontWeight: 700, color: 'var(--ink)' }}>배경음악</span>
+            </div>
+            <div 
+              onClick={() => onMusicToggle()}
+              style={{
+                width: 50, height: 28, background: musicEnabled ? 'var(--apple)' : 'var(--hairline)',
+                borderRadius: 999, position: 'relative', cursor: 'pointer', transition: 'background 0.2s'
+              }}
+            >
+              <div style={{
+                position: 'absolute', top: 3, left: musicEnabled ? 25 : 3, width: 22, height: 22,
+                background: '#fff', borderRadius: '50%', boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                transition: 'left 0.2s'
+              }}/>
             </div>
           </div>
 

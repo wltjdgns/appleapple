@@ -104,14 +104,14 @@ function PrimaryButton({ children, variant = "primary", disabled = false, icon =
   return (
     <button disabled={disabled} onClick={onClick} style={{
       display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-      padding: '16px 24px',
-      fontFamily: 'var(--font-body)', fontSize: 17, fontWeight: 700,
+      padding: '18px 24px',
+      fontFamily: 'var(--font-body)', fontSize: 18, fontWeight: 700,
       background: s.bg, color: s.color,
       border: '1.5px solid', borderColor: s.border === 'transparent' ? 'transparent' : `var(--hairline)`,
       borderRadius: 14, cursor: disabled ? 'not-allowed' : 'pointer',
       boxShadow: s.shadow,
       opacity: disabled ? 0.5 : 1,
-      letterSpacing: '-0.01em', minHeight: 56,
+      letterSpacing: '-0.01em', minHeight: 60, width: '100%'
     }}>
       {icon}{children}
     </button>
@@ -175,59 +175,59 @@ function MainScreen({ onStart, onRecords, onLeaderboard, user, onLogin, onLogout
           </h1>
           <p style={{
             fontFamily: 'var(--font-body)', fontSize: 18, color: 'var(--ink-soft)',
-            margin: '20px 0 0', maxWidth: 380, lineHeight: 1.5
+            margin: '20px 0 0', maxWidth: 420, lineHeight: 1.5
           }}>
             합이 <strong style={{ color: 'var(--apple)' }}>10</strong>이 되도록 사과를 묶어 따세요.
             120초, 한 바구니 가득.
           </p>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 360, marginTop: 20, marginBottom: 20 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14, maxWidth: 'min(100%, 460px)', marginTop: 28, marginBottom: 28 }}>
           {!user ? (
             <>
               <PrimaryButton onClick={onLogin} icon={<span>G</span>}>구글 로그인</PrimaryButton>
               <div style={{ display: 'flex', gap: 10 }}>
                 <input type="text" id="guest-name-input" placeholder="게스트 닉네임" style={{
-                  flex: 1, padding: '12px', borderRadius: 10, border: '1px solid var(--hairline)',
-                  fontFamily: 'var(--font-body)', minWidth: 0
+                  flex: 1, padding: '14px', borderRadius: 12, border: '1px solid var(--hairline)',
+                  fontFamily: 'var(--font-body)', minWidth: 0, fontSize: 16
                 }} />
                 <button onClick={() => onLoginAsGuest(document.getElementById('guest-name-input').value)} style={{
-                   padding: '12px 20px', borderRadius: 10, border: '1px solid var(--hairline)',
-                   background: 'var(--paper-warm)', cursor: 'pointer', fontWeight: 600, whiteSpace: 'nowrap'
+                   padding: '14px 24px', borderRadius: 12, border: '1px solid var(--hairline)',
+                   background: 'var(--paper-warm)', cursor: 'pointer', fontWeight: 600, whiteSpace: 'nowrap', fontSize: 16
                 }}>게스트 시작</button>
               </div>
             </>
           ) : (
             <>
-              <PrimaryButton onClick={onStart} variant="primary" icon={<span style={{ fontSize: 18 }}>🍎</span>}>혼자 따러 가기</PrimaryButton>
-              <PrimaryButton variant="secondary" disabled>같이 따기 <span style={{ fontSize: 11, color: 'var(--ink-mute)', fontWeight: 500, marginLeft: 4 }}>· COMING SOON</span></PrimaryButton>
-              <div style={{ display: 'flex', gap: 12, marginTop: 4 }}>
+              <PrimaryButton onClick={onStart} variant="primary" icon={<span style={{ fontSize: 20 }}>🍎</span>}>혼자 따러 가기</PrimaryButton>
+              <PrimaryButton variant="secondary" disabled>같이 따기 <span style={{ fontSize: 12, color: 'var(--ink-mute)', fontWeight: 500, marginLeft: 4 }}>· COMING SOON</span></PrimaryButton>
+              <div style={{ display: 'flex', gap: 14, marginTop: 4 }}>
                 <button onClick={onRecords} style={{
-                  flex: 1, padding: '12px', fontFamily: 'inherit', fontSize: 13, fontWeight: 600,
+                  flex: 1, padding: '14px', fontFamily: 'inherit', fontSize: 14, fontWeight: 600,
                   background: 'transparent', color: 'var(--ink-soft)',
-                  border: '1px solid var(--hairline)', borderRadius: 10, cursor: 'pointer'
+                  border: '1px solid var(--hairline)', borderRadius: 12, cursor: 'pointer'
                 }}>나의 바구니</button>
                 <button onClick={onLeaderboard} style={{
-                  flex: 1, padding: '12px', fontFamily: 'inherit', fontSize: 13, fontWeight: 600,
+                  flex: 1, padding: '14px', fontFamily: 'inherit', fontSize: 14, fontWeight: 600,
                   background: 'transparent', color: 'var(--ink-soft)',
-                  border: '1px solid var(--hairline)', borderRadius: 10, cursor: 'pointer'
+                  border: '1px solid var(--hairline)', borderRadius: 12, cursor: 'pointer'
                 }}>리더보드</button>
               </div>
-              <div style={{ display: 'flex', gap: 12, marginTop: 4 }}>
+              <div style={{ display: 'flex', gap: 14, marginTop: 4 }}>
                 <button onClick={() => openModal('bug')} style={{
-                  flex: 1, padding: '10px', fontFamily: 'inherit', fontSize: 12, fontWeight: 600,
+                  flex: 1, padding: '12px', fontFamily: 'inherit', fontSize: 13, fontWeight: 600,
                   background: 'var(--paper-warm)', color: 'var(--ink-soft)',
-                  border: '1px solid var(--hairline)', borderRadius: 10, cursor: 'pointer'
+                  border: '1px solid var(--hairline)', borderRadius: 12, cursor: 'pointer'
                 }}>버그제보</button>
                 <button onClick={() => openModal('suggestion')} style={{
-                  flex: 1, padding: '10px', fontFamily: 'inherit', fontSize: 12, fontWeight: 600,
+                  flex: 1, padding: '12px', fontFamily: 'inherit', fontSize: 13, fontWeight: 600,
                   background: 'var(--paper-warm)', color: 'var(--ink-soft)',
-                  border: '1px solid var(--hairline)', borderRadius: 10, cursor: 'pointer'
+                  border: '1px solid var(--hairline)', borderRadius: 12, cursor: 'pointer'
                 }}>문의/개선점</button>
               </div>
               <button onClick={onLogout} style={{
-                padding: '8px', background: 'transparent', border: 'none', color: 'var(--ink-mute)',
-                fontSize: 12, cursor: 'pointer', textDecoration: 'underline'
+                padding: '10px', background: 'transparent', border: 'none', color: 'var(--ink-mute)',
+                fontSize: 13, cursor: 'pointer', textDecoration: 'underline'
               }}>로그아웃</button>
             </>
           )}
