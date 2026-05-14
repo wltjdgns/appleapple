@@ -12,12 +12,20 @@ const PALETTES = {
     '--apple': '#e56f5b', '--apple-deep': '#A91D29', '--apple-bright': '#FF6B6B',
     '--leaf': '#1B4332', '--leaf-light': '#74C69D', '--gold': '#F4A261', '--honey': '#FFD166',
     '--ink': '#1B2410', '--ink-soft': '#3D4C24', '--ink-mute': '#7B8868'
+  },
+  custom: {
+    '--paper': '#F8FBF2', '--paper-warm': '#EAF2DA', '--paper-dark': '#D6E4B8', '--hairline': '#C3D2A4',
+    '--apple': '#ff3333', '--apple-deep': '#A91D29', '--apple-bright': '#FF6B6B',
+    '--leaf': '#1B4332', '--leaf-light': '#74C69D', '--gold': '#F4A261', '--honey': '#FFD166',
+    '--ink': '#1B2410', '--ink-soft': '#3D4C24', '--ink-mute': '#7B8868'
   }
 };
 
 function App() {
   const [screen, setScreen] = useState('main');
   const [theme, setTheme] = useState('original');
+  const [customColor, setCustomColor] = useState('#ff3333');
+  const [appleShape, setAppleShape] = useState('realistic');
   const [musicEnabled, setMusicEnabled] = useState(false);
   const [user, setUser] = useState(null);
   const [gameConfig, setGameConfig] = useState({
@@ -36,11 +44,16 @@ function App() {
 
   // Apply theme to :root
   useEffect(() => {
-    const vars = PALETTES[theme];
+    const vars = PALETTES[theme] || PALETTES['original'];
     for (const [k, v] of Object.entries(vars)) {
       document.documentElement.style.setProperty(k, v);
     }
-  }, [theme]);
+    if (theme === 'custom') {
+      document.documentElement.style.setProperty('--apple', customColor);
+      // Darken color slightly for apple-deep
+      document.documentElement.style.setProperty('--apple-deep', '#8B0000'); // generic deep for custom
+    }
+  }, [theme, customColor]);
 
   // Firebase Auth integration
   useEffect(() => {
@@ -148,6 +161,7 @@ function App() {
         return (
           <MainScreen
             user={user}
+            appleShape={appleShape}
             onStart={() => setScreen('settings')}
             onRecords={fetchRecords}
             onLeaderboard={fetchLeaderboard}
@@ -163,6 +177,10 @@ function App() {
             onChange={(key, val) => setGameConfig(prev => ({ ...prev, [key]: val }))}
             theme={theme}
             onThemeChange={(val) => setTheme(val)}
+            customColor={customColor}
+            onCustomColorChange={(val) => setCustomColor(val)}
+            appleShape={appleShape}
+            onAppleShapeChange={(val) => setAppleShape(val)}
             musicEnabled={musicEnabled}
             onMusicToggle={() => setMusicEnabled(!musicEnabled)}
             onStart={startGame}
@@ -175,7 +193,11 @@ function App() {
             engine={engine}
             config={gameConfig}
             theme={theme}
-            onThemeToggle={() => setTheme(t => t === 'original' ? 'warm' : 'original')}
+            onThemeToggle={(val) => setTheme(val || (theme === 'original' ? 'warm' : 'original'))}
+            customColor={customColor}
+            onCustomColorChange={(val) => setCustomColor(val)}
+            appleShape={appleShape}
+            onAppleShapeChange={(val) => setAppleShape(val)}
             musicEnabled={musicEnabled}
             onMusicToggle={() => setMusicEnabled(!musicEnabled)}
             onQuit={() => setScreen('main')}
@@ -188,6 +210,7 @@ function App() {
             score={finalScore}
             config={gameConfig}
             reason={finishReason}
+            appleShape={appleShape}
             onRestart={startGame}
             onNewSettings={() => setScreen('settings')}
             onMain={() => setScreen('main')}
@@ -195,7 +218,7 @@ function App() {
           />
         );
       case 'records':
-        return <RecordsScreen records={records} onMain={() => setScreen('main')} />;
+        return <RecordsScreen records={records} appleShape={appleShape} onMain={() => setScreen('main')} />;
       case 'leaderboard':
         return (
           <LeaderboardScreen 
@@ -207,7 +230,7 @@ function App() {
           />
         );
       default:
-        return <MainScreen user={user} onStart={() => setScreen('settings')} onLogin={handleLogin} />;
+        return <MainScreen user={user} appleShape={appleShape} onStart={() => setScreen('settings')} onLogin={handleLogin} />;
     }
   })();
 

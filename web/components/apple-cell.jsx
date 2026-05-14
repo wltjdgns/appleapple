@@ -56,6 +56,45 @@ function AppleCell({ n = 1, size = 44, shape = "round", selected = false, ghost 
     );
   }
 
+  if (shape === "3d") {
+    return (
+      <svg width={s} height={s} viewBox={`0 0 ${s} ${s}`} style={{ display: 'block', overflow: 'visible' }}>
+        <defs>
+          <radialGradient id={`apple-grad-${n}`} cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stopColor="#fff" stopOpacity="0.5" />
+            <stop offset="15%" stopColor={ghost ? "#E0D2B0" : "var(--apple, #D62828)"} />
+            <stop offset="90%" stopColor={ghost ? "#B8A98A" : "var(--apple-deep, #A91D29)"} />
+            <stop offset="100%" stopColor="#000" stopOpacity="0.2" />
+          </radialGradient>
+          <filter id={`shadow-${n}`} x="-20%" y="-20%" width="150%" height="150%">
+            <feDropShadow dx="0" dy={s*0.06} stdDeviation={s*0.04} floodOpacity="0.3" />
+          </filter>
+        </defs>
+        {ring}
+        {/* stem */}
+        <path d={`M ${s*0.50} ${s*0.18} Q ${s*0.53} ${s*0.10} ${s*0.56} ${s*0.13}`}
+              stroke={ghost ? "#A6936E" : "var(--bark, #6B4226)"} strokeWidth={s*0.04} strokeLinecap="round" fill="none" filter={`url(#shadow-${n})`} />
+        {/* leaf */}
+        {leaf && (
+          <path d={`M ${s*0.55} ${s*0.16} Q ${s*0.72} ${s*0.08} ${s*0.78} ${s*0.22} Q ${s*0.66} ${s*0.24} ${s*0.55} ${s*0.20} Z`}
+                fill={ghost ? "#B8B093" : "var(--leaf, #2D6A4F)"} filter={`url(#shadow-${n})`} />
+        )}
+        {/* body */}
+        <path d={`
+          M ${s*0.50} ${s*0.22}
+          C ${s*0.20} ${s*0.20} ${s*0.10} ${s*0.46} ${s*0.14} ${s*0.66}
+          C ${s*0.18} ${s*0.86} ${s*0.34} ${s*0.94} ${s*0.50} ${s*0.92}
+          C ${s*0.66} ${s*0.94} ${s*0.82} ${s*0.86} ${s*0.86} ${s*0.66}
+          C ${s*0.90} ${s*0.46} ${s*0.80} ${s*0.20} ${s*0.50} ${s*0.22} Z`}
+          fill={`url(#apple-grad-${n})`} filter={`url(#shadow-${n})`} />
+        <text x={s*0.50} y={s*0.60} textAnchor="middle" dominantBaseline="middle"
+              fontFamily="var(--font-num)" fontSize={fontSize}
+              fill={ghost ? "#A89875" : "#FFF7E8"}
+              style={{ fontWeight: 'normal', letterSpacing: '-0.02em', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>{n}</text>
+      </svg>
+    );
+  }
+
   // "round" — flat circle
   return (
     <svg width={s} height={s} viewBox={`0 0 ${s} ${s}`} style={{ display: 'block' }}>

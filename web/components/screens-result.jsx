@@ -1,6 +1,6 @@
 // Result & Records components
 
-function ResultScreen({ score, config, reason, onRestart, onNewSettings, onMain, onLeaderboard }) {
+function ResultScreen({ score, config, reason, appleShape, onRestart, onNewSettings, onMain, onLeaderboard }) {
   const getMessage = () => {
     switch (reason) {
       case 'nomoves': return "더 이상 할 수 있는게 없어!";
@@ -30,8 +30,8 @@ function ResultScreen({ score, config, reason, onRestart, onNewSettings, onMain,
       fontFamily: 'var(--font-body)', position: 'relative', overflow: 'auto'
     }}>
       {/* confetti apples decoration */}
-      <div style={{ position: 'absolute', left: '6%', top: '8%', transform: 'rotate(-12deg)', opacity: 0.6 }}><AppleCell n={7} size={36} shape="realistic" /></div>
-      <div style={{ position: 'absolute', right: '6%', top: '12%', transform: 'rotate(18deg)', opacity: 0.6 }}><AppleCell n={3} size={44} shape="realistic" /></div>
+      <div style={{ position: 'absolute', left: '6%', top: '8%', transform: 'rotate(-12deg)', opacity: 0.6 }}><AppleCell n={7} size={36} shape={appleShape || "realistic"} /></div>
+      <div style={{ position: 'absolute', right: '6%', top: '12%', transform: 'rotate(18deg)', opacity: 0.6 }}><AppleCell n={3} size={44} shape={appleShape || "realistic"} /></div>
 
       <div className="result-grid">
         <div className="mascot-result" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -78,7 +78,7 @@ function ResultScreen({ score, config, reason, onRestart, onNewSettings, onMain,
   );
 }
 
-function RecordsScreen({ records, onMain }) {
+function RecordsScreen({ records, appleShape, onMain }) {
   const [activeTab, setActiveTab] = React.useState('all');
   
   const filteredRecords = activeTab === 'all' 
@@ -141,7 +141,7 @@ function RecordsScreen({ records, onMain }) {
               return (
                 <tr key={key} style={{ borderBottom: '1px solid var(--hairline)' }}>
                   <td style={{ padding: '16px 22px', display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <AppleCell n={(i % 9) + 1} size={28} shape="realistic" leaf={false} />
+                    <AppleCell n={(i % 9) + 1} size={28} shape={appleShape || "realistic"} leaf={false} />
                     <span style={{ fontWeight: 600 }}>{modeLabel}</span>
                   </td>
                   <td style={{ padding: '16px 22px', fontFamily: 'var(--font-num)', fontSize: 22 }}>{r.playCount}</td>

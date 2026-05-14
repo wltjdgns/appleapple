@@ -1,6 +1,6 @@
 // Game scene components
 
-function HUD({ score, time, warn, mode, onThemeToggle, themeLabel, onQuit, musicEnabled, onMusicToggle }) {
+function HUD({ score, time, warn, mode, onStyleToggle, onQuit, musicEnabled, onMusicToggle }) {
   return (
     <div style={{
       display: 'flex', justifyContent: 'space-between', alignItems: 'center',
@@ -30,19 +30,19 @@ function HUD({ score, time, warn, mode, onThemeToggle, themeLabel, onQuit, music
          }}>
            🎵 {musicEnabled ? 'ON' : 'OFF'}
          </button>
-         <button onClick={onThemeToggle} style={{
+         <button onClick={onStyleToggle} style={{
            padding: '10px 18px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.2)',
            background: 'rgba(255,255,255,0.05)', color: '#fff', cursor: 'pointer',
            fontSize: 17, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8
          }}>
-           🎨 색상 변경
+           🎨 스타일
          </button>
       </div>
     </div>
   );
 }
 
-function GameGrid({ board, cellSize, selection }) {
+function GameGrid({ board, cellSize, selection, appleShape }) {
   const GAP = 2;
   const rows = board.length;
   const cols = board[0].length;
@@ -70,7 +70,7 @@ function GameGrid({ board, cellSize, selection }) {
               <AppleCell 
                 n={apple} 
                 size={cellSize} 
-                shape="realistic" 
+                shape={appleShape || "realistic"} 
                 selected={isSelected} 
               />
             ) : (
@@ -83,7 +83,7 @@ function GameGrid({ board, cellSize, selection }) {
   );
 }
 
-function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish, musicEnabled, onMusicToggle }) {
+function GameScreen({ engine, config, theme, onThemeToggle, customColor, onCustomColorChange, appleShape, onAppleShapeChange, onQuit, onFinish, musicEnabled, onMusicToggle }) {
   const [board, setBoard] = React.useState([]);
   const [score, setScore] = React.useState(0);
   const [timeLeft, setTimeLeft] = React.useState(0);
@@ -273,12 +273,57 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish, mu
         time={formatTime(timeLeft)}
         warn={timeLeft <= 10 && config.timeMode !== 'infinite'}
         mode={`${config.cols}×${config.rows}`}
-        onThemeToggle={onThemeToggle}
-        themeLabel={theme}
+        onStyleToggle={() => setStyleModalOpen(!styleModalOpen)}
         onQuit={onQuit}
         musicEnabled={musicEnabled}
         onMusicToggle={onMusicToggle}
       />
+
+      {styleModalOpen && (
+        <div style={{
+          position: 'absolute', top: 90, right: 32, background: 'var(--paper-warm)', padding: 20, 
+          borderRadius: 16, border: '1.5px solid var(--ink)', boxShadow: '0 10px 30px rgba(0,0,0,0.2)', 
+          zIndex: 1000, display: 'flex', flexDirection: 'column', gap: 16, minWidth: 200
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ fontWeight: 700, color: 'var(--ink)' }}>사과 모양</div>
+            <select value={appleShape} onChange={(e) => onAppleShapeChange(e.target.value)} style={{
+              padding: '6px', borderRadius: 8, border: '1px solid var(--hairline)', fontFamily: 'var(--font-body)'
+            }}>
+              <option value="realistic">2D</option>
+              <option value="3d">3D</option>
+            </select>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ fontWeight: 700, color: 'var(--ink)' }}>색상 테마</div>
+            <select value={theme === 'custom' ? 'custom' : theme} onChange={(e) => onThemeToggle(e.target.value)} style={{
+              padding: '6px', borderRadius: 8, border: '1px solid var(--hairline)', fontFamily: 'var(--font-body)'
+            }}>
+              <option value="original">오리지널</option>
+              <option value="warm">따뜻한 색감</option>
+              <option value="custom">사용자 지정</option>
+            </select>
+          </div>
+          {theme === 'custom' && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ fontWeight: 700, color: 'var(--ink)' }}>커스텀 색상</div>
+              <input 
+                type="color" 
+                value={customColor} 
+                onChange={(e) => {
+                  onCustomColorChange(e.target.value);
+                  onThemeToggle('custom');
+                }}
+                style={{ width: 32, height: 32, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
+              />
+            </div>
+          )}
+          <button onClick={() => setStyleModalOpen(false)} style={{
+            marginTop: 8, padding: '10px', background: 'var(--ink)', color: '#fff', 
+            borderRadius: 12, border: 'none', cursor: 'pointer', fontWeight: 600
+          }}>닫기</button>
+        </div>
+      )}
 
       <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'auto', position: 'relative' }}>
         <div 
@@ -287,7 +332,7 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish, mu
           onPointerMove={handlePointerMove}
           style={{ position: 'relative', touchAction: 'none' }}
         >
-           {board.length > 0 && <GameGrid board={board} cellSize={appleSize} selection={selection} />}
+           {board.length > 0 && <GameGrid board={board} cellSize={appleSize} selection={selection} appleShape={appleShape} />}
            
            {isDragging && (
              <div style={{

@@ -1,6 +1,6 @@
 // Settings scene
 
-function SettingsScreen({ config, onChange, theme, onThemeChange, musicEnabled, onMusicToggle, onStart, onBack }) {
+function SettingsScreen({ config, onChange, theme, onThemeChange, customColor, onCustomColorChange, appleShape, onAppleShapeChange, musicEnabled, onMusicToggle, onStart, onBack }) {
   return (
     <>
     <style>{`
@@ -21,7 +21,7 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, musicEnabled, 
       fontFamily: 'var(--font-body)', position: 'relative', overflow: 'auto'
     }}>
       {/* background decoration */}
-      <div style={{ position: 'absolute', top: -40, right: -40, opacity: 0.1, pointerEvents: 'none' }}><AppleCell n={9} size={240} shape="realistic"/></div>
+      <div style={{ position: 'absolute', top: -40, right: -40, opacity: 0.1, pointerEvents: 'none' }}><AppleCell n={9} size={240} shape={appleShape || "realistic"}/></div>
       
       <div style={{ zIndex: 1, position: 'relative' }}>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--apple-deep)', letterSpacing: '0.22em', textTransform: 'uppercase' }}>● 준비 작업 · SETTINGS</div>
@@ -83,32 +83,63 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, musicEnabled, 
           </div>
 
           <div className="setting-item">
+            <label className="setting-label">🍎 사과 모양</label>
+            <select value={appleShape} onChange={(e) => onAppleShapeChange(e.target.value)} style={{
+              padding: '16px 20px', borderRadius: 16, border: '1.5px solid var(--hairline)',
+              background: 'var(--paper-warm)', color: 'var(--ink)', fontFamily: 'var(--font-body)', fontSize: 18
+            }}>
+              <option value="realistic">2D 모드</option>
+              <option value="3d">3D 입체 모드</option>
+            </select>
+          </div>
+
+          <div className="setting-item">
             <label className="setting-label">🎨 사과 색상</label>
-            <div style={{ display: 'flex', gap: 16 }}>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <button 
                 onClick={() => onThemeChange('original')}
                 style={{
-                  flex: 1, padding: '16px', borderRadius: 16, 
+                  flex: '1 1 auto', padding: '16px 12px', borderRadius: 16, 
                   border: `2px solid ${theme === 'original' ? '#ff3333' : 'var(--hairline)'}`,
                   background: 'var(--paper-warm)', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8
                 }}
               >
-                <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#ff3333' }}></div>
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 16, fontWeight: theme === 'original' ? 700 : 400, color: 'var(--ink)' }}>오리지널</span>
+                <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#ff3333' }}></div>
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: theme === 'original' ? 700 : 400, color: 'var(--ink)' }}>오리지널</span>
               </button>
               <button 
                 onClick={() => onThemeChange('warm')}
                 style={{
-                  flex: 1, padding: '16px', borderRadius: 16, 
+                  flex: '1 1 auto', padding: '16px 12px', borderRadius: 16, 
                   border: `2px solid ${theme === 'warm' ? '#e56f5b' : 'var(--hairline)'}`,
                   background: 'var(--paper-warm)', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8
                 }}
               >
-                <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#e56f5b' }}></div>
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 16, fontWeight: theme === 'warm' ? 700 : 400, color: 'var(--ink)' }}>따뜻한 색감</span>
+                <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#e56f5b' }}></div>
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: theme === 'warm' ? 700 : 400, color: 'var(--ink)' }}>따뜻한 색감</span>
               </button>
+              <div 
+                style={{
+                  flex: '1 1 auto', padding: '8px 12px', borderRadius: 16, 
+                  border: `2px solid ${theme === 'custom' ? customColor : 'var(--hairline)'}`,
+                  background: 'var(--paper-warm)', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8
+                }}
+                onClick={() => onThemeChange('custom')}
+              >
+                <input 
+                  type="color" 
+                  value={customColor} 
+                  onChange={(e) => {
+                    onCustomColorChange(e.target.value);
+                    onThemeChange('custom');
+                  }}
+                  style={{ width: 32, height: 32, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
+                />
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: theme === 'custom' ? 700 : 400, color: 'var(--ink)' }}>사용자 지정</span>
+              </div>
             </div>
           </div>
 
@@ -161,10 +192,10 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, musicEnabled, 
           position: 'relative', overflow: 'hidden', minHeight: 500
         }}>
           {/* decorative apples */}
-          <div style={{ position: 'absolute', top: 40, left: 40 }}><AppleCell n={3} size={56} shape="realistic" /></div>
-          <div style={{ position: 'absolute', top: 120, right: 60 }}><AppleCell n={7} size={48} shape="realistic" /></div>
-          <div style={{ position: 'absolute', bottom: 100, left: 70 }}><AppleCell n={5} size={44} shape="realistic" /></div>
-          <div style={{ position: 'absolute', bottom: 50, right: 80 }}><AppleCell n={2} size={52} shape="realistic" /></div>
+          <div style={{ position: 'absolute', top: 40, left: 40 }}><AppleCell n={3} size={56} shape={appleShape || "realistic"} /></div>
+          <div style={{ position: 'absolute', top: 120, right: 60 }}><AppleCell n={7} size={48} shape={appleShape || "realistic"} /></div>
+          <div style={{ position: 'absolute', bottom: 100, left: 70 }}><AppleCell n={5} size={44} shape={appleShape || "realistic"} /></div>
+          <div style={{ position: 'absolute', bottom: 50, right: 80 }}><AppleCell n={2} size={52} shape={appleShape || "realistic"} /></div>
 
           <AppleMascot size={220} mood="happy" />
           
