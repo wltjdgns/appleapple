@@ -348,28 +348,28 @@ function GameScreen({ engine, config, theme, onThemeToggle, customColor, onCusto
               </button>
               <div 
                 style={{
-                  flex: 1, padding: '0 10px', height: 44, borderRadius: 12, 
+                  flex: '0 0 auto', padding: '0 12px', height: 44, borderRadius: 12, 
                   border: `2px solid ${theme === 'custom' ? customColor : 'var(--hairline)'}`,
                   background: 'var(--paper)', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-                  position: 'relative', overflow: 'hidden'
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative'
                 }}
                 onClick={() => onThemeToggle('custom')}
               >
                 <div style={{
-                   position: 'absolute', inset: 0, opacity: 0.2, pointerEvents: 'none',
-                   background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff)'
-                }}/>
-                <input 
-                  type="color" 
-                  value={customColor} 
-                  onChange={(e) => {
-                    onCustomColorChange(e.target.value);
-                    onThemeToggle('custom');
-                  }}
-                  style={{ width: 28, height: 28, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer', zIndex: 1 }}
-                />
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: theme === 'custom' ? 700 : 500, color: 'var(--ink)', whiteSpace: 'nowrap', zIndex: 1 }}>사용자 지정</span>
+                  width: 22, height: 22, borderRadius: '50%',
+                  background: 'conic-gradient(#ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)',
+                  position: 'relative', overflow: 'hidden'
+                }}>
+                  <input 
+                    type="color" 
+                    value={customColor} 
+                    onChange={(e) => {
+                      onCustomColorChange(e.target.value);
+                      onThemeToggle('custom');
+                    }}
+                    style={{ position: 'absolute', top: -10, left: -10, width: 44, height: 44, opacity: 0, cursor: 'pointer' }}
+                  />
+                </div>
               </div>
             </div>
           </div>
