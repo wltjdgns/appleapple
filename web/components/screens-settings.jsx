@@ -1,6 +1,6 @@
 // Settings scene
 
-function SettingsScreen({ config, onChange, theme, onThemeChange, onStart, onBack }) {
+function SettingsScreen({ config, onChange, theme, onThemeChange, musicEnabled, onMusicToggle, onStart, onBack }) {
   return (
     <>
     <style>{`
@@ -108,6 +108,34 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, onStart, onBac
               >
                 <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#e56f5b' }}></div>
                 <span style={{ fontFamily: 'var(--font-body)', fontSize: 16, fontWeight: theme === 'warm' ? 700 : 400, color: 'var(--ink)' }}>따뜻한 색감</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="setting-item">
+            <label className="setting-label">🎵 배경음악</label>
+            <div style={{ display: 'flex', gap: 16 }}>
+              <button 
+                onClick={() => onMusicToggle()}
+                style={{
+                  flex: 1, padding: '16px', borderRadius: 16, 
+                  border: `2px solid ${!musicEnabled ? 'var(--ink)' : 'var(--hairline)'}`,
+                  background: 'var(--paper-warm)', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10
+                }}
+              >
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: 16, fontWeight: !musicEnabled ? 700 : 400, color: 'var(--ink)' }}>OFF</span>
+              </button>
+              <button 
+                onClick={() => onMusicToggle()}
+                style={{
+                  flex: 1, padding: '16px', borderRadius: 16, 
+                  border: `2px solid ${musicEnabled ? 'var(--ink)' : 'var(--hairline)'}`,
+                  background: 'var(--paper-warm)', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10
+                }}
+              >
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: 16, fontWeight: musicEnabled ? 700 : 400, color: 'var(--ink)' }}>ON</span>
               </button>
             </div>
           </div>

@@ -18,6 +18,7 @@ const PALETTES = {
 function App() {
   const [screen, setScreen] = useState('main');
   const [theme, setTheme] = useState('original');
+  const [musicEnabled, setMusicEnabled] = useState(false);
   const [user, setUser] = useState(null);
   const [gameConfig, setGameConfig] = useState({
     timeMode: '120',
@@ -162,6 +163,8 @@ function App() {
             onChange={(key, val) => setGameConfig(prev => ({ ...prev, [key]: val }))}
             theme={theme}
             onThemeChange={(val) => setTheme(val)}
+            musicEnabled={musicEnabled}
+            onMusicToggle={() => setMusicEnabled(!musicEnabled)}
             onStart={startGame}
             onBack={() => setScreen('main')}
           />
@@ -173,6 +176,8 @@ function App() {
             config={gameConfig}
             theme={theme}
             onThemeToggle={() => setTheme(t => t === 'original' ? 'warm' : 'original')}
+            musicEnabled={musicEnabled}
+            onMusicToggle={() => setMusicEnabled(!musicEnabled)}
             onQuit={() => setScreen('main')}
             onFinish={(score, reason) => finishGame(score, reason)}
           />
@@ -212,6 +217,15 @@ function App() {
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       background: 'var(--paper)'
     }}>
+      {musicEnabled && (
+        <iframe
+          width="1"
+          height="1"
+          src="https://www.youtube.com/embed/ni1iFd-qhZI?autoplay=1&loop=1&playlist=ni1iFd-qhZI&list=PLNO8mbP5cc3EWK2anVhCoRTz5ggHUyRNn"
+          allow="autoplay"
+          style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}
+        />
+      )}
       <div style={{
         position: 'relative',
         width: '100%',

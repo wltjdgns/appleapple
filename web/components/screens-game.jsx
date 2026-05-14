@@ -1,6 +1,6 @@
 // Game scene components
 
-function HUD({ score, time, warn, mode, onThemeToggle, themeLabel, onQuit }) {
+function HUD({ score, time, warn, mode, onThemeToggle, themeLabel, onQuit, musicEnabled, onMusicToggle }) {
   return (
     <div style={{
       display: 'flex', justifyContent: 'space-between', alignItems: 'center',
@@ -23,6 +23,13 @@ function HUD({ score, time, warn, mode, onThemeToggle, themeLabel, onQuit }) {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+         <button onClick={onMusicToggle} style={{
+           padding: '10px 18px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.2)',
+           background: 'rgba(255,255,255,0.05)', color: '#fff', cursor: 'pointer',
+           fontSize: 17, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8
+         }}>
+           🎵 {musicEnabled ? 'ON' : 'OFF'}
+         </button>
          <button onClick={onThemeToggle} style={{
            padding: '10px 18px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.2)',
            background: 'rgba(255,255,255,0.05)', color: '#fff', cursor: 'pointer',
@@ -76,7 +83,7 @@ function GameGrid({ board, cellSize, selection }) {
   );
 }
 
-function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) {
+function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish, musicEnabled, onMusicToggle }) {
   const [board, setBoard] = React.useState([]);
   const [score, setScore] = React.useState(0);
   const [timeLeft, setTimeLeft] = React.useState(0);
@@ -354,6 +361,10 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish }) 
       </div>
     </div>
   );
+}
+
+Object.assign(window, { GameScreen });
+);
 }
 
 Object.assign(window, { GameScreen });
