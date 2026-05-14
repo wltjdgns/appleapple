@@ -276,6 +276,8 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish, mu
         onThemeToggle={onThemeToggle}
         themeLabel={theme}
         onQuit={onQuit}
+        musicEnabled={musicEnabled}
+        onMusicToggle={onMusicToggle}
       />
 
       <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'auto', position: 'relative' }}>
@@ -361,10 +363,6 @@ function GameScreen({ engine, config, theme, onThemeToggle, onQuit, onFinish, mu
       </div>
     </div>
   );
-}
-
-Object.assign(window, { GameScreen });
-);
 }
 
 Object.assign(window, { GameScreen });

@@ -12,17 +12,17 @@ function FeedbackModal({ isOpen, onClose, type }) {
       alert('제목과 내용을 모두 입력해주세요.');
       return;
     }
-    setIsSending(true);
-    const success = await window.saveFeedback(type, title, content);
-    setIsSending(false);
-    if (success) {
-      alert('소중한 의견 감사합니다!');
-      setTitle('');
-      setContent('');
-      onClose();
-    } else {
-      alert('전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
-    }
+    const prefix = type === 'bug' ? '[버그제보]' : '[문의/개선점]';
+    const subject = `${prefix} ${title}`;
+    // 받는 분의 이메일 주소를 입력해주세요.
+    const email = 'jikeho@gmail.com';
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(content)}`;
+    
+    window.location.href = mailtoLink;
+    
+    setTitle('');
+    setContent('');
+    onClose();
   };
 
   return (
