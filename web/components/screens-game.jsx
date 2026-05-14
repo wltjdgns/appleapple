@@ -94,6 +94,7 @@ function GameScreen({ engine, config, theme, onThemeToggle, customColor, onCusto
   const [currentSum, setCurrentSum] = React.useState(0);
   const [floatingTexts, setFloatingTexts] = React.useState([]);
   const [appleSize, setAppleSize] = React.useState(40);
+  const [styleModalOpen, setStyleModalOpen] = React.useState(false);
   const containerRef = React.useRef(null);
 
   const GAP = 2;

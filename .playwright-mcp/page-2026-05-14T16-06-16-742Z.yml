@@ -1,0 +1,32 @@
+- generic [ref=e5]:
+  - generic [ref=e6]:
+    - generic [ref=e10]: Season · 가을 출하중
+    - generic [ref=e11]:
+      - heading "사과 사과게임" [level=1] [ref=e12]:
+        - text: 사과
+        - text: 사과게임
+      - paragraph [ref=e13]:
+        - text: 합이
+        - strong [ref=e14]: "10"
+        - text: 이 되도록 사과를 묶어 따세요. 120초, 한 바구니 가득.
+    - generic [ref=e15]:
+      - button "G 구글 로그인" [ref=e16] [cursor=pointer]:
+        - generic [ref=e17]: G
+        - text: 구글 로그인
+      - generic [ref=e18]:
+        - textbox "게스트 닉네임" [ref=e19]
+        - button "게스트 시작" [ref=e20] [cursor=pointer]
+    - generic [ref=e21]: Made By Sunghoon Ji
+  - generic [ref=e22]:
+    - img [ref=e24]:
+      - generic [ref=e28]: "3"
+    - img [ref=e30]:
+      - generic [ref=e34]: "7"
+    - img [ref=e36]:
+      - generic [ref=e40]: "5"
+    - img [ref=e42]:
+      - generic [ref=e46]: "2"
+    - img [ref=e48]:
+      - generic [ref=e52]: "8"
+    - img [ref=e54]
+    - generic [ref=e66]: 오늘도 한바구니, 같이 따자!

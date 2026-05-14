@@ -1,0 +1,44 @@
+- generic [ref=e5]:
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e10]: Season · 가을 출하중
+      - generic [ref=e67]:
+        - text: 환영합니다,
+        - strong [ref=e68]: Guest_3991
+        - text: 님!
+    - generic [ref=e11]:
+      - heading "사과 사과게임" [level=1] [ref=e12]:
+        - text: 사과
+        - text: 사과게임
+      - paragraph [ref=e13]:
+        - text: 합이
+        - strong [ref=e14]: "10"
+        - text: 이 되도록 사과를 묶어 따세요. 120초, 한 바구니 가득.
+    - generic [ref=e15]:
+      - button "🍎 혼자 따러 가기" [ref=e69] [cursor=pointer]:
+        - generic [ref=e17]: 🍎
+        - text: 혼자 따러 가기
+      - button "같이 따기 · COMING SOON" [disabled] [ref=e70]:
+        - text: 같이 따기
+        - generic [ref=e71]: · COMING SOON
+      - generic [ref=e72]:
+        - button "나의 바구니" [ref=e73] [cursor=pointer]
+        - button "리더보드" [ref=e74] [cursor=pointer]
+      - generic [ref=e75]:
+        - button "버그제보" [ref=e76] [cursor=pointer]
+        - button "문의/개선점" [ref=e77] [cursor=pointer]
+      - button "로그아웃" [ref=e78] [cursor=pointer]
+    - generic [ref=e21]: Made By Sunghoon Ji
+  - generic [ref=e22]:
+    - img [ref=e24]:
+      - generic [ref=e28]: "3"
+    - img [ref=e30]:
+      - generic [ref=e34]: "7"
+    - img [ref=e36]:
+      - generic [ref=e40]: "5"
+    - img [ref=e42]:
+      - generic [ref=e46]: "2"
+    - img [ref=e48]:
+      - generic [ref=e52]: "8"
+    - img [ref=e54]
+    - generic [ref=e66]: 오늘도 한바구니, 같이 따자!

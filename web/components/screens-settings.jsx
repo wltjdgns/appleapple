@@ -152,6 +152,14 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, customColor, o
               <PrimaryButton onClick={onStart} variant="primary">게임 시작! →</PrimaryButton>
             </div>
             
+            <div style={{ flex: 1 }}>
+              <button onClick={onBack} style={{
+                width: '100%', height: '100%', minHeight: 60,
+                padding: '0 16px', background: 'var(--paper)', border: '1.5px solid var(--hairline)',
+                borderRadius: 14, color: 'var(--ink-soft)', fontSize: 16, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap'
+              }}>뒤로 가기</button>
+            </div>
+
             <div style={{ 
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', 
               padding: '0 16px', background: 'var(--paper-warm)', borderRadius: 14, border: '1.5px solid var(--hairline)',
@@ -168,14 +176,6 @@ function SettingsScreen({ config, onChange, theme, onThemeChange, customColor, o
                   transition: 'left 0.2s'
                 }}/>
               </div>
-            </div>
-
-            <div style={{ flex: 1 }}>
-              <button onClick={onBack} style={{
-                width: '100%', height: '100%', minHeight: 60,
-                padding: '0 16px', background: 'var(--paper)', border: '1.5px solid var(--hairline)',
-                borderRadius: 14, color: 'var(--ink-soft)', fontSize: 16, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap'
-              }}>뒤로 가기</button>
             </div>
           </div>
         </div>
